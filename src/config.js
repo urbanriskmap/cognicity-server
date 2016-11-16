@@ -1,8 +1,8 @@
 require('dotenv').config({silent:true})
 
 module.exports = {
-  AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
-  AUTH0_SECRET: process.env.AUTH0_SECRET,
+  AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID || '',
+  AUTH0_SECRET: process.env.AUTH0_SECRET || '',
   BODY_LIMIT: process.env.BODY_LIMIT || '100kb',
   CACHE: process.env.CACHE === 'true' || false,
   COMPRESSION: process.env.COMPRESSION === 'true' || false,

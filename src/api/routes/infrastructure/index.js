@@ -4,20 +4,19 @@ import { Router } from 'express';
 import infrastructure from './model';
 
 // Import any required utility functions
-import { cache, jwtCheck, toGeoJson } from '../../../lib/util';
+import { cache, toGeoJson } from '../../../lib/util';
 
 // Setup validation
 import Joi from 'joi';
 import validate from 'celebrate';
-// TODO: Should return a 4xx error
 
 const schema =  {
   query: {
-    token: Joi.string().token().required()
+    //token: Joi.string().token().required()
   }
 }
 
-export default ({ config, db, logger }) => {
+export default ({ db, logger }) => {
 	let api = Router();
 
 	// Get a list of infrastructure by type

@@ -25,6 +25,12 @@ export default ({ config, db, logger }) => {
 	//api.use('/floods', floods({ config, db, logger }));
 	api.use('/infrastructure', infrastructure({ config, db, logger }));
 
+	// Set 400 status for validation errors
+	api.use((err, req, res, next) => {
+		if (err.isJoi) err.status = 400;
+		next(err);
+	})
+
 	// Handle errors gracefully returning nicely formatted json
 	api.use(errorHandler());
 

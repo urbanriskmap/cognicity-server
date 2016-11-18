@@ -1,0 +1,46 @@
+2016-11-18T19:46:20.073Z - error: DB Connection error: Error: connect ETIMEDOUT 52.212.184.6:5432
+2016-11-18T19:46:20.074Z - error: Fatal error: Application shutting down
+2016-11-18T20:11:59.716Z - info: SIGINT: Application shutting down
+2016-11-18T20:11:59.718Z - info: Exiting with status 0
+2016-11-18T20:12:07.528Z - info: Application started, listening on port 8001
+2016-11-18T20:12:15.624Z - info: ::1 - - [18/Nov/2016:20:12:15 +0000] "GET /infrastructure/floodgates HTTP/1.1" 400 105 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:12:37.627Z - info: ::1 - - [18/Nov/2016:20:12:37 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:12:42.327Z - info: ::1 - - [18/Nov/2016:20:12:42 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:12:46.561Z - info: ::1 - - [18/Nov/2016:20:12:46 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:12:56.714Z - info: ::1 - - [18/Nov/2016:20:12:56 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:12:58.423Z - info: ::1 - - [18/Nov/2016:20:12:58 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:15:47.186Z - info: Application started, listening on port 8001
+2016-11-18T20:15:57.785Z - info: Application started, listening on port 8001
+2016-11-18T20:16:46.934Z - info: Application started, listening on port 8001
+2016-11-18T20:17:13.489Z - info: Application started, listening on port 8001
+2016-11-18T20:17:36.924Z - info: Application started, listening on port 8001
+2016-11-18T20:17:42.268Z - info: Application started, listening on port 8001
+2016-11-18T20:17:49.775Z - info: ::1 - - [18/Nov/2016:20:17:49 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:17:50.941Z - info: ::1 - - [18/Nov/2016:20:17:50 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:17:55.425Z - info: ::1 - - [18/Nov/2016:20:17:55 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:18:04.409Z - info: ::1 - - [18/Nov/2016:20:18:04 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:18:05.677Z - info: ::1 - - [18/Nov/2016:20:18:05 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:18:16.519Z - info: ::1 - - [18/Nov/2016:20:18:16 +0000] "GET /infrastructure/floodgates?token=willy HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:18:31.368Z - info: ::1 - - [18/Nov/2016:20:18:31 +0000] "GET /infrastructure/floodgates HTTP/1.1" 400 105 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:18:32.656Z - info: ::1 - - [18/Nov/2016:20:18:32 +0000] "GET /infrastructure/floodgates HTTP/1.1" 400 105 "-" "PostmanRuntime/2.5.2"
+2016-11-18T20:18:38.912Z - info: ::1 - - [18/Nov/2016:20:18:38 +0000] "GET /infrastructure/floodgates HTTP/1.1" 400 105 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:18:39.286Z - info: ::1 - - [18/Nov/2016:20:18:39 +0000] "GET /favicon.ico HTTP/1.1" 404 24 "http://localhost:8001/infrastructure/floodgates" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:02.935Z - info: ::1 - - [18/Nov/2016:20:20:02 +0000] "GET /infrastructure/floodgates HTTP/1.1" 400 105 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:18.060Z - info: ::1 - - [18/Nov/2016:20:20:18 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:20.566Z - info: ::1 - - [18/Nov/2016:20:20:20 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:22.114Z - info: ::1 - - [18/Nov/2016:20:20:22 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:25.066Z - info: ::1 - - [18/Nov/2016:20:20:25 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:26.193Z - info: ::1 - - [18/Nov/2016:20:20:26 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:27.414Z - info: ::1 - - [18/Nov/2016:20:20:27 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:29.040Z - info: ::1 - - [18/Nov/2016:20:20:29 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:39.613Z - info: Application started, listening on port 8001
+2016-11-18T20:20:44.729Z - info: Application started, listening on port 8001
+2016-11-18T20:20:49.349Z - info: ::1 - - [18/Nov/2016:20:20:49 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:53.883Z - info: ::1 - - [18/Nov/2016:20:20:53 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:55.057Z - info: ::1 - - [18/Nov/2016:20:20:55 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:20:56.069Z - info: ::1 - - [18/Nov/2016:20:20:56 +0000] "GET /infrastructure/floodgates?token=cock HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:21:15.050Z - info: Application started, listening on port 8001
+2016-11-18T20:21:20.260Z - info: Application started, listening on port 8001
+2016-11-18T20:21:23.462Z - info: ::1 - - [18/Nov/2016:20:21:23 +0000] "GET /infrastructure/floodgates HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:21:25.469Z - info: ::1 - - [18/Nov/2016:20:21:25 +0000] "GET /infrastructure/floodgates HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-11-18T20:21:39.721Z - info: Application started, listening on port 8001

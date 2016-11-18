@@ -54,8 +54,8 @@ logger.add(logger.transports.File, {
 
 // Winston stream function we can plug in to express so we can capture its logs along with our own
 const winstonStream = {
-  write: function(message, encoding){
-  	logger.info(message.slice(0, -1));
+  write: function(message) {
+		logger.info(message.slice(0, -1));
   }
 };
 

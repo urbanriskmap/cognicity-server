@@ -5,3 +5,6 @@ This is the NodeJS server which runs the Cognicity API used by the petabencana.i
 
 **To Do**
 - README.md documentation
+
+# Building
+Run `npm run -s build` to build.

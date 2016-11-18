@@ -6,7 +6,7 @@ const pgp = require('pg-promise')({
 export default (config) => new Promise((resolve, reject) => {
 
 	// Build the connection string
-	const cn = `postgres://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOSTNAME}:${config.DB_PORT}/${config.DB_NAME}?ssl=config.pg.ssl`;
+	const cn = `postgres://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOSTNAME}:${config.DB_PORT}/${config.DB_NAME}?sslmode=${config.DB_SSL}`;
 
 	// Connect to postgres
 	let db = pgp(cn);

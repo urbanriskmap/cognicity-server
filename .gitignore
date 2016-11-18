@@ -1,5 +1,6 @@
 .idea
 .env
+.log
 /dist
 /logs
 /npm-debug.log

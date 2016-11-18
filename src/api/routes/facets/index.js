@@ -1,7 +1,7 @@
 import resource from 'resource-router-middleware';
 import facets from './model';
 
-export default ({ config, db }) => resource({
+export default ({ config, db, logger }) => resource({
 
 	/** Property name to store preloaded entity on `request`. */
 	id : 'facet',

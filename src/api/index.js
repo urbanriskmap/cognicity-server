@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import jwt from 'express-jwt';
+
+// Import the dependencies we need to handle the request
+import errorHandler from 'api-error-handler';
 
 // Get the current version
 import { version } from '../../package.json';
@@ -9,14 +11,8 @@ import facets from './routes/facets';
 import floods from './routes/floods';
 import infrastructure from './routes/infrastructure';
 
-export default ({ config, db }) => {
+export default ({ config, db, logger }) => {
 	let api = Router();
-
-	// Configure our JWT checker TODO: Add expiry check
-	const jwtCheck = jwt({
-	  secret: new Buffer(config.AUTH0_SECRET, 'base64'),
-	  audience: config.AUTH0_CLIENT_ID
-	});
 
 	// Return the API version
 	// TODO: Perhaps expose some API metadata?
@@ -25,9 +21,12 @@ export default ({ config, db }) => {
 	});
 
 	// Mount the various endpoints
-	api.use('/facets', facets({ config, db }));
-	api.use('/floods', jwtCheck, floods({ config, db }));
-	api.use('/infrastructure', infrastructure({ config, db }));
+	//api.use('/facets', facets({ config, db, logger }));
+	//api.use('/floods', floods({ config, db, logger }));
+	api.use('/infrastructure', infrastructure({ config, db, logger }));
+
+	// Handle errors gracefully returning nicely formatted json
+	api.use(errorHandler());
 
 	return api;
 }

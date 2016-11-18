@@ -5,6 +5,9 @@ export default ({ config, db }) => {
 
 	// TODO: Add custom middleware here
 
+	// TODO: topojson middleware
+
+	// TODO: XML middleware
 
 	return routes;
 }

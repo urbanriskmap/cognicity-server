@@ -7,7 +7,6 @@ import errorHandler from 'api-error-handler';
 import { version } from '../../package.json';
 
 // Import our routes
-import facets from './routes/facets';
 import floods from './routes/floods';
 import infrastructure from './routes/infrastructure';
 
@@ -21,8 +20,7 @@ export default ({ config, db, logger }) => {
 	});
 
 	// Mount the various endpoints
-	//api.use('/facets', facets({ config, db, logger }));
-	//api.use('/floods', floods({ config, db, logger }));
+	api.use('/floods', floods({ config, db, logger }));
 	api.use('/infrastructure', infrastructure({ config, db, logger }));
 
 	// Set 400 status for validation errors

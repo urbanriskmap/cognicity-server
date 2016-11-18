@@ -23,6 +23,7 @@ export default ({ db, logger }) => {
 	const allByType = (req, res, next, type) => {
 		infrastructure(db).allByType(type)
 			.then((json) => {
+        // TODO: CAP (XML) support
 				toGeoJson(json).then((geojson) => res.json(geojson)).catch((err) => next(err))
 			})
 			.catch((err) => {

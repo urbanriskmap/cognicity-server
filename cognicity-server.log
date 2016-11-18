@@ -44,3 +44,17 @@
 2016-11-18T20:21:23.462Z - info: ::1 - - [18/Nov/2016:20:21:23 +0000] "GET /infrastructure/floodgates HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
 2016-11-18T20:21:25.469Z - info: ::1 - - [18/Nov/2016:20:21:25 +0000] "GET /infrastructure/floodgates HTTP/1.1" 200 2802 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
 2016-11-18T20:21:39.721Z - info: Application started, listening on port 8001
+2016-11-18T21:48:55.244Z - info: SIGINT: Application shutting down
+2016-11-18T21:48:55.266Z - info: Exiting with status 0
+2016-11-18T21:50:07.272Z - info: SIGINT: Application shutting down
+2016-11-18T21:50:07.279Z - info: Exiting with status 0
+2016-11-18T21:50:43.676Z - info: SIGINT: Application shutting down
+2016-11-18T21:50:43.680Z - info: Exiting with status 0
+2016-11-18T21:51:11.601Z - info: Application started, listening on port 8001
+2016-11-18T21:51:29.037Z - info: Application started, listening on port 8001
+2016-11-18T21:51:38.049Z - info: ::1 - - [18/Nov/2016:21:51:38 +0000] "GET /infrastructure HTTP/1.1" 404 27 "-" "PostmanRuntime/2.5.2"
+2016-11-18T21:51:44.773Z - info: ::1 - - [18/Nov/2016:21:51:44 +0000] "GET /infrastructure/floodgates HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T21:51:48.568Z - info: ::1 - - [18/Nov/2016:21:51:48 +0000] "GET /infrastructure/floodgates HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-11-18T21:52:00.552Z - info: ::1 - - [18/Nov/2016:21:52:00 +0000] "GET /floods HTTP/1.1" 200 171 "-" "PostmanRuntime/2.5.2"
+2016-11-18T21:52:17.959Z - info: SIGINT: Application shutting down
+2016-11-18T21:52:17.960Z - info: Exiting with status 0

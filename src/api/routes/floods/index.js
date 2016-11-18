@@ -1,23 +1,35 @@
-import resource from 'resource-router-middleware';
+import { Router } from 'express';
+
+// Import our data model
 import floods from './model';
 
-export default ({ config, db, logger }) => resource({
+// Import any required utility functions
+import { cache, toGeoJson } from '../../../lib/util';
 
-	/** Property name to store preloaded entity on `request`. */
-	id : 'floods',
+// Setup validation
+import Joi from 'joi';
+import validate from 'celebrate';
 
-	/** For requests with an `id`, you can auto-load the entity.
-	 *  Errors terminate the request, success sets `req[id] = data`.
-	 */
-	load(req, id, callback) {
-		let flood = floods.find( flood => flood.id === id ),
-			err = flood ? null : 'Not found';
-		callback(err, flood);
-	},
+const schema =  {
+  query: {
+    //token: Joi.string().token().required()
+  }
+}
 
-	/** GET / - List all infrastructure */
-	index({ params }, res) {
-		res.json(floods);
-	},
+export default ({ db, logger }) => {
+	let api = Router();
 
-});
+	// Mount the various endpoints
+	api.get('/', validate(schema), cache('1 minute'), (req, res, next) => floods(db).all()
+		.then((json) => {
+      // TODO: CAP (XML) support
+			toGeoJson(json).then((geojson) => res.json(geojson)).catch((err) => next(err))
+		})
+		.catch((err) => {
+			logger.error(err);
+			next(err);
+		})
+  );
+
+	return api;
+}

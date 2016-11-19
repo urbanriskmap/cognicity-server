@@ -14,7 +14,7 @@ module.exports = {
   DB_PORT: process.env.DB_PORT || 5432,
   DB_NAME: process.env.DB_NAME || 'cognicity',
   DB_USERNAME: process.env.DB_USERNAME || 'cognicity',
-  DB_SSL: process.env.DB_SSL || 'allow',
+  DB_SSL: process.env.DB_SSL || 'false',
   LOG_CONSOLE: process.env.LOG_CONSOLE === 'true' || false,
   LOG_DIR: process.env.LOG_DIR || '',
   LOG_JSON: process.env.LOG_JSON === 'true' || false,

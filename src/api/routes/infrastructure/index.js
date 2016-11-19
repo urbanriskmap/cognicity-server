@@ -33,9 +33,9 @@ export default ({ db, logger }) => {
 	}
 
 	// Mount the various endpoints
-	api.get('/floodgates', validate(schema), cache('1 minute'), (req, res, next) => allByType(req, res, next, 'floodgates'));
-  api.get('/pumps', cache('30 seconds'), (req, res, next) => allByType(req, res, next, 'pumps'));
-  api.get('/waterways', cache('5 minutes'), (req, res, next) => allByType(req, res, next, 'waterways'));
+	api.get('/floodgates', validate(schema), cache('1 hour'), (req, res, next) => allByType(req, res, next, 'floodgates'));
+  api.get('/pumps', cache('1 hour'), (req, res, next) => allByType(req, res, next, 'pumps'));
+  api.get('/waterways', cache('1 hour'), (req, res, next) => allByType(req, res, next, 'waterways'));
 
 	return api;
 }

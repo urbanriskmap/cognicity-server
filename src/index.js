@@ -74,9 +74,11 @@ config.RESPONSE_TIME && app.use(responseTime());
 // Parse body messages into json
 app.use(bodyParser.json({ limit : config.BODY_LIMIT }));
 
-// Connect to db
-initializeDb(config)
+// Try and connect to the db
+initializeDb(config, logger)
 	.then((db) => {
+		logger.info('Successfully connected to DB');
+
 		// Apply custom middleware
 		app.use(middleware({ config, db, logger }));
 

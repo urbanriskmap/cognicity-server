@@ -24,5 +24,6 @@ module.exports = {
   LOG_MAX_FILES: process.env.LOG_MAX_FILES || 10,
   NODE_ENV: process.env.NODE_ENV || 'development',
   PORT: process.env.PORT || 8001,
+  REGION_CODES: (process.env.REGION_CODES || 'jbd,bdg,sby').split(','),
   RESPONSE_TIME: process.env.RESPONSE_TIME === 'false' || true,
 }

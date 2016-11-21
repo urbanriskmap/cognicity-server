@@ -1,8 +1,11 @@
-export default (db) => ({
+import Promise from 'bluebird';
 
-	// TODO: Add implementation code?  e.g JBO etc
+export default (db, logger) => ({
+
 	allByType: (type) => new Promise((resolve, reject) => {
-		db.any(`select name, the_geom from infrastructure.${type}`)
+		let sql = `select name, the_geom from infrastructure.${type}`;
+		logger.debug(sql);
+		db.any(sql)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
 	})

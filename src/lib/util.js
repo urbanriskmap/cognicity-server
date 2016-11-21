@@ -1,4 +1,5 @@
 // Import dependencies
+import Promise from 'bluebird';
 import { middleware as apicache } from 'apicache';
 import jwt from 'express-jwt';
 import dbgeo from 'dbgeo';

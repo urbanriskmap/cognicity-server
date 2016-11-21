@@ -7,9 +7,12 @@ import dbgeo from 'dbgeo';
 // Import config
 import config from '../config';
 
+// Check to only cache status 500
+const onlyStatus200 = req => req.statusCode === 200;
+
 // If caching is enabled then hand off to apicache otherwise return an empty middleware
 const cache = (duration) => {
-	return config.CACHE ? apicache(duration) : (req, res, next) => next();
+	return config.CACHE ? apicache(duration, onlyStatus200) : (req, res, next) => next();
 }
 
 // Configure our JWT checker TODO: Add expiry check

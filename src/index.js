@@ -26,16 +26,16 @@ import api from './api';
 import morgan from 'morgan'; // Express logging
 import logger from 'winston'; // Application logging
 
+// Set the default logging level
+logger.level = config.LOG_LEVEL;
+
 // Create the server
 let app = express();
 app.server = http.createServer(app);
 
-// If we are not in dev and console logging has not been requested then remove it
-app.get('env') !== 'development' && !config.LOG_CONSOLE && logger.remove(logger.transports.Console);
-
 // Check that log file directory can be written to
 try {
-	config.LOG_DIR !== '' && fs.lstatSync(config.LOG_DIR).isDirectory();
+	config.LOG_DIR !== '' && fs.accessSync(config.LOG_DIR, fs.W_OK);
 	logger.info(`Logging to ${config.LOG_DIR !== '' ? config.LOG_DIR : 'current working directory' }`);
 } catch(e) {
 	// TODO: Is this desired behaviour or should we exit?
@@ -51,6 +51,11 @@ logger.add(logger.transports.File, {
 	maxFiles: config.LOG_MAX_FILES, // Max number of files
 	level: config.LOG_LEVEL // Level of log messages
 })
+
+// If we are not in development and console logging has not been requested then remove it
+if (app.get('env') !== 'development' && !config.LOG_CONSOLE) {
+	logger.remove(logger.transports.Console);
+}
 
 // Winston stream function we can plug in to express so we can capture its logs along with our own
 const winstonStream = {

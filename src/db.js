@@ -12,8 +12,9 @@ export default (config, logger) => new Promise((resolve, reject) => {
 
 	// Build the connection string
 	const cn = `postgres://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOSTNAME}:${config.DB_PORT}/${config.DB_NAME}?ssl=${config.DB_SSL}`;
+  logger.debug(cn);
 
-	// Setuo the connection
+	// Setup the connection
 	let db = pgp(cn);
 
 	// Make sure we can connect, if so resolve, if not reject

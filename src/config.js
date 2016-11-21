@@ -16,6 +16,7 @@ module.exports = {
   DB_SSL: process.env.DB_SSL || 'false',
   DB_TIMEOUT: process.env.DB_TIMEOUT || 5000,
   DB_USERNAME: process.env.DB_USERNAME || 'cognicity',
+  INFRASTRUCTURE_TYPES: (process.env.INFRASTRUCTURE_TYPES || 'floodgates,pumps,waterways').split(','),
   LOG_CONSOLE: process.env.LOG_CONSOLE === 'true' || false,
   LOG_DIR: process.env.LOG_DIR || '',
   LOG_JSON: process.env.LOG_JSON === 'true' || false,

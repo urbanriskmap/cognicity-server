@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2016-11-19T02:06:25Z",
+    "version": "2016-11-22T19:10:22Z",
     "title": "cognicity"
   },
   "host": "data.petabencana.id",
@@ -19,13 +19,21 @@
             "description": "200 response",
             "schema": {
               "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
             }
           }
         },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
           "uri": "https://api-server.petabencana.id/floods/",
@@ -65,7 +73,7 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS'",
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
@@ -111,8 +119,8 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
             }
@@ -135,13 +143,21 @@
             "description": "200 response",
             "schema": {
               "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
             }
           }
         },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
           "uri": "https://api-server.petabencana.id/infrastructure/floodgates/",
@@ -181,8 +197,8 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
             }
@@ -205,13 +221,21 @@
             "description": "200 response",
             "schema": {
               "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
             }
           }
         },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
           "uri": "https://api-server.petabencana.id/infrastructure/pumps/",
@@ -251,8 +275,8 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
             }
@@ -275,13 +299,21 @@
             "description": "200 response",
             "schema": {
               "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
             }
           }
         },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
           "uri": "https://api-server.petabencana.id/infrastructure/waterways/",
@@ -321,8 +353,86 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/reports": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "uri": "https://api-server.petabencana.id/reports/",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "type": "http"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
             }
@@ -341,5 +451,10 @@
       "type": "object",
       "title": "Empty Schema"
     }
-  }
+  },
+  "x-amazon-apigateway-binary-media-types": [
+    "application/gzip",
+    "application/x-gzip",
+    "application/x-compressed"
+  ]
 }

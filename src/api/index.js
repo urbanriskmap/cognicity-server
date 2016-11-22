@@ -10,6 +10,12 @@ import validate from 'celebrate';
 // Get the current version
 import { version } from '../../package.json';
 
+// Caching
+import apicache from 'apicache';
+let cache = apicache.middleware;
+const onlyStatus200 = (req) => req.statusCode === 200;
+const cacheSuccesses = cache('5 minutes', onlyStatus200);
+
 // Import our routes
 import floods from './routes/floods';
 import infrastructure from './routes/infrastructure';
@@ -17,6 +23,9 @@ import reports from './routes/reports';
 
 export default ({ config, db, logger }) => {
 	let api = Router();
+
+	// Cache successful responses for 5 mins
+	api.use(cacheSuccesses);
 
 	// Setup any API level general validation rules
 	api.use(validate({

@@ -4,7 +4,7 @@ import { Router } from 'express';
 import reports from './model';
 
 // Import any required utility functions
-import { cache, toGeoJson } from '../../../lib/util';
+import { toGeoJson } from '../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';
@@ -38,9 +38,9 @@ export default ({ config, db, logger }) => {
 	}
 
 	// Mount the various endpoints
-	api.get('/', cache('1 minute'), (req, res, next) => all(req, res, next, req.query.city));
+	api.get('/', (req, res, next) => all(req, res, next, req.query.city));
 	api.get('/:id', validate({ params: { id: Joi.number().integer() } }),
-		cache('1 minute'), (req, res, next) => byId(req, res, next, req.params.id));
+		(req, res, next) => byId(req, res, next, req.params.id));
 
 	return api;
 }

@@ -58,3 +58,8 @@
 2016-11-18T21:52:00.552Z - info: ::1 - - [18/Nov/2016:21:52:00 +0000] "GET /floods HTTP/1.1" 200 171 "-" "PostmanRuntime/2.5.2"
 2016-11-18T21:52:17.959Z - info: SIGINT: Application shutting down
 2016-11-18T21:52:17.960Z - info: Exiting with status 0
+2016-11-22T10:28:46.195Z - debug: postgres://cognicity:ER7aAVPx@aa1cxc7kfyija9n.c5m6uvjxvtxl.eu-west-1.rds.amazonaws.com:5432/cognicity?ssl=true
+2016-11-22T10:28:48.046Z - info: Successfully connected to DB
+2016-11-22T10:28:48.068Z - info: Application started, listening on port 8001
+2016-11-22T10:29:09.469Z - debug: select name, the_geom from infrastructure.floodgates
+2016-11-22T10:29:09.799Z - info: ::1 - - [22/Nov/2016:10:29:09 +0000] "GET /infrastructure/floodgates HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"

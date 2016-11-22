@@ -4,7 +4,7 @@ import { Router } from 'express';
 import infrastructure from './model';
 
 // Import any required utility functions
-import { cache, toGeoJson } from '../../../lib/util';
+import { toGeoJson } from '../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';
@@ -29,7 +29,7 @@ export default ({ config, db, logger }) => {
 
 	// Mount the various endpoints
 	api.get('/:type', validate({ params: { type: Joi.any().valid(config.INFRASTRUCTURE_TYPES) } }),
-		cache('1 hour'), (req, res, next) => allByType(req, res, next, req.params.type));
+		(req, res, next) => allByType(req, res, next, req.params.type));
 
 	return api;
 }

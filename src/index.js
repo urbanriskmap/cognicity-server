@@ -38,7 +38,7 @@ try {
 	config.LOG_DIR !== '' && fs.accessSync(config.LOG_DIR, fs.W_OK);
 	logger.info(`Logging to ${config.LOG_DIR !== '' ? config.LOG_DIR : 'current working directory' }`);
 } catch(e) {
-	// TODO: Is this desired behaviour or should we exit?
+	// If we cannot write to the desired directory then log in the current directory
 	logger.info(`Cannot log to '${config.LOG_DIR}', logging to current working directory instead`);
 	config.LOG_DIR = '';
 }

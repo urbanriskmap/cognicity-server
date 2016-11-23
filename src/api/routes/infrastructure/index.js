@@ -4,7 +4,7 @@ import { Router } from 'express';
 import infrastructure from './model';
 
 // Import any required utility functions
-import { toGeoJson } from '../../../lib/util';
+import { handleResponse } from '../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';
@@ -17,10 +17,7 @@ export default ({ config, db, logger }) => {
 	// Get a list of infrastructure by type
 	const allByType = (req, res, next, type) => {
 		infrastructure(config, db, logger).allByType(type)
-			.then((json) => {
-        // TODO: CAP (XML) support
-				toGeoJson(json).then((geojson) => res.json(geojson)).catch((err) => next(err))
-			})
+			.then((data) => handleResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);
 				next(err);

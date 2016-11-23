@@ -4,7 +4,7 @@ import { Router } from 'express';
 import reports from './model';
 
 // Import any required utility functions
-import { toGeoJson } from '../../../lib/util';
+import { handleResponse } from '../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';
@@ -16,9 +16,7 @@ export default ({ config, db, logger }) => {
 	// Get a list of all reports
 	const all = (req, res, next, city) => {
 		reports(config, db, logger).all(city)
-			.then((json) => {
-				toGeoJson(json).then((geojson) => res.json(geojson)).catch((err) => next(err))
-			})
+			.then((data) => handleResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);
 				next(err);
@@ -28,9 +26,7 @@ export default ({ config, db, logger }) => {
 	// Get a single report TODO: Merge this into a single 'formatResponse' utility function
 	const byId = (req, res, next, id) => {
 		reports(db, logger).byId(id)
-			.then((json) => {
-				toGeoJson(json).then((geojson) => res.json(geojson)).catch((err) => next(err))
-			})
+			.then((data) => handleResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);
 				next(err);

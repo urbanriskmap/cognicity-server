@@ -14,20 +14,29 @@ const jwtCheck = jwt({
 
 // TODO Make configurable
 dbgeo.defaults = {
-  outputFormat: 'topojson',
+  outputFormat: config.GEO_FORMAT_DEFAULT,
   geometryColumn: 'the_geom',
   geometryType: 'wkb',
-  precision: null
+  precision: config.GEO_PRECISION
 }
 
-const toGeoJson = (json, options) => new Promise((resolve, reject) => {
-	// TODO: use options
-	dbgeo.parse(json, options, (err, geojson) => {
+const formatResponse = (body, outputFormat) => new Promise((resolve, reject) => {
+	dbgeo.parse(body, { outputFormat }, (err, formatted) => {
 		if (err) reject(err);
-		resolve(geojson);
+		resolve(formatted);
 	})
 })
 
+// Handle the response, send back a correctly formatted json object with status 200
+// Catch and forward any errors in the process
+const handleResponse = (data, req, res, next) => {
+  if (!data || data instanceof Array && data.length === 0)
+    res.status(200).json([])
+  else
+    formatResponse(data, req.query.format).then((formatted) =>
+      res.status(200).json(formatted)).catch((err) => next(err))
+}
+
 module.exports = {
-  jwtCheck, toGeoJson,
+  formatResponse, handleResponse, jwtCheck
 }

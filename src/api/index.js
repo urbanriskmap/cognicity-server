@@ -30,14 +30,15 @@ export default ({ config, db, logger }) => {
 	// Setup any API level general validation rules
 	api.use(validate({
 		query: {
-			city: Joi.any().valid(config.REGION_CODES)
+			city: Joi.any().valid(config.REGION_CODES),
+			format: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT),
 		}
 	}));
 
 	// Return the API version
 	// TODO: Perhaps expose some API metadata?
 	api.get('/', (req, res) => {
-		res.json({ version });
+		res.status(200).json({ version });
 	});
 
 	// Mount the various endpoints

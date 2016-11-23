@@ -29,7 +29,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `LOG_CONSOLE`: In development mode we log to the console by default, in other environments this must be enabled if required by setting this parameter to `true` (default: `false`)
 * `LOG_DIR`: Which directory should logs be written to.  If blank, not supplied or the directory is not writable by the application this will default to the current directory
 * `LOG_JSON`: Should json format be used for logging (default: `false`)
-* `LOG_LEVEL`: What level to log at. Levels are: silly, debug, verbose, info, warn, error. `debug` level is recommended for development.  (default: `error`)
+* `LOG_LEVEL`: What level to log at. Levels are: `silly`, `debug`, `verbose`, `info`, `warn`, `error`. `debug` level is recommended for development.  (default: `error`)
 * `LOG_MAX_FILE_SIZE`: Maximum size of log file in bytes before rotating (default: `1024 * 1024 * 100` i.e. `100mb`)
 * `LOG_MAX_FILES`: Maximum number of log files before rotation (default: `10`)
 * `NODE_ENV`: Which environment are we in.  Environments are: development, test, staging, production (default: `development`)

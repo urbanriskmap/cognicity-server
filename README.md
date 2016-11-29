@@ -25,6 +25,11 @@ Server configuration parameters are stored in a configuration file which is pars
 * `DB_SSL`: SSL enabled on Postgres DB connection? (default: `true`)
 * `DB_TIMEOUT`: Max duration on DB calls before timeout (in milliseconds) (default: `5000` i.e. 5 seconds)
 * `DB_USERNAME`: Postgres DB username (default: `postgres`)
+* `FORMAT_DEFAULT`: Which format to return results in by default (default: `json`)
+* `FORMATS`: Formats supported by the system (as comma separated list) (default: `json,xml`)
+* `GEO_FORMAT_DEFAULT`: Which format to return geographic results in by default (default: `topojson`)
+* `GEO_FORMATS`: Geographic formats supported by the system (as comma separated list) (default: `topojson,geojson,cap`)
+* `GEO_PRECISION`: Precision to use when rounding geographic coordinates (default: `10`)
 * `INFRASTRUCTURE_TYPES`: Infrastructure types supported (as comma separated list) (default: `floodgates,pumps,waterways`)
 * `LOG_CONSOLE`: In development mode we log to the console by default, in other environments this must be enabled if required by setting this parameter to `true` (default: `false`)
 * `LOG_DIR`: Which directory should logs be written to.  If blank, not supplied or the directory is not writable by the application this will default to the current directory

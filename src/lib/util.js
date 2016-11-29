@@ -33,7 +33,7 @@ const handleResponse = (data, req, res, next) => {
   if (!data || data instanceof Array && data.length === 0)
     res.status(200).json([])
   else
-    formatResponse(data, req.query.format).then((formatted) =>
+    formatResponse(data, req.query.geoFormat).then((formatted) =>
       res.status(200).json(formatted)).catch((err) => next(err))
 }
 

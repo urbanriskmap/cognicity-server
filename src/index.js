@@ -1,3 +1,5 @@
+import Promise from 'bluebird';
+
 // Import express, fs and http
 import express from 'express';
 import fs from 'fs';
@@ -19,8 +21,8 @@ import config from './config';
 // Import DB initializer
 import initializeDb from './db';
 
-// Import the route api
-import api from './api';
+// Import the routes
+import routes from './api';
 
 // Import logging libraries
 import morgan from 'morgan'; // Express logging
@@ -28,10 +30,6 @@ import logger from 'winston'; // Application logging
 
 // Set the default logging level
 logger.level = config.LOG_LEVEL;
-
-// Create the server
-let app = express();
-app.server = http.createServer(app);
 
 // Check that log file directory can be written to
 try {
@@ -53,79 +51,92 @@ logger.add(logger.transports.File, {
 })
 
 // If we are not in development and console logging has not been requested then remove it
-if (app.get('env') !== 'development' && !config.LOG_CONSOLE) {
+if (config.NODE_ENV !== 'development' && !config.LOG_CONSOLE) {
 	logger.remove(logger.transports.Console);
 }
 
-// Winston stream function we can plug in to express so we can capture its logs along with our own
-const winstonStream = {
-  write: function(message) {
-		logger.info(message.slice(0, -1));
-  }
-};
+// Function to start the initialize the api server
+const init = () => new Promise((resolve, reject) => {
 
-// Setup express logger
-app.use(morgan('combined', { stream : winstonStream }));
+	// Create the server
+	let app = express();
+	app.server = http.createServer(app);
 
-// Compress responses if required but only if caching is disabled
-config.COMPRESS && !config.CACHE && app.use(compression());
+	// Winston stream function we can plug in to express so we can capture its logs along with our own
+	const winstonStream = {
+	  write: function(message) {
+			logger.info(message.slice(0, -1));
+	  }
+	};
 
-// Provide CORS support (not required if behind API gateway)
-config.CORS && app.use(cors({ exposedHeaders: config.CORS_HEADERS }));
+	// Setup express logger
+	app.use(morgan('combined', { stream : winstonStream }));
 
-// Provide response time header in response
-config.RESPONSE_TIME && app.use(responseTime());
+	// Compress responses if required but only if caching is disabled
+	config.COMPRESS && !config.CACHE && app.use(compression());
 
-// Parse body messages into json
-app.use(bodyParser.json({ limit : config.BODY_LIMIT }));
+	// Provide CORS support (not required if behind API gateway)
+	config.CORS && app.use(cors({ exposedHeaders: config.CORS_HEADERS }));
 
-// Try and connect to the db
-initializeDb(config, logger)
-	.then((db) => {
-		logger.info('Successfully connected to DB');
+	// Provide response time header in response
+	config.RESPONSE_TIME && app.use(responseTime());
 
-		// Apply custom middleware
-		app.use(middleware({ config, db, logger }));
+	// Parse body messages into json
+	app.use(bodyParser.json({ limit : config.BODY_LIMIT }));
 
-		// Mount the api
-		app.use('/', api({ config, db, logger }));
+	// Try and connect to the db
+	initializeDb(config, logger)
+		.then((db) => {
+			// Log debug message
+			logger.debug('Successfully connected to DB');
 
-		// Start listening for requests
-		app.server.listen(config.PORT);
-		logger.info(`Application started, listening on port ${app.server.address().port}`);
-	})
-	.catch((err) => {
-		logger.error('DB Connection error: ' + err);
-		logger.error('Fatal error: Application shutting down');
-		exitWithStatus(1);
-	})
+			// Apply custom middleware
+			app.use(middleware({ config, db, logger }));
 
-// FIXME This is a workaround for https://github.com/flatiron/winston/issues/228
-// If we exit immediately winston does not get a chance to write the last log message.
-// So we wait a short time before exiting.
-function exitWithStatus(exitStatus) {
-	logger.info( 'Exiting with status ' + exitStatus );
-	setTimeout( function() {
-		process.exit(exitStatus);
-	}, 500 );
+			// Mount the routes
+			app.use('/', routes({ config, db, logger }));
+
+			// App is ready to go, resolve the promise
+			resolve(app);
+
+		})
+		.catch((err) => {
+			logger.error('DB Connection error: ' + err);
+			logger.error('Fatal error: Application shutting down');
+
+			// We cannot continue without a DB, reject
+			reject(err);
+		})
+})
+
+// If we exit immediately winston does not get a chance to write the last log message
+const exitWithStatus = (status) => {
+	logger.info(`Exiting with status ${status}`);
+	setTimeout(() => process.exit(status), 500);
 }
 
 // Catch kill and interrupt signals and log a clean exit status
-process.on('SIGTERM', function() {
-	logger.info('SIGTERM: Application shutting down');
-	exitWithStatus(0);
-});
-process.on('SIGINT', function() {
-	logger.info('SIGINT: Application shutting down');
-	exitWithStatus(0);
-});
+process
+	.on('SIGTERM', () => {
+		logger.info('SIGTERM: Application shutting down');
+		exitWithStatus(0);
+	})
+	.on('SIGINT', () => {
+		logger.info('SIGINT: Application shutting down');
+		exitWithStatus(0);
+	});
 
-// Catch unhandled exceptions, log, and exit with error status
-// TODO: This seems dangerous!  Should we not instead return a 500?
-process.on('uncaughtException', function (err) {
-	logger.error('uncaughtException: ' + err.message + ', ' + err.stack);
+// Try and start the server
+let app = init().then((app) => {
+	// All good to go, start listening for requests
+	app.server.listen(config.PORT);
+	logger.info(`Application started, listening on port ${app.server.address().port}`);
+}).catch((err) => {
+	// Error has occurred, log and shutdown
+	logger.error('Error starting server: ' + err.message + ', ' + err.stack);
 	logger.error('Fatal error: Application shutting down');
 	exitWithStatus(1);
 });
 
-export default app;
+// Export the init function for use externally (e.g. in tests)
+module.exports = { init };

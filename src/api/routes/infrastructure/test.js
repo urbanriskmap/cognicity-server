@@ -1,38 +1,36 @@
-'use strict'
-
 const request = require('supertest');
+const assert = require('chai').assert;
+require('it-each')();
 
-const app = require('../../../index.js');
+import { init } from '../../..';
 
-console.log(app)
+// Setup an array of tests to run
+const tests = [
+  {
+    url: '/infrastructure',
+    exp: {
+      status: 404
+    }
+  },
+  {
+    url: '/infrastructure/waterways',
+    exp: {
+      status: 200
+    }
+  }
+]
 
-
-const api = app.server;
-
-console.log(api)
-
+// Run the tests
 describe('GET /infrastructure', () => {
-  it('respond with json', function(done) {
-    request(api)
-      .get('/infrastructure')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
+  it.each(tests, 'respond with correct response for test', (test, next) => {
+    init().then((app) => {
+      request(app)
+        .get(test.url)
+        .end((err, res) => {
+          if (err) next(err);
+          assert.equal(res.status, test.exp.status);
+          return next();
+        });
+    });
   });
 });
-
-
-/*TODO: Get ES6 and mocha working together
-const request = require('supertest');
-
-const api = require('../../../index.js');
-
-describe('GET /reports', () => {
-  it('respond with json', function(done) {
-    request(api)
-      .get('/reports')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-  });
-})*/

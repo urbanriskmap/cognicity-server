@@ -31,7 +31,8 @@ export default ({ config, db, logger }) => {
 	api.use(validate({
 		query: {
 			city: Joi.any().valid(config.REGION_CODES),
-			format: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT),
+			format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
+			geoFormat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT),
 		}
 	}));
 
@@ -48,6 +49,11 @@ export default ({ config, db, logger }) => {
 
 	// Handle validation errors (wording of messages can be overridden using err.isJoi)
 	api.use(validate.errors());
+
+	// Handle not found errors
+	api.use((req, res, next) => {
+		res.status(404).json({ message: 'URL not found', url: req.url });
+	});
 
 	// Handle errors gracefully returning nicely formatted json
 	api.use(errorHandler());

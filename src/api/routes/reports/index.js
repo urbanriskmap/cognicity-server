@@ -23,9 +23,9 @@ export default ({ config, db, logger }) => {
 			});
 	}
 
-	// Get a single report TODO: Merge this into a single 'formatResponse' utility function
+	// Get a single report
 	const byId = (req, res, next, id) => {
-		reports(db, logger).byId(id)
+		reports(config, db, logger).byId(id)
 			.then((data) => handleResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);

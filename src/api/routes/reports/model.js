@@ -5,31 +5,41 @@ export default (config, db, logger) => ({
 	// Return all reports in last hour
 	// Optional: city (Petabencana.id Instance Region 3 letter code)
 	all: (city) => new Promise((resolve, reject) => {
-		let oneHourAgo = Date.now() / 1000 - (1000 * 60);
-		let sql = `select pkey, created_at at time zone 'ICT' created_at, source,
-			status, url, image_url, disaster_type, report_data, tags, title, text
-			the_geom
-			from cognicity.all_reports
-			where created_at >= to_timestamp(${oneHourAgo})`;
-		if (city) sql += ` and city=${city}`;
-		// TODO: No city column?
-		// TODO: What to return if no entries?
-		logger.debug(sql);
-		db.any(sql).timeout(config.DB_TIMEOUT)
+
+		// Setup query
+		let query = `SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM ${config.TABLE_REPORTS}
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3`;
+
+		// Setup values
+		let timeWindow = (Date.now() / 1000) - config.API_REPORTS_TIME_WINDOW;
+		let values = [ timeWindow, city, config.API_REPORTS_LIMIT ]
+
+		// Execute
+		logger.debug(query, values);
+		db.any(query, values).timeout(config.DB_TIMEOUT)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
 	}),
 
-	// Return all reports in last hour
-	// Optional: city (Petabencana.id Instance Region 3 letter code)
+	// Return specific report by id
 	byId: (id) => new Promise((resolve, reject) => {
-		let sql = `select pkey, created_at at time zone 'ICT' created_at, source,
-			status, url, image_url, disaster_type, report_data, tags, title, text
-			the_geom
-			from cognicity.all_reports
-			where pkey = ${id}`;
-		logger.debug(sql);
-		db.any(sql).timeout(config.DB_TIMEOUT)
+
+		// Setup query
+		let query = `SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM ${config.TABLE_REPORTS}
+			where pkey = $1`;
+
+		// Setup values
+		let values = [ id ]
+
+		// Execute
+		logger.debug(query, values);
+		db.oneOrNone(query, values).timeout(config.DB_TIMEOUT)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
 	})

@@ -2,8 +2,12 @@ require('dotenv').config({silent:true})
 
 export default {
   APP_NAME: process.env.APP_NAME || 'cognicity-server',
-  AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID || '',
-  AUTH0_SECRET: process.env.AUTH0_SECRET || '',
+  API_REPORTS_TIME_WINDOW: process.env.API_REPORTS_TIME_WINDOW || 3600,
+  API_REPORTS_LIMIT: process.env.API_REPORTS_LIMIT,
+  API_FLOODGAUGE_REPORTS_TIME_WINDOW: process.env.API_FLOODGAUGE_REPORTS_TIME_WINDOW || 3600,
+  API_FLOODGAUGE_REPORTS_LIMIT: process.env.API_FLOODGAUGE_REPORTS_LIMIT,
+  AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+  AUTH0_SECRET: process.env.AUTH0_SECRET,
   BODY_LIMIT: process.env.BODY_LIMIT || '100kb',
   CACHE: process.env.CACHE === 'true' || false,
   COMPRESS: process.env.COMPRESS === 'true' || false,
@@ -32,4 +36,12 @@ export default {
   PORT: process.env.PORT || 8001,
   REGION_CODES: (process.env.REGION_CODES || 'jbd,bdg,sby').split(','),
   RESPONSE_TIME: process.env.RESPONSE_TIME === 'true' || true,
+  TABLE_FLOODGAUGE_REPORTS: process.env.TABLE_FLOODGAUGE_REPORTS || 'floodgauge.reports',
+  TABLE_GRASP_CARDS: process.env.TABLE_GRASP_CARDS || 'grasp.cards',
+  TABLE_GRASP_LOG: process.env.TABLE_GRASP_LOG || 'grasp.log',
+  TABLE_GRASP_REPORTS: process.env.TABLE_GRASP_REPORTS || 'grasp.reports',
+  TABLE_GRASP_REPORT_IMAGES: process.env.TABLE_GRASP_REPORT_IMAGES || 'grasp.images',
+  TABLE_INSTANCE_REGIONS: process.env.TABLE_INSTANCE_REGIONS || 'cognicity.instance_regions',
+  TABLE_LOCAL_AREAS: process.env.TABLE_LOCAL_AREAS || 'cognicity.local_areas',
+  TABLE_REPORTS: process.env.TABLE_REPORTS || 'cognicity.all_reports',
 }

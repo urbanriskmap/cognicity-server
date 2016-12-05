@@ -30,6 +30,7 @@ const formatResponse = (body, outputFormat) => new Promise((resolve, reject) => 
 // Handle the response, send back a correctly formatted json object with status 200
 // Catch and forward any errors in the process
 const handleResponse = (data, req, res, next) => {
+  console.log(data);
   if (!data || data instanceof Array && data.length === 0)
     res.status(200).json([])
   else

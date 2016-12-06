@@ -11,7 +11,7 @@ export default (config, db, logger) => ({
 			VALUES ($1, to_timestamp($2), $3, $4, $5, $6, $7, ST_SetSRID(ST_Point($8,$9),4326))`;
 
 		// Setup values
-		let values = [ body.post_id, body.created_at, 'flood', body.text, body.image_url,
+		let values = [ body.post_id, body.created_at, body.disaster_type, body.text, body.image_url,
 			body.qlue_city, body.location.lng, body.location.lat  ]
 
 		// Execute

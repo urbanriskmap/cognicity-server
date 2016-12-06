@@ -35,19 +35,17 @@ export default ({ config, db, logger }) => {
 	);
 
 	// Update a card record
-	// TODO: Check what is mandatory
-	// TODO: Check format for lat / lng - nested object might be nicer than WKT?
 	api.put('/:cardId', validate({
-		params: { cardId: Joi.string().required() },
+		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
-				location: Joi.object().required().keys({
-				lat: Joi.number().min(-90).max(90),
-				lng: Joi.number().min(-180).max(180)
-			}),
-			water_depth: Joi.number(), // TODO: Validation?
-			text: Joi.string().required(),
+			water_depth: Joi.number().integer().min(0).max(200).required(),
+			text: Joi.string(),
 			image_id: Joi.string(),
-			created_at: Joi.string() // TODO: Data type?
+			created_at: Joi.date().iso().required(),
+			location: Joi.object().required().keys({
+				lat: Joi.number().min(-90).max(90).required(),
+				lng: Joi.number().min(-180).max(180).required()
+			})
 		})
 	}),
 	(req, res, next) => {
@@ -58,7 +56,6 @@ export default ({ config, db, logger }) => {
 					// If the card does not exist then return an error message
 					if (!card) res.status(404).json({ message: `No card exists with id '${req.params.cardId}'` })
 					// If the card already has received status then return an error message
-					// TODO: what is the message here?  HTTP Status 409 seems most appropriate?
 					else if (card && card.received) res.status(409).json({ message: `Report already received for card '${req.params.cardId}'` })
 					// We have a card and it has not yet had a report received
 					else {
@@ -82,6 +79,14 @@ export default ({ config, db, logger }) => {
 	);
 
 	// TODO: Add POST method to create a new card entry and return the ID
+	// https://github.com/dylang/shortid
+
+	// TODO: Send images to S3, lambda function,
+	// api.post('/:cardId/image' - can we upload the card and image at the same time? POST / PUT / PATCH?
+	// Validate the card ID, image: png/jpg/gif, max size?
+	// API Gateway - binary data
+	// Save the file to the bucket, what is the format, filename as report card (check Matthew's code)
+	// Send a response back to the user
 
 	return api;
 }

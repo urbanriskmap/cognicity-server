@@ -2,9 +2,11 @@ require('dotenv').config({silent:true})
 
 export default {
   APP_NAME: process.env.APP_NAME || 'cognicity-server',
+  API_FEEDS_QLUE_CITIES: (process.env.API_FEEDS_QLUE_CITIES || 'jabodetabek,bandung,surabaya').split(','),
+  API_FEEDS_QLUE_DISASTER_TYPES: (process.env.API_FEEDS_QLUE_DISASTER_TYPES || 'flood').split(','),
   API_REPORTS_TIME_WINDOW: process.env.API_REPORTS_TIME_WINDOW || 3600,
   API_REPORTS_LIMIT: process.env.API_REPORTS_LIMIT,
-  API_FLOODGAUGE_REPORTS_TIME_WINDOW: process.env.API_FLOODGAUGE_REPORTS_TIME_WINDOW || 3600,
+  API_FLOODGAUGE_REPORTS_TIME_WINDOW: process.env.API_FLOODGAUGE_REPORTS_TIME_WINDOW || 43200,
   API_FLOODGAUGE_REPORTS_LIMIT: process.env.API_FLOODGAUGE_REPORTS_LIMIT,
   AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
   AUTH0_SECRET: process.env.AUTH0_SECRET,

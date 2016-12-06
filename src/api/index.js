@@ -40,12 +40,12 @@ export default ({ config, db, logger }) => {
 	});
 
 	// Mount the various endpoints
-	api.use('/cards', cards({ config, db, logger }));
-	api.use('/feeds', feeds({ config, db, logger }));
-	api.use('/floodgauges', floodgauges({ config, db, logger }));
-	api.use('/floods', checkToken, floods({ config, db, logger }));
+	api.use('/cards', cacheResponse('1 minute'), cards({ config, db, logger }));
+	api.use('/feeds', checkToken, cacheResponse('1 minute'), feeds({ config, db, logger }));
+	api.use('/floodgauges', cacheResponse('1 minute'), floodgauges({ config, db, logger }));
+	api.use('/floods', checkToken, cacheResponse('1 minute'), floods({ config, db, logger }));
 	api.use('/infrastructure', cacheResponse('1 hour'), infrastructure({ config, db, logger }));
-	api.use('/reports', reports({ config, db, logger }));
+	api.use('/reports', cacheResponse('1 minute'), reports({ config, db, logger }));
 
 	// Handle validation errors (wording of messages can be overridden using err.isJoi)
 	api.use(validate.errors());

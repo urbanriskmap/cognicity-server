@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 
 export default (config, db, logger) => ({
 
-	// Return all reports in last hour
+	// Return all reports within the defined max period
 	// Optional: city (Petabencana.id Instance Region 3 letter code)
 	all: (city) => new Promise((resolve, reject) => {
 

@@ -15,17 +15,21 @@ export default ({ config, db, logger }) => {
 	let api = Router();
 
 	// Create a new qlue record in the database
-	// TODO: Agree schema and validation
+	// TODO: What is mandatory around title / text, any rules AND/OR?
+	// TODO: Bulk endpoint for multiple POSTs
+	// TODO: Unique consraint on post_id, if it exists then report back status
 	api.post('/qlue', validate({
 			body: Joi.object().keys({
-				post_id: Joi.string(),
-				created_at: Joi.string(),
-				text: Joi.string().required(),
-				image_url: Joi.string(),
-				qlue_city: Joi.string(),
+				post_id: Joi.number().integer().required(),
+				created_at: Joi.date().iso().required(),
+				text: Joi.string(),
+				image_url: Joi.string().required(),
+				qlue_city: Joi.string().valid(config.API_FEEDS_QLUE_CITIES).required(),
+				disaster_type: Joi.string().valid(config.API_FEEDS_QLUE_DISASTER_TYPES).required(),
+				title: Joi.string(),
 				location: Joi.object().required().keys({
-					lat: Joi.number().min(-90).max(90),
-					lng: Joi.number().min(-180).max(180)
+					lat: Joi.number().min(-90).max(90).required(),
+					lng: Joi.number().min(-180).max(180).required()
 				})
 			})
 		}),

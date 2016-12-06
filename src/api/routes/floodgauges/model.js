@@ -2,8 +2,7 @@ import Promise from 'bluebird';
 
 export default (config, db, logger) => ({
 
-	// TODO: Should this just be last hour or will we accept range as params?
-	// Return all flood gauge reports in last hour
+	// Return all flood gauge reports within the defined max period
 	// Optional: city (Petabencana.id Instance Region 3 letter code)
 	all: (city) => new Promise((resolve, reject) => {
 		let query = `SELECT gaugeid, gaugenameid, the_geom,

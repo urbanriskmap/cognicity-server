@@ -11,6 +11,9 @@ import validate from 'celebrate';
 import { version } from '../../package.json';
 
 // Import our routes
+import cards from './routes/cards';
+import feeds from './routes/feeds';
+import floodgauges from './routes/floodgauges';
 import floods from './routes/floods';
 import infrastructure from './routes/infrastructure';
 import reports from './routes/reports';
@@ -37,6 +40,9 @@ export default ({ config, db, logger }) => {
 	});
 
 	// Mount the various endpoints
+	api.use('/cards', cards({ config, db, logger }));
+	api.use('/feeds', feeds({ config, db, logger }));
+	api.use('/floodgauges', floodgauges({ config, db, logger }));
 	api.use('/floods', checkToken, floods({ config, db, logger }));
 	api.use('/infrastructure', cacheResponse('1 hour'), infrastructure({ config, db, logger }));
 	api.use('/reports', reports({ config, db, logger }));

@@ -14,19 +14,15 @@ import validate from 'celebrate';
 export default ({ config, db, logger }) => {
 	let api = Router();
 
-	// Get a list of infrastructure by type
-	const allByType = (req, res, next, type) => {
-		infrastructure(config, db, logger).allByType(type)
+	// Get a list of infrastructure by type for a given city
+	api.get('/:type', validate({ params: { type: Joi.any().valid(config.INFRASTRUCTURE_TYPES) } }),
+		(req, res, next) => infrastructure(config, db, logger).all(req.query.city, req.params.type)
 			.then((data) => handleResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);
 				next(err);
-			});
-	}
-
-	// Mount the various endpoints
-	api.get('/:type', validate({ params: { type: Joi.any().valid(config.INFRASTRUCTURE_TYPES) } }),
-		(req, res, next) => allByType(req, res, next, req.params.type));
+			})
+	);
 
 	return api;
 }

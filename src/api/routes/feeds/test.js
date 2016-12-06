@@ -7,33 +7,15 @@ import { init } from '../../..';
 // Setup an array of tests to run
 const tests = [
   {
-    url: '/reports',
+    url: '/feeds/qlue',
     exp: {
       status: 200
-    }
-  },
-  {
-    url: '/reports?city=jbd',
-    exp: {
-      status: 200
-    }
-  },
-  {
-    url: '/reports?city=xxx',
-    exp: {
-      status: 400
-    }
-  },
-  {
-    url: '/reports/1',
-    exp: {
-      status: 404
     }
   }
 ]
 
 // Run the tests
-describe('GET /reports', () => {
+describe('GET /feeds', () => {
   it.each(tests, 'respond with correct response for test', (test, next) => {
     init().then((app) => {
       request(app)

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 // Import our data model
-import reports from './model';
+import floodgauges from './model';
 
 // Import any required utility functions
 import { handleResponse } from '../../../lib/util';
@@ -10,12 +10,23 @@ import { handleResponse } from '../../../lib/util';
 import Joi from 'joi';
 import validate from 'celebrate';
 
+
 export default ({ config, db, logger }) => {
 	let api = Router();
 
-	// Get a list of all reports
+	// Get a list of all flood gauge reports
 	api.get('/',
-		(req, res, next) => reports(config, db, logger).all(req.query.city)
+		(req, res, next) => floodgauges(config, db, logger).all()
+			.then((data) => handleResponse(data, req, res, next))
+			.catch((err) => {
+				logger.error(err);
+				next(err);
+			})
+  );
+
+	// Get a single flood gauge report
+	api.get('/:id', validate({ params: { id: Joi.number().integer().required() } }),
+		(req, res, next) => floodgauges(config, db, logger).byId(req.params.id)
 			.then((data) => handleResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);
@@ -23,15 +34,6 @@ export default ({ config, db, logger }) => {
 			})
 	);
 
-	// Get a single report
-	api.get('/:id', validate({ params: { id: Joi.number().integer().required() } }),
-		(req, res, next) => reports(config, db, logger).byId(req.params.id)
-			.then((data) => handleResponse(data, req, res, next))
-			.catch((err) => {
-				logger.error(err);
-				next(err);
-			})
-	);
 
 	return api;
 }

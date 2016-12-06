@@ -32,7 +32,7 @@ export default (config, db, logger) => ({
 		let query = `SELECT pkey, created_at at time zone 'ICT' created_at, source,
 			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
 			FROM ${config.TABLE_REPORTS}
-			where pkey = $1`;
+			WHERE pkey = $1`;
 
 		// Setup values
 		let values = [ id ]

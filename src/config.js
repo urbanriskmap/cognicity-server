@@ -18,7 +18,7 @@ export default {
   DB_PASSWORD: process.env.DB_PASSWORD || 'p@ssw0rd',
   DB_PORT: process.env.DB_PORT || 5432,
   DB_SSL: process.env.DB_SSL === 'true' || false,
-  DB_TIMEOUT: process.env.DB_TIMEOUT || 5000,
+  DB_TIMEOUT: process.env.DB_TIMEOUT || 10000,
   DB_USERNAME: process.env.DB_USERNAME || 'postgres',
   FORMAT_DEFAULT: process.env.GEO_FORMAT_DEFAULT || 'json',
   FORMATS: (process.env.GEO_FORMATS || 'json,xml').split(','),

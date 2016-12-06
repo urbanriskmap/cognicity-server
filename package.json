@@ -8,7 +8,7 @@
     "build": "babel src -s -D -d dist --presets es2015,stage-0",
     "start": "node dist",
     "prestart": "npm run -s build",
-    "test": "make test"
+    "test": "eslint src"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -17,7 +17,8 @@
       "sourceType": "module"
     },
     "env": {
-      "node": true
+      "node": true,
+      "mocha": true
     },
     "rules": {
       "no-console": 0,

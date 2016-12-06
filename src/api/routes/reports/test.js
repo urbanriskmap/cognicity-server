@@ -27,7 +27,7 @@ const tests = [
   {
     url: '/reports/1',
     exp: {
-      status: 200
+      status: 404
     }
   }
 ]

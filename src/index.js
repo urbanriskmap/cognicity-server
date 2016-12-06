@@ -12,9 +12,6 @@ import cors from 'cors';
 import compression from 'compression';
 import responseTime from 'response-time';
 
-// Import custom middlewares
-import middleware from './middleware';
-
 // Import config
 import config from './config';
 
@@ -64,9 +61,9 @@ const init = () => new Promise((resolve, reject) => {
 
 	// Winston stream function we can plug in to express so we can capture its logs along with our own
 	const winstonStream = {
-	  write: function(message) {
+		write: function(message) {
 			logger.info(message.slice(0, -1));
-	  }
+		}
 	};
 
 	// Setup express logger
@@ -89,9 +86,6 @@ const init = () => new Promise((resolve, reject) => {
 		.then((db) => {
 			// Log debug message
 			logger.debug('Successfully connected to DB');
-
-			// Apply custom middleware
-			app.use(middleware({ config, db, logger }));
 
 			// Mount the routes
 			app.use('/', routes({ config, db, logger }));
@@ -127,7 +121,7 @@ process
 	});
 
 // Try and start the server
-let app = init().then((app) => {
+init().then((app) => {
 	// All good to go, start listening for requests
 	app.server.listen(config.PORT);
 	logger.info(`Application started, listening on port ${app.server.address().port}`);

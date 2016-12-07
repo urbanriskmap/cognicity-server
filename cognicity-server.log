@@ -63,3 +63,473 @@
 2016-11-22T10:28:48.068Z - info: Application started, listening on port 8001
 2016-11-22T10:29:09.469Z - debug: select name, the_geom from infrastructure.floodgates
 2016-11-22T10:29:09.799Z - info: ::1 - - [22/Nov/2016:10:29:09 +0000] "GET /infrastructure/floodgates HTTP/1.1" 200 2802 "-" "PostmanRuntime/2.5.2"
+2016-12-07T20:51:35.290Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T20:51:35.327Z - debug: Successfully connected to DB
+2016-12-07T20:51:35.351Z - info: Application started, listening on port 8001
+2016-12-07T20:51:54.284Z - info: SIGINT: Application shutting down
+2016-12-07T20:51:54.284Z - info: Exiting with status 0
+2016-12-07T22:42:13.308Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T22:42:13.340Z - debug: Successfully connected to DB
+2016-12-07T22:42:13.370Z - info: Application started, listening on port 8001
+2016-12-07T22:42:22.698Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146942.697, 1=undefined, 2=undefined
+2016-12-07T22:42:22.720Z - info: ::1 - - [07/Dec/2016:22:42:22 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:42:22.797Z - info: ::1 - - [07/Dec/2016:22:42:22 +0000] "GET /favicon.ico HTTP/1.1" 404 48 "http://localhost:8001/reports" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:42:29.887Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146949.887, 1=jbd, 2=undefined
+2016-12-07T22:42:29.920Z - info: ::1 - - [07/Dec/2016:22:42:29 +0000] "GET /reports?city=jbd HTTP/1.1" 200 75581 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:42:35.486Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146955.486, 1=sby, 2=undefined
+2016-12-07T22:42:35.489Z - info: ::1 - - [07/Dec/2016:22:42:35 +0000] "GET /reports?city=sby HTTP/1.1" 200 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:42:50.557Z - info: SIGINT: Application shutting down
+2016-12-07T22:42:50.558Z - info: Exiting with status 0
+2016-12-07T22:42:54.553Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T22:42:54.599Z - debug: Successfully connected to DB
+2016-12-07T22:42:54.626Z - info: Application started, listening on port 8001
+2016-12-07T22:43:00.760Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146980.76, 1=sby, 2=undefined
+2016-12-07T22:43:00.780Z - info: ::1 - - [07/Dec/2016:22:43:00 +0000] "GET /reports?city=sby HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:43:02.091Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146982.091, 1=sby, 2=undefined
+2016-12-07T22:43:02.096Z - info: ::1 - - [07/Dec/2016:22:43:02 +0000] "GET /reports?city=sby HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:43:04.741Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146984.74, 1=jbd, 2=undefined
+2016-12-07T22:43:04.769Z - info: ::1 - - [07/Dec/2016:22:43:04 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:43:07.746Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146987.746, 1=bdg, 2=undefined
+2016-12-07T22:43:07.750Z - info: ::1 - - [07/Dec/2016:22:43:07 +0000] "GET /reports?city=bdg HTTP/1.1" 200 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:43:11.009Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146991.009, 1=sby, 2=undefined
+2016-12-07T22:43:11.011Z - info: ::1 - - [07/Dec/2016:22:43:11 +0000] "GET /reports?city=sby HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:43:11.842Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146991.842, 1=sby, 2=undefined
+2016-12-07T22:43:11.844Z - info: ::1 - - [07/Dec/2016:22:43:11 +0000] "GET /reports?city=sby HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:43:12.377Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146992.377, 1=sby, 2=undefined
+2016-12-07T22:43:12.379Z - info: ::1 - - [07/Dec/2016:22:43:12 +0000] "GET /reports?city=sby HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:43:15.745Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481146995.744, 1=jbd, 2=undefined
+2016-12-07T22:43:15.761Z - info: ::1 - - [07/Dec/2016:22:43:15 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:44:15.110Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147055.11, 1=sby, 2=undefined
+2016-12-07T22:44:15.124Z - info: ::1 - - [07/Dec/2016:22:44:15 +0000] "GET /reports?city=sby HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:44:23.754Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147063.754, 1=jbd, 2=undefined
+2016-12-07T22:44:23.771Z - info: ::1 - - [07/Dec/2016:22:44:23 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:50:24.203Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147424.203, 1=undefined, 2=undefined
+2016-12-07T22:50:24.214Z - info: ::1 - - [07/Dec/2016:22:50:24 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:50:27.513Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147427.513, 1=jbd, 2=undefined
+2016-12-07T22:50:27.531Z - info: ::1 - - [07/Dec/2016:22:50:27 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:50:31.993Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147431.993, 1=undefined, 2=undefined
+2016-12-07T22:50:31.999Z - info: ::1 - - [07/Dec/2016:22:50:31 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:50:34.054Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147434.054, 1=undefined, 2=undefined
+2016-12-07T22:50:34.058Z - info: ::1 - - [07/Dec/2016:22:50:34 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:50:37.052Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147437.052, 1=jbd, 2=undefined
+2016-12-07T22:50:37.067Z - info: ::1 - - [07/Dec/2016:22:50:37 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:50:39.397Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147439.397, 1=sby, 2=undefined
+2016-12-07T22:50:39.399Z - info: ::1 - - [07/Dec/2016:22:50:39 +0000] "GET /reports?city=sby HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:51:46.121Z - info: SIGINT: Application shutting down
+2016-12-07T22:51:46.121Z - info: Exiting with status 0
+2016-12-07T22:51:50.936Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T22:51:50.969Z - debug: Successfully connected to DB
+2016-12-07T22:51:50.995Z - info: Application started, listening on port 8001
+2016-12-07T22:51:54.765Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147514.765, 1=undefined, 2=undefined
+2016-12-07T22:51:54.782Z - info: ::1 - - [07/Dec/2016:22:51:54 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:51:56.150Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147516.15, 1=undefined, 2=undefined
+2016-12-07T22:51:56.154Z - info: ::1 - - [07/Dec/2016:22:51:56 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:51:57.340Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147517.34, 1=undefined, 2=undefined
+2016-12-07T22:51:57.343Z - info: ::1 - - [07/Dec/2016:22:51:57 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:51:57.516Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147517.516, 1=undefined, 2=undefined
+2016-12-07T22:51:57.519Z - info: ::1 - - [07/Dec/2016:22:51:57 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:51:57.679Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147517.679, 1=undefined, 2=undefined
+2016-12-07T22:51:57.682Z - info: ::1 - - [07/Dec/2016:22:51:57 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:51:57.836Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147517.836, 1=undefined, 2=undefined
+2016-12-07T22:51:57.838Z - info: ::1 - - [07/Dec/2016:22:51:57 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:53:32.614Z - info: SIGINT: Application shutting down
+2016-12-07T22:53:32.615Z - info: Exiting with status 0
+2016-12-07T22:53:36.616Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T22:53:36.649Z - debug: Successfully connected to DB
+2016-12-07T22:53:36.674Z - info: Application started, listening on port 8001
+2016-12-07T22:53:38.718Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			ORDER BY created_at DESC LIMIT $3 0=1481147618.718, 1=undefined, 2=undefined
+2016-12-07T22:53:38.747Z - info: ::1 - - [07/Dec/2016:22:53:38 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:53:39.882Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			ORDER BY created_at DESC LIMIT $3 0=1481147619.882, 1=undefined, 2=undefined
+2016-12-07T22:53:39.888Z - info: ::1 - - [07/Dec/2016:22:53:39 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:53:40.622Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			ORDER BY created_at DESC LIMIT $3 0=1481147620.622, 1=undefined, 2=undefined
+2016-12-07T22:53:40.625Z - info: ::1 - - [07/Dec/2016:22:53:40 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:53:40.992Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			ORDER BY created_at DESC LIMIT $3 0=1481147620.992, 1=undefined, 2=undefined
+2016-12-07T22:53:40.995Z - info: ::1 - - [07/Dec/2016:22:53:40 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:53:41.335Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			ORDER BY created_at DESC LIMIT $3 0=1481147621.335, 1=undefined, 2=undefined
+2016-12-07T22:53:41.337Z - info: ::1 - - [07/Dec/2016:22:53:41 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:53:41.654Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			ORDER BY created_at DESC LIMIT $3 0=1481147621.653, 1=undefined, 2=undefined
+2016-12-07T22:53:41.655Z - info: ::1 - - [07/Dec/2016:22:53:41 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:53:41.978Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			ORDER BY created_at DESC LIMIT $3 0=1481147621.978, 1=undefined, 2=undefined
+2016-12-07T22:53:41.980Z - info: ::1 - - [07/Dec/2016:22:53:41 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:54:30.522Z - info: SIGINT: Application shutting down
+2016-12-07T22:54:30.522Z - info: Exiting with status 0
+2016-12-07T22:54:34.089Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T22:54:34.134Z - debug: Successfully connected to DB
+2016-12-07T22:54:34.159Z - info: Application started, listening on port 8001
+2016-12-07T22:54:36.587Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			ORDER BY created_at DESC LIMIT $3 0=-999998518848723.4, 1=undefined, 2=undefined
+2016-12-07T22:54:36.600Z - error:  error: interval out of range
+    at Connection.parseE (/Users/tomas/Dropbox/Projects/urbanriskmap/cognicity-server-v3/node_modules/pg/lib/connection.js:539:11)
+    at Connection.parseMessage (/Users/tomas/Dropbox/Projects/urbanriskmap/cognicity-server-v3/node_modules/pg/lib/connection.js:366:17)
+    at Socket.<anonymous> (/Users/tomas/Dropbox/Projects/urbanriskmap/cognicity-server-v3/node_modules/pg/lib/connection.js:105:22)
+    at emitOne (events.js:77:13)
+    at Socket.emit (events.js:169:7)
+    at readableAddChunk (_stream_readable.js:153:18)
+    at Socket.Readable.push (_stream_readable.js:111:10)
+    at TCP.onread (net.js:531:20)
+2016-12-07T22:54:36.609Z - info: ::1 - - [07/Dec/2016:22:54:36 +0000] "GET /reports HTTP/1.1" 500 709 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:54:45.033Z - info: SIGINT: Application shutting down
+2016-12-07T22:54:45.034Z - info: Exiting with status 0
+2016-12-07T22:54:48.488Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T22:54:48.525Z - debug: Successfully connected to DB
+2016-12-07T22:54:48.554Z - info: Application started, listening on port 8001
+2016-12-07T22:54:50.901Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			ORDER BY created_at DESC LIMIT $3 0=1480151290.9, 1=undefined, 2=undefined
+2016-12-07T22:54:50.947Z - info: ::1 - - [07/Dec/2016:22:54:50 +0000] "GET /reports HTTP/1.1" 200 75581 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:55:28.009Z - info: SIGINT: Application shutting down
+2016-12-07T22:55:28.009Z - info: Exiting with status 0
+2016-12-07T22:55:31.652Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T22:55:31.706Z - debug: Successfully connected to DB
+2016-12-07T22:55:31.737Z - info: Application started, listening on port 8001
+2016-12-07T22:55:33.557Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147733.557, 1=undefined, 2=undefined
+2016-12-07T22:55:33.576Z - info: ::1 - - [07/Dec/2016:22:55:33 +0000] "GET /reports HTTP/1.1" 200 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:55:44.603Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147744.603, 1=jbd, 2=undefined
+2016-12-07T22:55:44.610Z - info: ::1 - - [07/Dec/2016:22:55:44 +0000] "GET /reports?city=jbd HTTP/1.1" 200 199 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:55:45.894Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147745.894, 1=jbd, 2=undefined
+2016-12-07T22:55:45.897Z - info: ::1 - - [07/Dec/2016:22:55:45 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:55:46.485Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147746.484, 1=jbd, 2=undefined
+2016-12-07T22:55:46.488Z - info: ::1 - - [07/Dec/2016:22:55:46 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:55:46.708Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147746.707, 1=jbd, 2=undefined
+2016-12-07T22:55:46.711Z - info: ::1 - - [07/Dec/2016:22:55:46 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:55:46.919Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147746.918, 1=jbd, 2=undefined
+2016-12-07T22:55:46.920Z - info: ::1 - - [07/Dec/2016:22:55:46 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:55:47.476Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147747.476, 1=jbd, 2=undefined
+2016-12-07T22:55:47.478Z - info: ::1 - - [07/Dec/2016:22:55:47 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:55:50.202Z - info: ::1 - - [07/Dec/2016:22:55:50 +0000] "GET /reports?city=bdn HTTP/1.1" 400 171 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:55:54.450Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1481147754.45, 1=bdg, 2=undefined
+2016-12-07T22:55:54.453Z - info: ::1 - - [07/Dec/2016:22:55:54 +0000] "GET /reports?city=bdg HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:56:16.251Z - info: SIGINT: Application shutting down
+2016-12-07T22:56:16.251Z - info: Exiting with status 0
+2016-12-07T22:56:19.924Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T22:56:19.971Z - debug: Successfully connected to DB
+2016-12-07T22:56:20.011Z - info: Application started, listening on port 8001
+2016-12-07T22:56:25.246Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147785.245, 1=undefined, 2=undefined
+2016-12-07T22:56:25.262Z - info: ::1 - - [07/Dec/2016:22:56:25 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:56:26.334Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147786.334, 1=undefined, 2=undefined
+2016-12-07T22:56:26.340Z - info: ::1 - - [07/Dec/2016:22:56:26 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:56:27.598Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			ORDER BY created_at DESC LIMIT $3 0=1481147787.598, 1=jbd, 2=undefined
+2016-12-07T22:56:27.622Z - info: ::1 - - [07/Dec/2016:22:56:27 +0000] "GET /reports?city=jbd HTTP/1.1" 200 75581 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:56:47.975Z - info: SIGINT: Application shutting down
+2016-12-07T22:56:47.975Z - info: Exiting with status 0
+2016-12-07T22:56:51.994Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T22:56:52.038Z - debug: Successfully connected to DB
+2016-12-07T22:56:52.068Z - info: Application started, listening on port 8001
+2016-12-07T22:56:57.760Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251417.759, 1=jbd, 2=undefined
+2016-12-07T22:56:57.818Z - info: ::1 - - [07/Dec/2016:22:56:57 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:56:59.122Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251419.122, 1=jbd, 2=undefined
+2016-12-07T22:56:59.141Z - info: ::1 - - [07/Dec/2016:22:56:59 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:57:02.219Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251422.219, 1=undefined, 2=undefined
+2016-12-07T22:57:02.233Z - info: ::1 - - [07/Dec/2016:22:57:02 +0000] "GET /reports HTTP/1.1" 200 75581 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:57:02.271Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251422.264, 1=undefined, 2=undefined
+2016-12-07T22:57:02.287Z - info: ::1 - - [07/Dec/2016:22:57:02 +0000] "GET /reports HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:57:04.836Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251424.836, 1=jbd, 2=undefined
+2016-12-07T22:57:04.844Z - info: ::1 - - [07/Dec/2016:22:57:04 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:57:06.898Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251426.897, 1=sby, 2=undefined
+2016-12-07T22:57:06.900Z - info: ::1 - - [07/Dec/2016:22:57:06 +0000] "GET /reports?city=sby HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:57:20.866Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251440.865, 1=bdg, 2=undefined
+2016-12-07T22:57:20.867Z - info: ::1 - - [07/Dec/2016:22:57:20 +0000] "GET /reports?city=bdg HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:57:23.790Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251443.789, 1=jbd, 2=undefined
+2016-12-07T22:57:23.799Z - info: ::1 - - [07/Dec/2016:22:57:23 +0000] "GET /reports?city=jbd HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:58:11.512Z - info: SIGINT: Application shutting down
+2016-12-07T22:58:11.512Z - info: Exiting with status 0
+2016-12-07T22:58:14.868Z - debug: postgres://postgres:p@ssw0rd@127.0.0.1:5432/cognicity?ssl=false
+2016-12-07T22:58:14.916Z - debug: Successfully connected to DB
+2016-12-07T22:58:14.946Z - info: Application started, listening on port 8001
+2016-12-07T22:58:17.498Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251497.497, 1=jbd, 2=undefined
+2016-12-07T22:58:17.537Z - info: ::1 - - [07/Dec/2016:22:58:17 +0000] "GET /reports?city=jbd HTTP/1.1" 200 74649 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:58:20.117Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251500.117, 1=sby, 2=undefined
+2016-12-07T22:58:20.122Z - info: ::1 - - [07/Dec/2016:22:58:20 +0000] "GET /reports?city=sby HTTP/1.1" 200 698 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:58:25.132Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251505.132, 1=bdg, 2=undefined
+2016-12-07T22:58:25.138Z - info: ::1 - - [07/Dec/2016:22:58:25 +0000] "GET /reports?city=bdg HTTP/1.1" 200 698 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:58:26.420Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251506.42, 1=bdg, 2=undefined
+2016-12-07T22:58:26.423Z - info: ::1 - - [07/Dec/2016:22:58:26 +0000] "GET /reports?city=bdg HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:58:58.387Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251538.387, 1=bdg, 2=undefined
+2016-12-07T22:58:58.405Z - info: ::1 - - [07/Dec/2016:22:58:58 +0000] "GET /reports?city=bdg HTTP/1.1" 200 685 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:59:02.522Z - debug: SELECT pkey, created_at at time zone 'ICT' created_at, source,
+			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
+			FROM cognicity.all_reports
+			WHERE created_at >= to_timestamp($1)
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
+			ORDER BY created_at DESC LIMIT $3 0=1480251542.522, 1=sby, 2=undefined
+2016-12-07T22:59:02.525Z - info: ::1 - - [07/Dec/2016:22:59:02 +0000] "GET /reports?city=sby HTTP/1.1" 200 683 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36"
+2016-12-07T22:59:07.000Z - info: SIGINT: Application shutting down
+2016-12-07T22:59:07.000Z - info: Exiting with status 0

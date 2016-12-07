@@ -11,11 +11,11 @@ export default (config, db, logger) => ({
 			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
 			FROM ${config.TABLE_REPORTS}
 			WHERE created_at >= to_timestamp($1)
-			AND $2 IS NULL OR tags->>'instance_region_code'=$2
+			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
 			ORDER BY created_at DESC LIMIT $3`;
 
 		// Setup values
-		let timeWindow = (Date.now() / 1000) - config.API_REPORTS_TIME_WINDOW;
+		let timeWindow = (Date.now() / 1000) - 900000;//config.API_REPORTS_TIME_WINDOW;
 		let values = [ timeWindow, city, config.API_REPORTS_LIMIT ]
 
 		// Execute

@@ -15,7 +15,7 @@ export default (config, db, logger) => ({
 			ORDER BY created_at DESC LIMIT $3`;
 
 		// Setup values
-		let timeWindow = (Date.now() / 1000) - 900000;//config.API_REPORTS_TIME_WINDOW;
+		let timeWindow = (Date.now() / 1000) - config.API_REPORTS_TIME_WINDOW;
 		let values = [ timeWindow, city, config.API_REPORTS_LIMIT ]
 
 		// Execute

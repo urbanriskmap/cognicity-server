@@ -21,8 +21,8 @@ export default ({ config, db, logger }) => {
 			body: Joi.object().keys({
 				post_id: Joi.number().integer().required(),
 				created_at: Joi.date().iso().required(),
-				text: Joi.string().required(),
-				image_url: Joi.string().required(),
+				text: Joi.string(),
+				image_url: Joi.string(),
 				qlue_city: Joi.string().valid(config.API_FEEDS_QLUE_CITIES).required(),
 				disaster_type: Joi.string().valid(config.API_FEEDS_QLUE_DISASTER_TYPES).required(),
 				title: Joi.string(),

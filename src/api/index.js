@@ -41,7 +41,7 @@ export default ({ config, db, logger }) => {
 
 	// Mount the various endpoints
 	api.use('/cards', cacheResponse('1 minute'), cards({ config, db, logger }));
-	api.use('/feeds', checkToken, cacheResponse('1 minute'), feeds({ config, db, logger }));
+	api.use('/feeds', cacheResponse('1 minute'), feeds({ config, db, logger }));
 	api.use('/floodgauges', cacheResponse('1 minute'), floodgauges({ config, db, logger }));
 	api.use('/floods', checkToken, cacheResponse('1 minute'), floods({ config, db, logger }));
 	api.use('/infrastructure', cacheResponse('1 hour'), infrastructure({ config, db, logger }));

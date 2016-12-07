@@ -5,6 +5,7 @@ require('it-each')();
 import { init } from '../../..';
 
 // Setup an array of tests to run
+// TODO: Add POST test
 const tests = [
   {
     url: '/feeds/qlue',

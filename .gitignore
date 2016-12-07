@@ -9,3 +9,5 @@
 /node_modules
 
 *.log
+
+cognicity-server.log

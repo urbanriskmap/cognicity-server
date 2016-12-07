@@ -4,7 +4,7 @@ import { Router } from 'express';
 import cards from './model';
 
 // Import any required utility functions
-import { handleResponse } from '../../../lib/util';
+import { cacheResponse, handleResponse } from '../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';
@@ -15,7 +15,7 @@ export default ({ config, db, logger }) => {
 	let api = Router();
 
 	// Check for the existence of a card
-	api.head('/:cardId', validate({ params: { cardId: Joi.string().required() } }),
+	api.head('/:cardId', cacheResponse('1 minute'), validate({ params: { cardId: Joi.string().required() } }),
 		(req, res, next) => cards(config, db, logger).byCardId(req.params.cardId)
 			.then((data) => data ? res.status(200).end() : res.status(404).end())
 			.catch((err) => {
@@ -25,7 +25,7 @@ export default ({ config, db, logger }) => {
 	);
 
 	// Return a card
-	api.get('/:cardId', validate({ params: { cardId: Joi.string().required() } }),
+	api.get('/:cardId', cacheResponse('1 minute'), validate({ params: { cardId: Joi.string().required() } }),
 		(req, res, next) => cards(config, db, logger).byCardId(req.params.cardId)
 			.then((data) => handleResponse(data, req, res, next))
 			.catch((err) => {

@@ -30,7 +30,7 @@ export default ({ config, db, logger }) => {
 		query: {
 			city: Joi.any().valid(config.REGION_CODES),
 			format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
-			geoFormat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT),
+			geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT),
 		}
 	}));
 

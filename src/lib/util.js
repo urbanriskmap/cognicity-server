@@ -43,9 +43,9 @@ const handleResponse = (data, req, res, next) => {
     // If no data then return a not found error
     res.status(404).json({ statusCode: 404, found: false, result: null })
   } else if (data instanceof Array) {
-    if (req.query.geoFormat) {
+    if (req.query.geoformat) {
       // Format with requested geoformat
-      formatResponse(data, req.query.geoFormat)
+      formatResponse(data, req.query.geoformat)
         .then((formatted) => res.status(200).json({ statusCode: 200, result: formatted }))
         .catch((err) => next(err))
     } else {

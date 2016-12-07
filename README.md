@@ -22,7 +22,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `DB_NAME`: Postgres DB database name (default: `cognicity`)
 * `DB_PASSWORD`: Postgres DB password (default: `p@ssw0rd`)
 * `DB_PORT`: Postgres DB port (default: `5432`)
-* `DB_SSL`: SSL enabled on Postgres DB connection? (default: `true`)
+* `DB_SSL`: SSL enabled on Postgres DB connection? (default: `false`)
 * `DB_TIMEOUT`: Max duration on DB calls before timeout (in milliseconds) (default: `5000` i.e. 5 seconds)
 * `DB_USERNAME`: Postgres DB username (default: `postgres`)
 * `FORMAT_DEFAULT`: Which format to return results in by default (default: `json`)
@@ -40,7 +40,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `NODE_ENV`: Which environment are we in.  Environments are: development, test, staging, production (default: `development`)
 * `PORT`: Which port should the application run on (default: `8001`)
 * `REGION_CODES`: Which region codes are supported (as comma separated list) (default: `jbd,bdg,sby`)
-* `RESPONSE_TIME`: Should the server return an `X-Response-Time` header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: `true`)
+* `RESPONSE_TIME`: Should the server return an `X-Response-Time` header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: `false`)
 
 A few points to note on config:
 

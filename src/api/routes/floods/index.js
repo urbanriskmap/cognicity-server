@@ -4,7 +4,7 @@ import { Router } from 'express';
 import floods from './model';
 
 // Import any required utility functions
-import { handleResponse } from '../../../lib/util';
+import { handleGeoResponse, handleResponse } from '../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';
@@ -36,8 +36,15 @@ export default ({ config, db, logger }) => {
 
 	// Get a list of all floods
 	api.get('/',
+		validate({
+			query: {
+				city: Joi.any().valid(config.REGION_CODES),
+				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
+				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT)
+			}
+		}),
 		(req, res, next) => floods(config, db, logger).all()
-			.then((data) => handleResponse(data, req, res, next))
+			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);
 				next(err);

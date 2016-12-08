@@ -4,7 +4,7 @@ import { Router } from 'express';
 import feeds from './model';
 
 // Import any required utility functions
-import { handleResponse } from '../../../lib/util';
+import { handleGeoResponse } from '../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';

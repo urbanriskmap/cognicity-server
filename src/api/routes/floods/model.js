@@ -9,7 +9,7 @@ export default (config, db, logger) => ({
 		// Setup query
 		let query = `SELECT *
 			FROM ${config.TABLE_REPORTS}
-			WHERE $1 IS NULL OR tags->>'instance_region_code'=$1`;
+			WHERE ($1 IS NULL OR tags->>'instance_region_code'=$1)`;
 
 		// Setup values
 		let values = [ city ]

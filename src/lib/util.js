@@ -29,35 +29,30 @@ dbgeo.defaults = {
 }
 
 // Format the geographic response with the required geo format
-const formatResponse = (body, outputFormat) => new Promise((resolve, reject) => {
+const formatGeo = (body, outputFormat) => new Promise((resolve, reject) => {
 	dbgeo.parse(body, { outputFormat }, (err, formatted) => {
 		if (err) reject(err);
 		resolve(formatted);
 	})
 })
 
-// Handle the response, send back a correctly formatted json object with status 200 or not found 404
-// Catch and forward any errors in the process
+// Handle a geo response, send back a correctly formatted json object with
+// status 200 or not found 404, catch and forward any errors in the process
+const handleGeoResponse = (data, req, res, next) => {
+  return !data ?
+    res.status(404).json({ statusCode: 404, found: false, result: null }) :
+    formatGeo(data, req.query.geoformat)
+      .then((formatted) => res.status(200).json({ statusCode: 200, result: formatted }))
+      .catch((err) => next(err))
+}
+
+// Handle a regular response, send back result or 404
 const handleResponse = (data, req, res, next) => {
-  if (!data) {
-    // If no data then return a not found error
-    res.status(404).json({ statusCode: 404, found: false, result: null })
-  } else if (data instanceof Array) {
-    if (req.query.geoformat) {
-      // Format with requested geoformat
-      formatResponse(data, req.query.geoformat)
-        .then((formatted) => res.status(200).json({ statusCode: 200, result: formatted }))
-        .catch((err) => next(err))
-    } else {
-      // Send results as they are
-      res.status(200).json({ statusCode: 200, result: data })
-    }
-  } else {
-    // Send results as they are
-    res.status(200).json({ statusCode: 200, found: true, result: data })
-  }
+  return !data ?
+    res.status(404).json({ statusCode: 404, found: false, result: null }) :
+    res.status(200).json({ statusCode: 200, result: data })
 }
 
 module.exports = {
-  cacheResponse, checkToken, formatResponse, handleResponse
+  cacheResponse, checkToken, formatGeo, handleResponse, handleGeoResponse
 }

@@ -19,20 +19,11 @@ import infrastructure from './routes/infrastructure';
 import reports from './routes/reports';
 
 // Import any required utility functions
-import { cacheResponse, checkToken } from '../lib/util';
+import { checkToken } from '../lib/util';
 
 
 export default ({ config, db, logger }) => {
 	let api = Router();
-
-	// Setup any API level general validation rules
-	api.use(validate({
-		query: {
-			city: Joi.any().valid(config.REGION_CODES),
-			format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
-			geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT),
-		}
-	}));
 
 	// Return the API version
 	api.get('/', (req, res) => {
@@ -44,7 +35,7 @@ export default ({ config, db, logger }) => {
 	api.use('/feeds', feeds({ config, db, logger }));
 	api.use('/floodgauges', floodgauges({ config, db, logger }));
 	api.use('/floods', checkToken, floods({ config, db, logger }));
-	api.use('/infrastructure', cacheResponse('1 hour'), infrastructure({ config, db, logger }));
+	api.use('/infrastructure', infrastructure({ config, db, logger }));
 	api.use('/reports', reports({ config, db, logger }));
 
 	// Handle validation errors (wording of messages can be overridden using err.isJoi)

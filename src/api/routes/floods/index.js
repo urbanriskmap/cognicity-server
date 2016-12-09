@@ -14,7 +14,11 @@ import Joi from 'joi';
 import validate from 'celebrate';
 
 // Rem status codes
-const REM_STATUS = {
+const REM_STATES = {
+	0: {
+		severity: 'Cleared',
+		levelDescription: 'NO FLOODING'
+	},
 	1: {
 		severity: 'Unknown',
 		levelDescription: 'AN UNKNOWN LEVEL OF FLOODING - USE CAUTION -'
@@ -39,19 +43,20 @@ export default ({ config, db, logger }) => {
 	const cap = new Cap(logger); // Setup our cap formatter
 
 	// Get a list of all floods
-	// TODO: How does this differ from /reports now?  Do we need to join on local_area?
+	// TODO: If minimum_state is not supplied then bring across everything
 	api.get('/',
 		validate({
 			query: {
 				city: Joi.any().valid(config.REGION_CODES),
 				format: Joi.any().valid(['xml'].concat(config.FORMATS)).default(config.FORMAT_DEFAULT),
-				geoformat: Joi.any().valid(['cap'].concat(config.GEO_FORMATS)).default(config.GEO_FORMAT_DEFAULT)
+				geoformat: Joi.any().valid(['cap'].concat(config.GEO_FORMATS)).default(config.GEO_FORMAT_DEFAULT),
+				minimum_state: Joi.number().integer().valid(Object.keys(REM_STATES))
 			}
 		}),
 		(req, res, next) => {
 			if (req.query.geoformat === 'cap' && req.query.format !== 'xml') res.status(400).json({ statusCode: 400, message: 'format must be \'xml\' when geoformat=\'cap\'' })
 			else if (config.GEO_FORMATS.indexOf(req.query.geoformat) > -1 && req.query.format !== 'json') res.status(400).json({ statusCode: 400, message: 'format must be \'json\' when geoformat IN (\'geojson\',\'topojson\')' })
-			else floods(config, db, logger).all(req.query.city)
+			else floods(config, db, logger).allGeo(req.query.city, req.query.minimum_state)
 				.then((data) =>
 					req.query.geoformat === 'cap' ?
 						// If CAP format has been required first convert to geojson then to CAP
@@ -70,6 +75,22 @@ export default ({ config, db, logger }) => {
 		}
   );
 
+	// Just get the states without the geographic boundaries
+	api.get('/states',
+		validate({
+			query: {
+				city: Joi.any().valid(config.REGION_CODES),
+				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT)
+			}
+		}),
+		(req, res, next) => floods(config, db, logger).all(req.query.city)
+			.then((data) => handleResponse(data, req, res, next))
+			.catch((err) => {
+				logger.error(err);
+				next(err);
+			})
+  );
+
 	// TODO: Need a REM view of the world
 
 	// Update the status of a specific flood
@@ -78,16 +99,18 @@ export default ({ config, db, logger }) => {
 		validate({
 			params: { id: Joi.number().integer().required() },
 			body: Joi.object().keys({
-				status: Joi.number().integer().valid(Object.keys(REM_STATUS)),
+				state: Joi.number().integer().valid(Object.keys(REM_STATES)).required(),
 			})
 		}),
-		(req, res, next) => floods(config, db, logger).updateREMStatus(req.params.id, req.body.status)
+		(req, res, next) => floods(config, db, logger).updateREMStatus(req.params.id, req.body.state)
 			.then((data) => handleResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);
 				next(err);
 			})
   );
+
+	// TODO app.delete('/flood') : remove the status from the rem status and add a log to say we have done this
 
 	return api;
 }

@@ -29,6 +29,7 @@ export default ({ config, db, logger }) => {
 	});
 
 	// Mount the various endpoints
+	//api.use('/areas', cards({ config, db, logger }));// TODO: local_areas
 	api.use('/cards', cards({ config, db, logger }));
 	api.use('/cities', cities({ config, db, logger }));
 	api.use('/feeds', feeds({ config, db, logger }));

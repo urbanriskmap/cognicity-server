@@ -18,9 +18,6 @@ import floods from './routes/floods';
 import infrastructure from './routes/infrastructure';
 import reports from './routes/reports';
 
-// Import any required utility functions
-import { checkToken } from '../lib/util';
-
 
 export default ({ config, db, logger }) => {
 	let api = Router();
@@ -34,7 +31,7 @@ export default ({ config, db, logger }) => {
 	api.use('/cards', cards({ config, db, logger }));
 	api.use('/feeds', feeds({ config, db, logger }));
 	api.use('/floodgauges', floodgauges({ config, db, logger }));
-	api.use('/floods', checkToken, floods({ config, db, logger }));
+	api.use('/floods', floods({ config, db, logger }));
 	api.use('/infrastructure', infrastructure({ config, db, logger }));
 	api.use('/reports', reports({ config, db, logger }));
 

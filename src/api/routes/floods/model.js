@@ -3,13 +3,12 @@ import Promise from 'bluebird';
 export default (config, db, logger) => ({
 
 	// Get all flood reports for a given city
-	// TODO: Aggregate and join to flood areas
 	all: (city) => new Promise((resolve, reject) => {
 
 		// Setup query
 		let query = `SELECT *
 			FROM ${config.TABLE_REPORTS}
-			WHERE ($1 IS NULL OR tags->>'instance_region_code'=$1)`;
+			WHERE $1 IS NULL OR tags->>'instance_region_code'=$1`;
 
 		// Setup values
 		let values = [ city ]

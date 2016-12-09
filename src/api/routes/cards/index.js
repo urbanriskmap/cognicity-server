@@ -30,7 +30,7 @@ export default ({ config, db, logger }) => {
 	// Return a card
 	api.get('/:cardId', cacheResponse('1 minute'),
 		validate({
-			params: { cardId: Joi.string().required() }
+			params: { cardId: Joi.string().min(7).max(14).required() }
 		}),
 		(req, res, next) => cards(config, db, logger).byCardId(req.params.cardId)
 			.then((data) => handleResponse(data, req, res, next))
@@ -61,16 +61,16 @@ export default ({ config, db, logger }) => {
 			cards(config, db, logger).byCardId(req.params.cardId)
 				.then((card) => {
 					// If the card does not exist then return an error message
-					if (!card) res.status(404).json({ message: `No card exists with id '${req.params.cardId}'` })
+					if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId, message: `No card exists with id '${req.params.cardId}'` })
 					// If the card already has received status then return an error message
-					else if (card && card.received) res.status(409).json({ message: `Report already received for card '${req.params.cardId}'` })
+					else if (card && card.received) res.status(409).json({ statusCode: 409, cardId: req.params.cardId, message: `Report already received for card '${req.params.cardId}'` })
 					// We have a card and it has not yet had a report received
 					else {
 						// Try and submit the report and update the card
 						cards(config, db, logger).submitReport(card, req.body)
 							.then((data) => {
 								console.log(data)
-								res.status(200).json({ card_id: req.params.card_id, created: true })
+								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, created: true })
 							})
 							.catch((err) => {
 								logger.error(err);

@@ -16,6 +16,7 @@ import feeds from './routes/feeds';
 import floodgauges from './routes/floodgauges';
 import floods from './routes/floods';
 import infrastructure from './routes/infrastructure';
+import regions from './routes/regions';
 import reports from './routes/reports';
 
 
@@ -33,6 +34,7 @@ export default ({ config, db, logger }) => {
 	api.use('/floodgauges', floodgauges({ config, db, logger }));
 	api.use('/floods', floods({ config, db, logger }));
 	api.use('/infrastructure', infrastructure({ config, db, logger }));
+	api.use('/regions', regions({ config, db, logger }));
 	api.use('/reports', reports({ config, db, logger }));
 
 	// Handle validation errors (wording of messages can be overridden using err.isJoi)

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 // Import our data model
-import regions from './model';
+import cities from './model';
 
 // Import any required utility functions
 import { cacheResponse, handleGeoResponse } from '../../../lib/util';
@@ -22,7 +22,7 @@ export default ({ config, db, logger }) => {
 				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT)
 			}
 		}),
-		(req, res, next) => regions(config, db, logger).all()
+		(req, res, next) => cities(config, db, logger).all()
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);

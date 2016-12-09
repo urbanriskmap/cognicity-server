@@ -7,14 +7,14 @@ import { init } from '../../..';
 // Setup an array of tests to run
 const tests = [
   {
-    url: '/regions',
+    url: '/cities',
     exp: {
       status: 200
     }
   }]
 
 // Run the tests
-describe('GET /regions', () => {
+describe('GET /cities', () => {
   it.each(tests, 'respond with correct response for test', (test, next) => {
     init().then((app) => {
       request(app)

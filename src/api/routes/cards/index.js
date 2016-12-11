@@ -45,8 +45,8 @@ export default ({ config, db, logger }) => {
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200).required(),
-			text: Joi.string(),
-			image_id: Joi.string(),
+			text: Joi.string().allow(''),
+			image_url: Joi.string().allow(''),
 			created_at: Joi.date().iso().required(),
 			location: Joi.object().required().keys({
 				lat: Joi.number().min(-90).max(90).required(),

@@ -43,7 +43,6 @@ export default {
   TABLE_GRASP_CARDS: process.env.TABLE_GRASP_CARDS || 'grasp.cards',
   TABLE_GRASP_LOG: process.env.TABLE_GRASP_LOG || 'grasp.log',
   TABLE_GRASP_REPORTS: process.env.TABLE_GRASP_REPORTS || 'grasp.reports',
-  TABLE_GRASP_REPORT_IMAGES: process.env.TABLE_GRASP_REPORT_IMAGES || 'grasp.images',
   TABLE_INSTANCE_REGIONS: process.env.TABLE_INSTANCE_REGIONS || 'cognicity.instance_regions',
   TABLE_LOCAL_AREAS: process.env.TABLE_LOCAL_AREAS || 'cognicity.local_areas',
   TABLE_REM_STATUS: process.env.TABLE_REM_STATUS || 'cognicity.rem_status',

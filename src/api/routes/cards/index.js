@@ -10,9 +10,33 @@ import { cacheResponse, handleGeoResponse, handleResponse } from '../../../lib/u
 import Joi from 'joi';
 import validate from 'celebrate';
 
+// Import ID generator
+import shortid from 'shortid';
+
 
 export default ({ config, db, logger }) => {
 	let api = Router();
+
+	// Create a new card and if successful return generated cardId
+	api.post('/',
+		validate({
+			body: Joi.object().keys({
+				username: Joi.string().required(),
+				network: Joi.string().required(),
+				language: Joi.string().valid(config.LANGUAGES).required()
+			})
+		}),
+		(req, res, next) => {
+			let cardId = shortid.generate();
+			cards(config, db, logger).create(cardId, req.body)
+				.then((data) => data ? res.status(200).json({ cardId: cardId, created: true }) :
+					next(new Error('Failed to create card')))
+				.catch((err) => {
+					logger.error(err);
+					next(err);
+				})
+		}
+	);
 
 	// Check for the existence of a card
 	api.head('/:cardId', cacheResponse('1 minute'),
@@ -84,9 +108,6 @@ export default ({ config, db, logger }) => {
 			}
 		}
 	);
-
-	// TODO: Add POST method to create a new card entry and return the ID
-	// https://github.com/dylang/shortid
 
 	// TODO: Send images to S3, lambda function,
 	// api.post('/:cardId/image' - can we upload the card and image at the same time? POST / PUT / PATCH?

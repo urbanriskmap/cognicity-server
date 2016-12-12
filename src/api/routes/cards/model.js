@@ -2,6 +2,24 @@ import Promise from 'bluebird';
 
 export default (config, db, logger) => ({
 
+	// Create a new card entry with the given cardId
+	create: (cardId, body) => new Promise((resolve, reject) => {
+
+		// Setup query
+		let query = `INSERT INTO ${config.TABLE_GRASP_CARDS}
+			(card_id, username, network, language, received)
+			VALUES ($1, $2, $3, $4, $5) RETURNING pkey`;
+
+		// Setup values
+		let values = [ cardId, body.username, body.network, body.language, false ]
+
+		// Execute
+		logger.debug(query, values);
+		db.oneOrNone(query, values).timeout(config.DB_TIMEOUT)
+			.then((data) => resolve(data))
+			.catch((err) => reject(err))
+	}),
+
 	// Return specific card by id
 	// TODO: Agree properties to return
 	byCardId: (cardId) => new Promise((resolve, reject) => {

@@ -28,6 +28,7 @@ export default {
   GEO_FORMATS: (process.env.GEO_FORMATS || 'geojson,topojson').split(','),
   GEO_PRECISION: process.env.GEO_PRECISION || 10,
   INFRASTRUCTURE_TYPES: (process.env.INFRASTRUCTURE_TYPES || 'floodgates,pumps,waterways').split(','),
+  LANGUAGES: (process.env.LANGUAGES || 'en,id').split(','),
   LOG_CONSOLE: process.env.LOG_CONSOLE === 'true' || false,
   LOG_DIR: process.env.LOG_DIR || '',
   LOG_JSON: process.env.LOG_JSON === 'true' || false,

@@ -30,7 +30,7 @@ export default (config, db, logger) => ({
 			return t.batch([
 				t.one(`INSERT INTO ${config.TABLE_GRASP_REPORTS}
 					(card_id, card_data, text, created_at, disaster_type, image_url, status, the_geom)
-					VALUES ($1, $2, $3, $4, $5, $6, $7, ST_SetSRID(ST_Point($8,$9),4326))`,
+					VALUES ($1, $2, $3, $4, $5, $6, $7, ST_SetSRID(ST_Point($8,$9),4326)) returning pkey`,
 					[ card.card_id, { flood_depth: body.water_depth }, body.text,
 						body.created_at, 'flood', body.image_url, 'Confirmed',
 						body.location.lng, body.location.lat  ]

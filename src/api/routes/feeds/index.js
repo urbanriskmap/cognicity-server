@@ -21,11 +21,11 @@ export default ({ config, db, logger }) => {
 			body: Joi.object().keys({
 				post_id: Joi.number().integer().required(),
 				created_at: Joi.date().iso().required(),
+				title: Joi.string().allow(''),
 				text: Joi.string().allow(''),
 				image_url: Joi.string(),
 				qlue_city: Joi.string().valid(config.API_FEEDS_QLUE_CITIES).required(),
 				disaster_type: Joi.string().valid(config.API_FEEDS_QLUE_DISASTER_TYPES).required(),
-				title: Joi.string().allow(''),
 				location: Joi.object().required().keys({
 					lat: Joi.number().min(-90).max(90).required(),
 					lng: Joi.number().min(-180).max(180).required()

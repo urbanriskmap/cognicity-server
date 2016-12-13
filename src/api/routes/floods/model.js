@@ -27,13 +27,13 @@ export default (config, db, logger) => ({
 	allGeo: (city, minimum_state) => new Promise((resolve, reject) => {
 
 		// Setup query
-		let query = `SELECT local_area, state, last_updated, geom_id, area_name, city_name, area.the_geom
-			FROM ${config.TABLE_LOCAL_AREAS} area
-			LEFT JOIN ${config.TABLE_REM_STATUS} status ON area.pkey = status.local_area
-			WHERE state IS NOT NULL AND status.state > 0
-			AND ($1 IS NULL OR area.instance_region_code=$1)`;
-		// TODO: minimum_state functionality, if supplied filter, if not return everything
-		// TODO: Look at COALESCE to get this working
+		let query = `SELECT la.the_geom, la.geom_id, la.area_name, la.city_name, rs.state, rs.last_updated
+			FROM ${config.TABLE_LOCAL_AREAS} la
+			LEFT JOIN
+			(SELECT local_area, state, last_updated FROM ${config.TABLE_REM_STATUS}
+			WHERE state IS NOT NULL AND ($2 IS NULL OR state >= $2)) rs
+			ON la.pkey = rs.local_area
+			WHERE $1 IS NULL OR instance_region_code = $1`
 
 		// Setup values
 		let values = [ city, minimum_state ]
@@ -49,24 +49,70 @@ export default (config, db, logger) => ({
 	// Update the REM state and append to the log
 	updateREMState: (id, state) => new Promise((resolve, reject) => {
 
-		// Setup query
-		let query = `UPSERT ${config.TABLE_REM_STATUS}
-			SET state=$1 WHERE local_area=$2`;
+		// Setup a timestamp with current date/time in ISO format
+		let timestamp = (new Date).toISOString();
 
-		// TODO: Wrap in a transaction
-		// TODO: Postgres supports UPSERT now
-		// TODO: If the report exists then it is an update, otherwise INSERT
-		// TODO: Update and then add an entry to the log
+		// Setup our queries
+		let queries = [
+			{
+				query: `INSERT INTO ${config.TABLE_REM_STATUS}
+					( local_area, state, last_updated )
+					VALUES ( $1, $2, $3 )
+					ON CONFLICT (local_area) DO
+					UPDATE SET state=$2, last_updated=$3`,
+				values: [ id, state, timestamp ]
+			},
+			{
+				query: `INSERT INTO ${config.TABLE_REM_STATUS_LOG}
+					( local_area, state, changed, username )
+					VALUES ( $1, $2, $3, $4 )`,
+				values: [ id, state, timestamp, 'rem' ]
+				// TODO: Get username from token
+			}
+		]
 
-		// Setup values
-		let values = [ status, id ]
+		// Log queries to debugger
+		for (let query of queries) logger.debug(query.query, query.values);
 
-		// Execute
-		logger.debug(query, values);
-		db.none(query, values).timeout(config.DB_TIMEOUT)
+		// Execute in a transaction as both INSERT and UPDATE must happen together
+		db.tx((t) => {
+			return t.batch(queries.map((query) => t.none(query.query, query.values)))
+		}).timeout(config.DB_TIMEOUT)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
+	}),
 
+	// Remove the REM state record and append to the log
+	clearREMState: (id) => new Promise((resolve, reject) => {
+
+		// Setup a timestamp with current date/time in ISO format
+		let timestamp = (new Date).toISOString();
+
+		// Setup our queries
+		let queries = [
+			{
+				query: `DELETE FROM ${config.TABLE_REM_STATUS}
+					WHERE local_area = $1`,
+				values: [ id ]
+			},
+			{
+				query: `INSERT INTO ${config.TABLE_REM_STATUS_LOG}
+					( local_area, state, changed, username )
+					VALUES ( $1, $2, $3, $4 )`,
+				values: [ id, null, timestamp, 'rem' ]
+				// TODO: Get username from token
+			}
+		]
+
+		// Log queries to debugger
+		for (let query of queries) logger.debug(query.query, query.values);
+
+		// Execute in a transaction as both INSERT and UPDATE must happen together
+		db.tx((t) => {
+			return t.batch(queries.map((query) => t.none(query.query, query.values)))
+		}).timeout(config.DB_TIMEOUT)
+			.then((data) => resolve(data))
+			.catch((err) => reject(err))
 	})
 
 });

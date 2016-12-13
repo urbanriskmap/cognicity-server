@@ -47,7 +47,7 @@ const handleGeoResponse = (data, req, res, next) => {
 }
 
 // Handle a regular response, send back result or 404
-const handleResponse = (data, req, res, next) => {
+const handleResponse = (data, req, res) => {
   return !data ?
     res.status(404).json({ statusCode: 404, found: false, result: null }) :
     res.status(200).json({ statusCode: 200, result: data })

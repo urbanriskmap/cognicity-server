@@ -4,7 +4,6 @@ import { Router } from 'express';
 import errorHandler from 'api-error-handler';
 
 // Import validation dependencies
-import Joi from 'joi';
 import validate from 'celebrate';
 
 // Get the current version

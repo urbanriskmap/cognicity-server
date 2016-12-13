@@ -4,7 +4,7 @@ import { Router } from 'express';
 import floods from './model';
 
 // Import any required utility functions
-import { formatGeo, handleResponse, jwtCheck } from '../../../lib/util';
+import { formatGeo, /*jwtCheck*/ } from '../../../lib/util';
 
 // Cap formatter helper
 import Cap from '../../../lib/cap';
@@ -15,10 +15,6 @@ import validate from 'celebrate';
 
 // Rem status codes
 const REM_STATES = {
-	0: {
-		severity: 'Cleared',
-		levelDescription: 'NO FLOODING'
-	},
 	1: {
 		severity: 'Unknown',
 		levelDescription: 'AN UNKNOWN LEVEL OF FLOODING - USE CAUTION -'
@@ -84,33 +80,41 @@ export default ({ config, db, logger }) => {
 			}
 		}),
 		(req, res, next) => floods(config, db, logger).all(req.query.city)
-			.then((data) => handleResponse(data, req, res, next))
+			.then((data) => res.status(200).json({statusCode: 200, result: data}))
 			.catch((err) => {
 				logger.error(err);
 				next(err);
 			})
   );
 
-	// TODO: Need a REM view of the world
-
-	// Update the status of a specific flood
-	// TODO: Discuss with Tom, what are we updating, flood status or REM state?  Endpoint naming is a little confusing
-	api.put('/:id', jwtCheck,
+	// Update the flood status of a local area
+	api.put('/:id', //jwtCheck,
 		validate({
 			params: { id: Joi.number().integer().required() },
 			body: Joi.object().keys({
-				state: Joi.number().integer().valid(Object.keys(REM_STATES)).required(),
+				state: Joi.number().integer().valid(Object.keys(REM_STATES).map((state) => parseInt(state))).required(),
 			})
 		}),
-		(req, res, next) => floods(config, db, logger).updateREMStatus(req.params.id, req.body.state)
-			.then((data) => handleResponse(data, req, res, next))
+		(req, res, next) => floods(config, db, logger).updateREMState(req.params.id, req.body.state)
+			.then(() => res.status(200).json({area: req.params.id, state: req.body.state, updated: true}))
 			.catch((err) => {
 				logger.error(err);
 				next(err);
 			})
   );
 
-	// TODO app.delete('/flood') : remove the status from the rem status and add a log to say we have done this
+	// Remove the flood status of a local and add a log entry for audit
+	api.delete('/:id', //jwtCheck,
+		validate({
+			params: { id: Joi.number().integer().required() },
+		}),
+		(req, res, next) => floods(config, db, logger).clearREMState(req.params.id)
+			.then(() => res.status(200).json({area: req.params.id, state: null, updated: true}))
+			.catch((err) => {
+				logger.error(err);
+				next(err);
+			})
+	);
 
 	return api;
 }

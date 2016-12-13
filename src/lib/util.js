@@ -15,7 +15,7 @@ let cache = apicache.middleware;
 const cacheResponse = (duration) => cache(duration, config.CACHE);
 
 // Configure our JWT checker
-const checkToken = jwt({
+const jwtCheck = jwt({
   secret: new Buffer(config.AUTH0_SECRET, 'base64'),
   audience: config.AUTH0_CLIENT_ID
 });
@@ -41,9 +41,9 @@ const formatGeo = (body, outputFormat) => new Promise((resolve, reject) => {
 const handleGeoResponse = (data, req, res, next) => {
   return !data ?
     res.status(404).json({ statusCode: 404, found: false, result: null }) :
-    formatGeo(data, req.query.geoformat)
-      .then((formatted) => res.status(200).json({ statusCode: 200, result: formatted }))
-      .catch((err) => next(err))
+      formatGeo(data, req.query.geoformat)
+        .then((formatted) => res.status(200).json({ statusCode: 200, result: formatted }))
+        .catch((err) => next(err))
 }
 
 // Handle a regular response, send back result or 404
@@ -54,5 +54,5 @@ const handleResponse = (data, req, res, next) => {
 }
 
 module.exports = {
-  cacheResponse, checkToken, formatGeo, handleResponse, handleGeoResponse
+  cacheResponse, formatGeo, handleResponse, handleGeoResponse, jwtCheck
 }

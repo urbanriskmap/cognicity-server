@@ -10,9 +10,33 @@ import { cacheResponse, handleGeoResponse, handleResponse } from '../../../lib/u
 import Joi from 'joi';
 import validate from 'celebrate';
 
+// Import ID generator
+import shortid from 'shortid';
+
 
 export default ({ config, db, logger }) => {
 	let api = Router();
+
+	// Create a new card and if successful return generated cardId
+	api.post('/',
+		validate({
+			body: Joi.object().keys({
+				username: Joi.string().required(),
+				network: Joi.string().required(),
+				language: Joi.string().valid(config.LANGUAGES).required()
+			})
+		}),
+		(req, res, next) => {
+			let cardId = shortid.generate();
+			cards(config, db, logger).create(cardId, req.body)
+				.then((data) => data ? res.status(200).json({ cardId: cardId, created: true }) :
+					next(new Error('Failed to create card')))
+				.catch((err) => {
+					logger.error(err);
+					next(err);
+				})
+		}
+	);
 
 	// Check for the existence of a card
 	api.head('/:cardId', cacheResponse('1 minute'),
@@ -30,7 +54,7 @@ export default ({ config, db, logger }) => {
 	// Return a card
 	api.get('/:cardId', cacheResponse('1 minute'),
 		validate({
-			params: { cardId: Joi.string().required() }
+			params: { cardId: Joi.string().min(7).max(14).required() }
 		}),
 		(req, res, next) => cards(config, db, logger).byCardId(req.params.cardId)
 			.then((data) => handleResponse(data, req, res, next))
@@ -45,8 +69,8 @@ export default ({ config, db, logger }) => {
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200).required(),
-			text: Joi.string(),
-			image_id: Joi.string(),
+			text: Joi.string().allow(''),
+			image_url: Joi.string().allow(''),
 			created_at: Joi.date().iso().required(),
 			location: Joi.object().required().keys({
 				lat: Joi.number().min(-90).max(90).required(),
@@ -60,16 +84,16 @@ export default ({ config, db, logger }) => {
 			cards(config, db, logger).byCardId(req.params.cardId)
 				.then((card) => {
 					// If the card does not exist then return an error message
-					if (!card) res.status(404).json({ message: `No card exists with id '${req.params.cardId}'` })
+					if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId, message: `No card exists with id '${req.params.cardId}'` })
 					// If the card already has received status then return an error message
-					else if (card && card.received) res.status(409).json({ message: `Report already received for card '${req.params.cardId}'` })
+					else if (card && card.received) res.status(409).json({ statusCode: 409, cardId: req.params.cardId, message: `Report already received for card '${req.params.cardId}'` })
 					// We have a card and it has not yet had a report received
 					else {
 						// Try and submit the report and update the card
 						cards(config, db, logger).submitReport(card, req.body)
 							.then((data) => {
 								console.log(data)
-								res.status(200).json({ card_id: req.params.card_id, created: true })
+								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, created: true })
 							})
 							.catch((err) => {
 								logger.error(err);
@@ -83,9 +107,6 @@ export default ({ config, db, logger }) => {
 			}
 		}
 	);
-
-	// TODO: Add POST method to create a new card entry and return the ID
-	// https://github.com/dylang/shortid
 
 	// TODO: Send images to S3, lambda function,
 	// api.post('/:cardId/image' - can we upload the card and image at the same time? POST / PUT / PATCH?

@@ -46,16 +46,17 @@ export default (config, db, logger) => ({
 		// TODO: add debug logging here
 		db.tx((t) => {
 			return t.batch([
-				t.one(`INSERT INTO ${config.TABLE_GRASP_REPORTS}
-					(card_id, card_data, text, created_at, disaster_type, image_id, status, the_geom)
+				t.none(`INSERT INTO ${config.TABLE_GRASP_REPORTS}
+					(card_id, card_data, text, created_at, disaster_type, image_url, status, the_geom)
 					VALUES ($1, $2, $3, $4, $5, $6, $7, ST_SetSRID(ST_Point($8,$9),4326))`,
 					[ card.card_id, { flood_depth: body.water_depth }, body.text,
-						body.created_at, 'flood', body.image_id, 'Confirmed',
-						body.location.lng, body.location.lat  ]
-				),
+						body.created_at, 'flood', body.image_url, 'Confirmed',
+						body.location.lng, body.location.lat  ]),
         t.none(`UPDATE ${config.TABLE_GRASP_CARDS}
-					SET received = TRUE WHERE card_id = $1`, [card.card_id])
-				// TODO: Insert log entry or implement with trigger
+					SET received = TRUE WHERE card_id = $1`, [card.card_id]),
+				t.none(`INSERT INTO ${config.TABLE_GRASP_LOG}
+							(card_id, event_type)
+							VALUES ($1, $2)`, [card.card_id, 'REPORT SUBMITTED']),
       ])
 		}).timeout(config.DB_TIMEOUT)
 			.then((data) => resolve(data))

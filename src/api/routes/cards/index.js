@@ -65,17 +65,16 @@ export default ({ config, db, logger }) => {
 	);
 
 	// Update a card record
-	api.put('/:cardId',
-		validate({
-			params: { cardId: Joi.string().min(7).max(14).required() },
-			body: Joi.object().keys({
-				water_depth: Joi.number().integer().min(0).max(200).required(),
-				text: Joi.string(),
-				image_id: Joi.string(),
-				created_at: Joi.date().iso().required(),
-				location: Joi.object().required().keys({
-					lat: Joi.number().min(-90).max(90).required(),
-					lng: Joi.number().min(-180).max(180).required()
+	api.put('/:cardId', validate({
+		params: { cardId: Joi.string().min(7).max(14).required() },
+		body: Joi.object().keys({
+			water_depth: Joi.number().integer().min(0).max(200).required(),
+			text: Joi.string().allow(''),
+			image_url: Joi.string().allow(''),
+			created_at: Joi.date().iso().required(),
+			location: Joi.object().required().keys({
+				lat: Joi.number().min(-90).max(90).required(),
+				lng: Joi.number().min(-180).max(180).required()
 			})
 		})
 	}),

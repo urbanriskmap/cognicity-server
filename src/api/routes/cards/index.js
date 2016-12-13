@@ -4,7 +4,7 @@ import { Router } from 'express';
 import cards from './model';
 
 // Import any required utility functions
-import { cacheResponse, handleGeoResponse, handleResponse } from '../../../lib/util';
+import { cacheResponse, handleResponse } from '../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';
@@ -107,13 +107,6 @@ export default ({ config, db, logger }) => {
 			}
 		}
 	);
-
-	// TODO: Send images to S3, lambda function,
-	// api.post('/:cardId/image' - can we upload the card and image at the same time? POST / PUT / PATCH?
-	// Validate the card ID, image: png/jpg/gif, max size?
-	// API Gateway - binary data
-	// Save the file to the bucket, what is the format, filename as report card (check Matthew's code)
-	// Send a response back to the user
 
 	return api;
 }

@@ -77,7 +77,7 @@ export default ({ config, db, logger }) => {
 					req.query.geoformat === 'cap' ?
 						// If CAP format has been required first convert to geojson then to CAP
 						formatGeo(data, 'geojson')
-							.then((formatted) => res.status(200).set('Content-Type', 'text/xml').send(cap.geoJsonToAtomCap(formatted)))
+							.then((formatted) => res.status(200).set('Content-Type', 'text/xml').send(cap.geoJsonToAtomCap(formatted.features)))
 							.catch((err) => next(err)) :
 						// Otherwise hand off to geo formatter
 						formatGeo(data, req.query.geoformat)
@@ -116,22 +116,26 @@ export default ({ config, db, logger }) => {
   );
 
 	// Update the flood status of a local area
-	api.put('/:id', jwtCheck,
+	api.put('/:localAreaId', jwtCheck,
 		validate({
-			params: { id: Joi.number().integer().required() },
+			params: { localAreaId: Joi.number().integer().required() },
 			body: Joi.object().keys({
 				state: Joi.number().integer().valid(Object.keys(REM_STATES).map((state) => parseInt(state))).required(),
 			})
 		}),
-		(req, res, next) => floods(config, db, logger).updateREMState(req.params.id, req.body.state)
+		(req, res, next) => floods(config, db, logger).updateREMState(req.params.localAreaId, req.body.state)
 			.then(() => {
 <<<<<<< HEAD
 				apicache.clear(config.CACHE_GROUP_FLOODS);
 				apicache.clear(config.CACHE_GROUP_FLOODS_STATES);
 =======
 				clearCache();
+<<<<<<< HEAD
 >>>>>>> master
 				res.status(200).json({area: req.params.id, state: req.body.state, updated: true});
+=======
+				res.status(200).json({localAreaId: req.params.localAreaId, state: req.body.state, updated: true});
+>>>>>>> master
 			})
 			.catch((err) => {
 				logger.error(err);
@@ -140,19 +144,23 @@ export default ({ config, db, logger }) => {
   );
 
 	// Remove the flood status of a local and add a log entry for audit
-	api.delete('/:id', jwtCheck,
+	api.delete('/:localAreaId', jwtCheck,
 		validate({
-			params: { id: Joi.number().integer().required() },
+			params: { localAreaId: Joi.number().integer().required() },
 		}),
-		(req, res, next) => floods(config, db, logger).clearREMState(req.params.id)
+		(req, res, next) => floods(config, db, logger).clearREMState(req.params.localAreaId)
 			.then(() => {
 <<<<<<< HEAD
 				apicache.clear(config.CACHE_GROUP_FLOODS);
 				apicache.clear(config.CACHE_GROUP_FLOODS_STATES);
 =======
 				clearCache();
+<<<<<<< HEAD
 >>>>>>> master
 				res.status(200).json({area: req.params.id, state: null, updated: true})
+=======
+				res.status(200).json({localAreaId: req.params.localAreaId, state: null, updated: true})
+>>>>>>> master
 			})
 			.catch((err) => {
 				logger.error(err);

@@ -4,7 +4,7 @@ import { Router } from 'express';
 import cards from './model';
 
 // Import any required utility functions
-import { cacheResponse, handleResponse } from '../../../lib/util';
+import { cacheResponse, handleResponse, jwtCheck } from '../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';
@@ -18,7 +18,7 @@ export default ({ config, db, logger }) => {
 	let api = Router();
 
 	// Create a new card and if successful return generated cardId
-	api.post('/',
+	api.post('/', jwtCheck,
 		validate({
 			body: Joi.object().keys({
 				username: Joi.string().required(),
@@ -70,7 +70,7 @@ export default ({ config, db, logger }) => {
 =======
 >>>>>>> master
 	// Update a card record with a report
-	api.put('/:cardId', validate({
+	api.put('/:cardId', jwtCheck, validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200).required(),
@@ -119,7 +119,7 @@ export default ({ config, db, logger }) => {
 	);
 
 	// Update a card report with new details including the image URL
-	api.patch('/:cardId', validate({
+	api.patch('/:cardId', jwtCheck, validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200),

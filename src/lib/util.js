@@ -1,6 +1,7 @@
 // Import dependencies
 import Promise from 'bluebird';
 import jwt from 'express-jwt';
+import jwks from 'jwks-rsa';
 import dbgeo from 'dbgeo';
 
 // Import config
@@ -15,9 +16,20 @@ let cache = apicache.middleware;
 const cacheResponse = (duration) => cache(duration, config.CACHE);
 
 // Configure our JWT checker
+// TODO: Move to single auth0 mechanism once they support SPA auth using API
 const jwtCheck = jwt({
   secret: new Buffer(config.AUTH0_SECRET, 'base64'),
   audience: config.AUTH0_CLIENT_ID
+}) || jwt({
+  secret: jwks.expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: `${config.AUTH0_ISSUER}/.well-known/jwks.json`
+  }),
+  audience: config.AUTH0_AUDIENCE,
+  issuer: config.AUTH0_ISSUER,
+  algorithms: ['RS256']
 });
 
 // Setup dbgeo

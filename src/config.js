@@ -45,6 +45,7 @@ export default {
   PORT: process.env.PORT || 8001,
   REGION_CODES: (process.env.REGION_CODES || 'jbd,bdg,sby').split(','),
   RESPONSE_TIME: process.env.RESPONSE_TIME === 'true' || false,
+  SECURE_AUTH0: process.env.SECURE_AUTH0 === 'true' || false,
   TABLE_FLOODGAUGE_REPORTS: process.env.TABLE_FLOODGAUGE_REPORTS || 'floodgauge.reports',
   TABLE_FEEDS_QLUE: process.env.TABLE_FEEDS_QLUE || 'qlue.reports',
   TABLE_GRASP_CARDS: process.env.TABLE_GRASP_CARDS || 'grasp.cards',

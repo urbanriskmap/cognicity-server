@@ -3,6 +3,9 @@ import { Router } from 'express';
 // Import our data model
 import feeds from './model';
 
+// Import any required utility functions
+import { jwtCheck } from '../../../lib/util';
+
 // Import validation dependencies
 import Joi from 'joi';
 import validate from 'celebrate';
@@ -14,7 +17,7 @@ export default ({ config, db, logger }) => {
 	// Create a new qlue record in the database
 	// TODO: What is mandatory around title / text, any rules AND/OR?
 	// TODO: Bulk endpoint for multiple POSTs
-	api.post('/qlue', validate({
+	api.post('/qlue', jwtCheck, validate({
 			body: Joi.object().keys({
 				post_id: Joi.number().integer().required(),
 				created_at: Joi.date().iso().required(),

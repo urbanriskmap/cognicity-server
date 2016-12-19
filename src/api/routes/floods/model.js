@@ -3,17 +3,17 @@ import Promise from 'bluebird';
 export default (config, db, logger) => ({
 
 	// Get all flood reports for a given city
-	all: (city) => new Promise((resolve, reject) => {
+	all: (city, minimum_state) => new Promise((resolve, reject) => {
 
 		// Setup query
-		let query = `SELECT local_area, state, last_updated
+		let query = `SELECT local_area as area_id, state, last_updated
 			FROM ${config.TABLE_REM_STATUS} status, ${config.TABLE_LOCAL_AREAS} area
 			WHERE status.local_area = area.pkey
-			AND state IS NOT NULL AND status.state > 0
+			AND state IS NOT NULL AND ($2 IS NULL OR state >= $2)
 			AND ($1 IS NULL OR area.instance_region_code=$1)`;
 
 		// Setup values
-		let values = [ city ]
+		let values = [ city, minimum_state ]
 
 		// Execute
 		logger.debug(query, values);
@@ -27,9 +27,9 @@ export default (config, db, logger) => ({
 	allGeo: (city, minimum_state) => new Promise((resolve, reject) => {
 
 		// Setup query
-		let query = `SELECT la.the_geom, la.geom_id, la.area_name, la.city_name, rs.state, rs.last_updated
+		let query = `SELECT la.the_geom, la.pkey as area_id, la.geom_id, la.area_name, la.city_name, rs.state, rs.last_updated
 			FROM ${config.TABLE_LOCAL_AREAS} la
-			LEFT JOIN
+			${minimum_state ? 'JOIN' : 'LEFT JOIN'}
 			(SELECT local_area, state, last_updated FROM ${config.TABLE_REM_STATUS}
 			WHERE state IS NOT NULL AND ($2 IS NULL OR state >= $2)) rs
 			ON la.pkey = rs.local_area

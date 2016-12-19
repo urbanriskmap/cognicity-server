@@ -67,7 +67,7 @@ export default ({ config, db, logger }) => {
 					req.query.geoformat === 'cap' ?
 						// If CAP format has been required first convert to geojson then to CAP
 						formatGeo(data, 'geojson')
-							.then((formatted) => res.status(200).set('Content-Type', 'text/xml').send(cap.geoJsonToAtomCap(formatted)))
+							.then((formatted) => res.status(200).set('Content-Type', 'text/xml').send(cap.geoJsonToAtomCap(formatted.features)))
 							.catch((err) => next(err)) :
 						// Otherwise hand off to geo formatter
 						formatGeo(data, req.query.geoformat)

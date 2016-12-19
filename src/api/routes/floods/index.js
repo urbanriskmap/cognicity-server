@@ -4,7 +4,10 @@ import { Router } from 'express';
 import floods from './model';
 
 // Import any required utility functions
-import { formatGeo, /*jwtCheck*/ } from '../../../lib/util';
+import { cacheResponse, formatGeo, jwtCheck } from '../../../lib/util';
+
+// Caching
+import apicache from 'apicache';
 
 // Cap formatter helper
 import Cap from '../../../lib/cap';
@@ -33,14 +36,12 @@ const REM_STATES = {
 	}
 }
 
-
 export default ({ config, db, logger }) => {
 	let api = Router();
 	const cap = new Cap(logger); // Setup our cap formatter
 
 	// Get a list of all floods
-	// TODO: If minimum_state is not supplied then bring across everything
-	api.get('/',
+	api.get('/', cacheResponse(config.CACHE_DURATION_FLOODS),
 		validate({
 			query: {
 				city: Joi.any().valid(config.REGION_CODES),
@@ -50,6 +51,7 @@ export default ({ config, db, logger }) => {
 			}
 		}),
 		(req, res, next) => {
+			req.apicacheGroup = config.CACHE_GROUP_FLOODS;
 			if (req.query.geoformat === 'cap' && req.query.format !== 'xml') res.status(400).json({ statusCode: 400, message: 'format must be \'xml\' when geoformat=\'cap\'' })
 			else if (config.GEO_FORMATS.indexOf(req.query.geoformat) > -1 && req.query.format !== 'json') res.status(400).json({ statusCode: 400, message: 'format must be \'json\' when geoformat IN (\'geojson\',\'topojson\')' })
 			else floods(config, db, logger).allGeo(req.query.city, req.query.minimum_state)
@@ -72,19 +74,23 @@ export default ({ config, db, logger }) => {
   );
 
 	// Just get the states without the geographic boundaries
-	api.get('/states',
+	api.get('/states', cacheResponse(config.CACHE_DURATION_FLOODS_STATES),
 		validate({
 			query: {
 				city: Joi.any().valid(config.REGION_CODES),
-				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT)
+				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
+				minimum_state: Joi.number().integer().valid(Object.keys(REM_STATES))
 			}
 		}),
-		(req, res, next) => floods(config, db, logger).all(req.query.city)
-			.then((data) => res.status(200).json({statusCode: 200, result: data}))
-			.catch((err) => {
-				logger.error(err);
-				next(err);
-			})
+		(req, res, next) => {
+			req.apicacheGroup = config.CACHE_GROUP_FLOODS_STATES;
+			floods(config, db, logger).all(req.query.city, req.query.minimum_state)
+				.then((data) => res.status(200).json({statusCode: 200, result: data}))
+				.catch((err) => {
+					logger.error(err);
+					next(err);
+				})
+		}
   );
 
 	// Update the flood status of a local area
@@ -96,7 +102,11 @@ export default ({ config, db, logger }) => {
 			})
 		}),
 		(req, res, next) => floods(config, db, logger).updateREMState(req.params.id, req.body.state)
-			.then(() => res.status(200).json({area: req.params.id, state: req.body.state, updated: true}))
+			.then(() => {
+				apicache.clear(config.CACHE_GROUP_FLOODS);
+				apicache.clear(config.CACHE_GROUP_FLOODS_STATES);
+				res.status(200).json({area: req.params.id, state: req.body.state, updated: true});
+			})
 			.catch((err) => {
 				logger.error(err);
 				next(err);
@@ -109,7 +119,11 @@ export default ({ config, db, logger }) => {
 			params: { id: Joi.number().integer().required() },
 		}),
 		(req, res, next) => floods(config, db, logger).clearREMState(req.params.id)
-			.then(() => res.status(200).json({area: req.params.id, state: null, updated: true}))
+			.then(() => {
+				apicache.clear(config.CACHE_GROUP_FLOODS);
+				apicache.clear(config.CACHE_GROUP_FLOODS_STATES);
+				res.status(200).json({area: req.params.id, state: null, updated: true})
+			})
 			.catch((err) => {
 				logger.error(err);
 				next(err);

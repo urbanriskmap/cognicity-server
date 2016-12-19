@@ -64,13 +64,14 @@ export default ({ config, db, logger }) => {
 			})
 	);
 
-	// Update a card record
+	// TODO: Put or patch to allow updating just the image ID
+
+	// Update a card record with a report
 	api.put('/:cardId', validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200).required(),
 			text: Joi.string().allow(''),
-			image_url: Joi.string().allow(''),
 			created_at: Joi.date().iso().required(),
 			location: Joi.object().required().keys({
 				lat: Joi.number().min(-90).max(90).required(),
@@ -84,9 +85,11 @@ export default ({ config, db, logger }) => {
 			cards(config, db, logger).byCardId(req.params.cardId)
 				.then((card) => {
 					// If the card does not exist then return an error message
-					if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId, message: `No card exists with id '${req.params.cardId}'` })
+					if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId,
+						message: `No card exists with id '${req.params.cardId}'` })
 					// If the card already has received status then return an error message
-					else if (card && card.received) res.status(409).json({ statusCode: 409, cardId: req.params.cardId, message: `Report already received for card '${req.params.cardId}'` })
+					else if (card && card.received) res.status(409).json({ statusCode: 409,
+						cardId: req.params.cardId, message: `Report already received for card '${req.params.cardId}'` })
 					// We have a card and it has not yet had a report received
 					else {
 						// Try and submit the report and update the card

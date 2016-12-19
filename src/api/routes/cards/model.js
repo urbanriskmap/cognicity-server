@@ -21,7 +21,6 @@ export default (config, db, logger) => ({
 	}),
 
 	// Return specific card by id
-	// TODO: Agree properties to return
 	byCardId: (cardId) => new Promise((resolve, reject) => {
 
 		// Setup query
@@ -47,8 +46,13 @@ export default (config, db, logger) => ({
 			{
 				query: `INSERT INTO ${config.TABLE_GRASP_REPORTS}
 <<<<<<< HEAD
+<<<<<<< HEAD
 					(card_id, card_data, text, created_at, disaster_type, image_url, status, the_geom)
 					VALUES ($1, $2, $3, $4, $5, $6, $7, ST_SetSRID(ST_Point($8,$9),4326))`,
+=======
+					(card_id, card_data, text, created_at, disaster_type, status, the_geom)
+					VALUES ($1, $2, $3, $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
+>>>>>>> master
 =======
 					(card_id, card_data, text, created_at, disaster_type, status, the_geom)
 					VALUES ($1, $2, $3, $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
@@ -66,6 +70,40 @@ export default (config, db, logger) => ({
 							(card_id, event_type)
 							VALUES ($1, $2)`,
 				values: [ card.card_id, 'REPORT SUBMITTED' ]
+			}
+		]
+
+		// Log queries to debugger
+		for (let query of queries) logger.debug(query.query, query.values);
+
+		// Execute in a transaction as both INSERT and UPDATE must happen together
+		db.tx((t) => {
+			return t.batch(queries.map((query) => t.none(query.query, query.values)))
+		}).timeout(config.DB_TIMEOUT)
+			.then((data) => resolve(data))
+			.catch((err) => reject(err))
+	}),
+
+	// Update the reports table with new report details
+	updateReport: (card, body) => new Promise((resolve, reject) => {
+
+		// Setup our queries
+		let queries = [
+			{
+				query: `UPDATE ${config.TABLE_GRASP_REPORTS} SET
+					card_data = COALESCE($2, card_data),
+					text = COALESCE($3, text),
+					image_url = COALESCE($4, image_url)
+					WHERE card_id = $1`,
+				values: [ card.card_id,
+					body.water_depth ? { flood_depth: body.water_depth } : null,
+					body.text, body.image_url ]
+			},
+			{
+				query: `INSERT INTO ${config.TABLE_GRASP_LOG}
+							(card_id, event_type)
+							VALUES ($1, $2)`,
+				values: [ card.card_id, 'REPORT UPDATES' ]
 			}
 		]
 

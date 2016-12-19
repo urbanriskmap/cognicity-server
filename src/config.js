@@ -8,14 +8,23 @@ export default {
   API_REPORTS_LIMIT: process.env.API_REPORTS_LIMIT,
   API_FLOODGAUGE_REPORTS_TIME_WINDOW: process.env.API_FLOODGAUGE_REPORTS_TIME_WINDOW || 43200,
   API_FLOODGAUGE_REPORTS_LIMIT: process.env.API_FLOODGAUGE_REPORTS_LIMIT,
+  AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE || 'https://data.petabencana.id',
   AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+  AUTH0_ISSUER: process.env.AUTH0_ISSUER || 'https://petabencana.au.auth0.com',
   AUTH0_SECRET: process.env.AUTH0_SECRET,
   BODY_LIMIT: process.env.BODY_LIMIT || '100kb',
   CACHE: process.env.CACHE === 'true' || false,
+<<<<<<< HEAD
   CACHE_DURATION_FLOODS: process.env.CACHE_DURATION_FLOODS || '1 hour',
   CACHE_DURATION_FLOODS_STATES: process.env.CACHE_DURATION_FLOODS_STATES || '1 hour',
   CACHE_GROUP_FLOODS: process.env.CACHE_GROUP_FLOODS || '1 hour',
   CACHE_GROUP_FLOODS_STATES: process.env.CACHE_GROUP_FLOODS_STATES || '/floods/states',
+=======
+  CACHE_DURATION_CARDS: process.env.CACHE_DURATION_CARDS || '1 minute',
+  CACHE_DURATION_FLOODS: process.env.CACHE_DURATION_FLOODS || '1 hour',
+  CACHE_DURATION_FLOODS_STATES: process.env.CACHE_DURATION_FLOODS_STATES || '1 hour',
+  CACHE_DURATION_INFRASTRUCTURE: process.env.CACHE_DURATION_INFRASTRUCTURE || '1 hour',
+>>>>>>> master
   COMPRESS: process.env.COMPRESS === 'true' || false,
   CORS: process.env.CORS === 'true' || false,
   CORS_HEADERS: process.env.CORS_HEADERS || ['Link'],

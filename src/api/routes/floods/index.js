@@ -8,6 +8,11 @@ import { cacheResponse, formatGeo, jwtCheck } from '../../../lib/util';
 
 // Caching
 import apicache from 'apicache';
+<<<<<<< HEAD
+=======
+const CACHE_GROUP_FLOODS = '/floods';
+const CACHE_GROUP_FLOODS_STATES = '/floods/states';
+>>>>>>> master
 
 // Cap formatter helper
 import Cap from '../../../lib/cap';
@@ -36,6 +41,15 @@ const REM_STATES = {
 	}
 }
 
+<<<<<<< HEAD
+=======
+// Function to clear out the cache
+const clearCache = () => {
+	apicache.clear(CACHE_GROUP_FLOODS);
+	apicache.clear(CACHE_GROUP_FLOODS_STATES);
+}
+
+>>>>>>> master
 export default ({ config, db, logger }) => {
 	let api = Router();
 	const cap = new Cap(logger); // Setup our cap formatter
@@ -51,7 +65,11 @@ export default ({ config, db, logger }) => {
 			}
 		}),
 		(req, res, next) => {
+<<<<<<< HEAD
 			req.apicacheGroup = config.CACHE_GROUP_FLOODS;
+=======
+			req.apicacheGroup = CACHE_GROUP_FLOODS;
+>>>>>>> master
 			if (req.query.geoformat === 'cap' && req.query.format !== 'xml') res.status(400).json({ statusCode: 400, message: 'format must be \'xml\' when geoformat=\'cap\'' })
 			else if (config.GEO_FORMATS.indexOf(req.query.geoformat) > -1 && req.query.format !== 'json') res.status(400).json({ statusCode: 400, message: 'format must be \'json\' when geoformat IN (\'geojson\',\'topojson\')' })
 			else floods(config, db, logger).allGeo(req.query.city, req.query.minimum_state)
@@ -83,7 +101,11 @@ export default ({ config, db, logger }) => {
 			}
 		}),
 		(req, res, next) => {
+<<<<<<< HEAD
 			req.apicacheGroup = config.CACHE_GROUP_FLOODS_STATES;
+=======
+			req.apicacheGroup = CACHE_GROUP_FLOODS_STATES;
+>>>>>>> master
 			floods(config, db, logger).all(req.query.city, req.query.minimum_state)
 				.then((data) => res.status(200).json({statusCode: 200, result: data}))
 				.catch((err) => {
@@ -94,7 +116,7 @@ export default ({ config, db, logger }) => {
   );
 
 	// Update the flood status of a local area
-	api.put('/:id', //jwtCheck,
+	api.put('/:id', jwtCheck,
 		validate({
 			params: { id: Joi.number().integer().required() },
 			body: Joi.object().keys({
@@ -103,8 +125,12 @@ export default ({ config, db, logger }) => {
 		}),
 		(req, res, next) => floods(config, db, logger).updateREMState(req.params.id, req.body.state)
 			.then(() => {
+<<<<<<< HEAD
 				apicache.clear(config.CACHE_GROUP_FLOODS);
 				apicache.clear(config.CACHE_GROUP_FLOODS_STATES);
+=======
+				clearCache();
+>>>>>>> master
 				res.status(200).json({area: req.params.id, state: req.body.state, updated: true});
 			})
 			.catch((err) => {
@@ -114,14 +140,18 @@ export default ({ config, db, logger }) => {
   );
 
 	// Remove the flood status of a local and add a log entry for audit
-	api.delete('/:id', //jwtCheck,
+	api.delete('/:id', jwtCheck,
 		validate({
 			params: { id: Joi.number().integer().required() },
 		}),
 		(req, res, next) => floods(config, db, logger).clearREMState(req.params.id)
 			.then(() => {
+<<<<<<< HEAD
 				apicache.clear(config.CACHE_GROUP_FLOODS);
 				apicache.clear(config.CACHE_GROUP_FLOODS_STATES);
+=======
+				clearCache();
+>>>>>>> master
 				res.status(200).json({area: req.params.id, state: null, updated: true})
 			})
 			.catch((err) => {

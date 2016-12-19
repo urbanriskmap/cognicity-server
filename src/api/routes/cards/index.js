@@ -39,7 +39,7 @@ export default ({ config, db, logger }) => {
 	);
 
 	// Check for the existence of a card
-	api.head('/:cardId', cacheResponse('1 minute'),
+	api.head('/:cardId', cacheResponse(config.CACHE_DURATION_CARDS),
 		validate({
 			params: { cardId: Joi.string().required() }
 		}),
@@ -52,7 +52,7 @@ export default ({ config, db, logger }) => {
 	);
 
 	// Return a card
-	api.get('/:cardId', cacheResponse('1 minute'),
+	api.get('/:cardId', cacheResponse(config.CACHE_DURATION_CARDS),
 		validate({
 			params: { cardId: Joi.string().min(7).max(14).required() }
 		}),
@@ -64,14 +64,21 @@ export default ({ config, db, logger }) => {
 			})
 	);
 
+<<<<<<< HEAD
 	// TODO: Put or patch to allow updating just the image ID
 
+=======
+>>>>>>> master
 	// Update a card record with a report
 	api.put('/:cardId', validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200).required(),
 			text: Joi.string().allow(''),
+<<<<<<< HEAD
+=======
+			image_url: Joi.string(),
+>>>>>>> master
 			created_at: Joi.date().iso().required(),
 			location: Joi.object().required().keys({
 				lat: Joi.number().min(-90).max(90).required(),
@@ -97,6 +104,44 @@ export default ({ config, db, logger }) => {
 							.then((data) => {
 								console.log(data)
 								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, created: true })
+							})
+							.catch((err) => {
+								logger.error(err);
+								next(err);
+							})
+					}
+				})
+			} catch(err) {
+				logger.error(err);
+				next(err);
+			}
+		}
+	);
+
+	// Update a card report with new details including the image URL
+	api.patch('/:cardId', validate({
+		params: { cardId: Joi.string().min(7).max(14).required() },
+		body: Joi.object().keys({
+			water_depth: Joi.number().integer().min(0).max(200),
+			text: Joi.string().allow(''),
+			image_url: Joi.string()
+		})
+	}),
+	(req, res, next) => {
+		try {
+			// First get the card we wish to update
+			cards(config, db, logger).byCardId(req.params.cardId)
+				.then((card) => {
+					// If the card does not exist then return an error message
+					if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId,
+						message: `No card exists with id '${req.params.cardId}'` })
+					// We have a card
+					else {
+						// Try and submit the report and update the card
+						cards(config, db, logger).updateReport(card, req.body)
+							.then((data) => {
+								console.log(data)
+								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, updated: true })
 							})
 							.catch((err) => {
 								logger.error(err);

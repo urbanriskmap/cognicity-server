@@ -15,7 +15,7 @@ export default ({ config, db, logger }) => {
 	let api = Router();
 
 	// Get a list of infrastructure by type for a given city
-	api.get('/:type', cacheResponse('1 hour'),
+	api.get('/:type', cacheResponse(config.CACHE_DURATION_INFRASTRUCTURE),
 		validate({
 			params: { type: Joi.any().valid(config.INFRASTRUCTURE_TYPES) },
 			query: {

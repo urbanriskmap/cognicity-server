@@ -41,6 +41,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `PORT`: Which port should the application run on (default: `8001`)
 * `REGION_CODES`: Which region codes are supported (as comma separated list) (default: `jbd,bdg,sby`)
 * `RESPONSE_TIME`: Should the server return an `X-Response-Time` header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: `false`)
+* `SECURE_AUTH0`: Whether Auth0 JWT token security should be applied to secure routes (default: `false`)
 
 A few points to note on config:
 

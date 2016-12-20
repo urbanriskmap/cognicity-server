@@ -70,7 +70,7 @@ export default ({ config, db, logger }) => {
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200).required(),
 			text: Joi.string().allow(''),
-			image_url: Joi.string(),
+			image_url: Joi.string().allow(''),
 			created_at: Joi.date().iso().required(),
 			location: Joi.object().required().keys({
 				lat: Joi.number().min(-90).max(90).required(),

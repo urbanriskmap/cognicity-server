@@ -78,25 +78,13 @@ export default ({ config, db, logger }) => {
 		}
 	);
 
-<<<<<<< HEAD
-	// TODO: Put or patch to allow updating just the image ID
-
-=======
->>>>>>> master
 	// Update a card record with a report
 	api.put('/:cardId', jwtCheck, validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200).required(),
 			text: Joi.string().allow(''),
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-			image_url: Joi.string(),
->>>>>>> master
-=======
 			image_url: Joi.string().allow(''),
->>>>>>> master
 			created_at: Joi.date().iso().required(),
 			location: Joi.object().required().keys({
 				lat: Joi.number().min(-90).max(90).required(),

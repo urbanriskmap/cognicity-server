@@ -52,22 +52,8 @@ export default (config, db, logger) => ({
 		let queries = [
 			{
 				query: `INSERT INTO ${config.TABLE_GRASP_REPORTS}
-<<<<<<< HEAD
-<<<<<<< HEAD
-					(card_id, card_data, text, created_at, disaster_type, image_url, status, the_geom)
-					VALUES ($1, $2, $3, $4, $5, $6, $7, ST_SetSRID(ST_Point($8,$9),4326))`,
-=======
 					(card_id, card_data, text, created_at, disaster_type, status, the_geom)
-<<<<<<< HEAD
-					VALUES ($1, $2, $3, $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
->>>>>>> master
-=======
-					(card_id, card_data, text, created_at, disaster_type, status, the_geom)
-					VALUES ($1, $2, $3, $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
->>>>>>> master
-=======
 					VALUES ($1, $2, COALESCE($3,''), $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
->>>>>>> master
 				values: [ card.card_id, { flood_depth: body.water_depth }, body.text,
 					body.created_at, 'flood', 'Confirmed', body.location.lng, body.location.lat  ]
 			},

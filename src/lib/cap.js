@@ -1,3 +1,5 @@
+'use strict'
+
 // XML builder used to create XML output
 import builder from 'xmlbuilder';
 // moment module, JS date/time manipulation library
@@ -22,7 +24,6 @@ module.exports = class Cap {
 	 */
 	geoJsonToAtomCap(features) {
 		let self = this;
-
 		let feed = {
 			"@xmlns": "http://www.w3.org/2005/Atom",
 			id: 'https://data.petabencana.id/floods',
@@ -34,8 +35,7 @@ module.exports = class Cap {
 			}
 		};
 
-		for (let featureIndex = 0; featureIndex < features.length; featureIndex++) {
-			let feature = features[featureIndex];
+		for (let feature of features) {
 
 			let alert = self.createAlert( feature );
 			// If alert creation failed, don't create the entry
@@ -47,7 +47,7 @@ module.exports = class Cap {
 
 			feed.entry.push({
 				// Note, this ID does not resolve to a real resource - but enough information is contained in the URL that we could resolve the flooded report at the same point in time
-				id: 'https://data.petabencana.id/floods?parent_name='+encodeURI(feature.properties.parent_name)+'&level_name='+encodeURI(feature.properties.level_name)+'&time='+encodeURI(moment.tz(feature.properties.last_updated, 'Asia/Jakarta').format('YYYY-MM-DDTHH:mm:ssZ')),
+				id: 'https://data.petabencana.id/floods?parent_name='+encodeURI(feature.properties.parent_name)+'&area_name='+encodeURI(feature.properties.area_name)+'&time='+encodeURI(moment.tz(feature.properties.last_updated, 'Asia/Jakarta').format('YYYY-MM-DDTHH:mm:ssZ')),
 				title: alert.identifier + " Flood Affected Area",
 				updated: moment.tz(feature.properties.last_updated, 'Asia/Jakarta').format('YYYY-MM-DDTHH:mm:ssZ'),
 				content: {
@@ -73,7 +73,7 @@ module.exports = class Cap {
 
 		alert["@xmlns"] = "urn:oasis:names:tc:emergency:cap:1.2";
 
-		let identifier = feature.properties.parent_name + "." + feature.properties.level_name + "." + moment.tz(feature.properties.last_updated, 'Asia/Jakarta').format('YYYY-MM-DDTHH:mm:ssZ');
+		let identifier = feature.properties.parent_name + "." + feature.properties.area_name + "." + moment.tz(feature.properties.last_updated, 'Asia/Jakarta').format('YYYY-MM-DDTHH:mm:ssZ');
 		identifier = identifier.replace(/ /g,'_');
 		alert.identifier = encodeURI(identifier);
 
@@ -132,7 +132,7 @@ module.exports = class Cap {
 		info.headline = "FLOOD WARNING";
 
 		let descriptionTime = moment(feature.properties.last_updated).tz('Asia/Jakarta').format('HH:mm z');
-		let descriptionArea = feature.properties.parent_name + ", " + feature.properties.level_name;
+		let descriptionArea = feature.properties.parent_name + ", " + feature.properties.area_name;
 		info.description = "AT " + descriptionTime + " THE JAKARTA EMERGENCY MANAGEMENT AGENCY OBSERVED " + levelDescription + " IN " + descriptionArea + ".";
 
 		info.web = "https://petabencana.id/";
@@ -157,7 +157,7 @@ module.exports = class Cap {
 
 		let area = {};
 
-		area.areaDesc = feature.properties.level_name + ", " + feature.properties.parent_name;
+		area.areaDesc = feature.properties.area_name + ", " + feature.properties.parent_name;
 
 		// Collate array of polygon-describing strings from different geometry types
 		area.polygon = [];

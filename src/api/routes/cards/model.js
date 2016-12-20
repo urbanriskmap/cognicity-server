@@ -24,9 +24,16 @@ export default (config, db, logger) => ({
 	byCardId: (cardId) => new Promise((resolve, reject) => {
 
 		// Setup query
-		let query = `SELECT *
-			FROM ${config.TABLE_GRASP_CARDS}
-			WHERE card_id = $1`;
+		let query = `SELECT c.card_id, c.username, c.network, c.language, c.received,
+			CASE WHEN r.card_id IS NOT NULL THEN
+				json_build_object('created_at', r.created_at, 'disaster_type', r.disaster_type,
+				'text', r.text, 'card_data', r.card_data, 'image_url', r.image_url,
+				'status', r.status)
+			ELSE null END AS report
+			FROM ${config.TABLE_GRASP_CARDS} c
+			LEFT JOIN ${config.TABLE_GRASP_REPORTS} r USING (card_id)
+			WHERE c.card_id = $1
+			LIMIT 1`;
 
 		// Setup values
 		let values = [ cardId ]
@@ -51,11 +58,15 @@ export default (config, db, logger) => ({
 					VALUES ($1, $2, $3, $4, $5, $6, $7, ST_SetSRID(ST_Point($8,$9),4326))`,
 =======
 					(card_id, card_data, text, created_at, disaster_type, status, the_geom)
+<<<<<<< HEAD
 					VALUES ($1, $2, $3, $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
 >>>>>>> master
 =======
 					(card_id, card_data, text, created_at, disaster_type, status, the_geom)
 					VALUES ($1, $2, $3, $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
+>>>>>>> master
+=======
+					VALUES ($1, $2, COALESCE($3,''), $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
 >>>>>>> master
 				values: [ card.card_id, { flood_depth: body.water_depth }, body.text,
 					body.created_at, 'flood', 'Confirmed', body.location.lng, body.location.lat  ]

@@ -101,8 +101,8 @@ export default ({ config, db, logger }) => {
 					if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId,
 						message: `No card exists with id '${req.params.cardId}'` })
 					// If the card already has received status then return an error message
-					else if (card && card.received) res.status(409).json({ statusCode: 409,
-						cardId: req.params.cardId, message: `Report already received for card '${req.params.cardId}'` })
+//					else if (card && card.received) res.status(409).json({ statusCode: 409,
+//						cardId: req.params.cardId, message: `Report already received for card '${req.params.cardId}'` })
 					// We have a card and it has not yet had a report received
 					else {
 						// Try and submit the report and update the card

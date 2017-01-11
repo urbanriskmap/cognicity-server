@@ -13,6 +13,14 @@ import validate from 'celebrate';
 // Import ID generator
 import shortid from 'shortid';
 
+// Caching
+import apicache from 'apicache';
+const CACHE_GROUP_CARDS = '/cards';
+
+// Function to clear out the cache
+const clearCache = () => {
+	apicache.clear(CACHE_GROUP_CARDS);
+}
 
 export default ({ config, db, logger }) => {
 	let api = Router();
@@ -43,12 +51,15 @@ export default ({ config, db, logger }) => {
 		validate({
 			params: { cardId: Joi.string().required() }
 		}),
-		(req, res, next) => cards(config, db, logger).byCardId(req.params.cardId)
-			.then((data) => data ? res.status(200).end() : res.status(404).end())
-			.catch((err) => {
-				logger.error(err);
-				next(err);
-			})
+		(req, res, next) => {
+			req.apicacheGroup = CACHE_GROUP_CARDS;
+			cards(config, db, logger).byCardId(req.params.cardId)
+				.then((data) => data ? res.status(200).end() : res.status(404).end())
+				.catch((err) => {
+					logger.error(err);
+					next(err);
+				})
+		}
 	);
 
 	// Return a card
@@ -56,29 +67,24 @@ export default ({ config, db, logger }) => {
 		validate({
 			params: { cardId: Joi.string().min(7).max(14).required() }
 		}),
-		(req, res, next) => cards(config, db, logger).byCardId(req.params.cardId)
-			.then((data) => handleResponse(data, req, res, next))
-			.catch((err) => {
-				logger.error(err);
-				next(err);
-			})
+		(req, res, next) => {
+			req.apicacheGroup = CACHE_GROUP_CARDS;
+			cards(config, db, logger).byCardId(req.params.cardId)
+				.then((data) => handleResponse(data, req, res, next))
+				.catch((err) => {
+					logger.error(err);
+					next(err);
+				})
+		}
 	);
 
-<<<<<<< HEAD
-	// TODO: Put or patch to allow updating just the image ID
-
-=======
->>>>>>> master
 	// Update a card record with a report
 	api.put('/:cardId', jwtCheck, validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200).required(),
 			text: Joi.string().allow(''),
-<<<<<<< HEAD
-=======
-			image_url: Joi.string(),
->>>>>>> master
+			image_url: Joi.string().allow(''),
 			created_at: Joi.date().iso().required(),
 			location: Joi.object().required().keys({
 				lat: Joi.number().min(-90).max(90).required(),
@@ -102,8 +108,9 @@ export default ({ config, db, logger }) => {
 						// Try and submit the report and update the card
 						cards(config, db, logger).submitReport(card, req.body)
 							.then((data) => {
-								console.log(data)
-								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, created: true })
+								console.log(data);
+								clearCache();
+								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, created: true });
 							})
 							.catch((err) => {
 								logger.error(err);
@@ -140,8 +147,9 @@ export default ({ config, db, logger }) => {
 						// Try and submit the report and update the card
 						cards(config, db, logger).updateReport(card, req.body)
 							.then((data) => {
-								console.log(data)
-								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, updated: true })
+								console.log(data);
+								clearCache();
+								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, updated: true });
 							})
 							.catch((err) => {
 								logger.error(err);

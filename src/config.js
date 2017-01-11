@@ -14,17 +14,10 @@ export default {
   AUTH0_SECRET: process.env.AUTH0_SECRET,
   BODY_LIMIT: process.env.BODY_LIMIT || '100kb',
   CACHE: process.env.CACHE === 'true' || false,
-<<<<<<< HEAD
-  CACHE_DURATION_FLOODS: process.env.CACHE_DURATION_FLOODS || '1 hour',
-  CACHE_DURATION_FLOODS_STATES: process.env.CACHE_DURATION_FLOODS_STATES || '1 hour',
-  CACHE_GROUP_FLOODS: process.env.CACHE_GROUP_FLOODS || '1 hour',
-  CACHE_GROUP_FLOODS_STATES: process.env.CACHE_GROUP_FLOODS_STATES || '/floods/states',
-=======
   CACHE_DURATION_CARDS: process.env.CACHE_DURATION_CARDS || '1 minute',
   CACHE_DURATION_FLOODS: process.env.CACHE_DURATION_FLOODS || '1 hour',
   CACHE_DURATION_FLOODS_STATES: process.env.CACHE_DURATION_FLOODS_STATES || '1 hour',
   CACHE_DURATION_INFRASTRUCTURE: process.env.CACHE_DURATION_INFRASTRUCTURE || '1 hour',
->>>>>>> master
   COMPRESS: process.env.COMPRESS === 'true' || false,
   CORS: process.env.CORS === 'true' || false,
   CORS_HEADERS: process.env.CORS_HEADERS || ['Link'],

@@ -44,6 +44,10 @@ dbgeo.defaults = {
 
 // Format the geographic response with the required geo format
 const formatGeo = (body, outputFormat) => new Promise((resolve, reject) => {
+  // Check that body is an array, required by dbgeo.parse
+  if (Object.prototype.toString.call( body ) !== '[object Array]'){
+    body = [body]; // Force to array
+  }
 	dbgeo.parse(body, { outputFormat }, (err, formatted) => {
 		if (err) reject(err);
 		resolve(formatted);

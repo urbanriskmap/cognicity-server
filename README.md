@@ -15,6 +15,10 @@ Server configuration parameters are stored in a configuration file which is pars
 * `AUTH0_SECRET`: Auth0 secret (NOTE: this is mandatory and no default value)
 * `BODY_LIMIT`: Maximum body size POST/PUT/PATCH (default: `100kb`)
 * `CACHE`: Should caching be enabled? (default: `false`)
+* `CACHE_DURATION_CARDS`: How long should cards be cached for? (default: '1 minute')
+* `CACHE_DURATION_FLOODS`: How long should floods be cached for? (default: '1 hour')
+* `CACHE_DURATION_FLOODS_STATES`: How long should flood states be cached for? (default: '1 hour')
+* `CACHE_DURATION_INFRASTRUCTURE`: How long should infrastructure be cached for? (default: '1 hour')
 * `COMPRESS`: Should the server gzip compress results? (default: `false`)
 * `CORS`: Should Cross Object Resource Sharing (CORS) be enabled (default: `false`)
 * `CORS_HEADERS`: CORS headers to use (default: `[Link]`)
@@ -41,6 +45,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `PORT`: Which port should the application run on (default: `8001`)
 * `REGION_CODES`: Which region codes are supported (as comma separated list) (default: `jbd,bdg,sby`)
 * `RESPONSE_TIME`: Should the server return an `X-Response-Time` header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: `false`)
+* `SECURE_AUTH0`: Whether Auth0 JWT token security should be applied to secure routes (default: `false`)
 
 A few points to note on config:
 

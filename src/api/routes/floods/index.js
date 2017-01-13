@@ -102,7 +102,6 @@ export default ({ config, db, logger }) => {
   );
 
 	// Update the flood status of a local area
-	// TODO: Pass username through to DB
 	api.put('/:localAreaId', jwtCheck,
 		validate({
 			params: { localAreaId: Joi.number().integer().required() },
@@ -113,7 +112,7 @@ export default ({ config, db, logger }) => {
 				username: Joi.string().required()
 			}
 		}),
-		(req, res, next) => floods(config, db, logger).updateREMState(req.params.localAreaId, req.body.state)
+		(req, res, next) => floods(config, db, logger).updateREMState(req.params.localAreaId, req.body.state, req.query.username)
 			.then(() => {
 				clearCache();
 				res.status(200).json({localAreaId: req.params.localAreaId, state: req.body.state, updated: true});
@@ -125,7 +124,6 @@ export default ({ config, db, logger }) => {
   );
 
 	// Remove the flood status of a local and add a log entry for audit
-	// TODO: Pass username through to DB
 	api.delete('/:localAreaId', jwtCheck,
 		validate({
 			params: { localAreaId: Joi.number().integer().required() },
@@ -133,7 +131,7 @@ export default ({ config, db, logger }) => {
 				username: Joi.string().required()
 			}
 		}),
-		(req, res, next) => floods(config, db, logger).clearREMState(req.params.localAreaId)
+		(req, res, next) => floods(config, db, logger).clearREMState(req.params.localAreaId, req.query.username)
 			.then(() => {
 				clearCache();
 				res.status(200).json({localAreaId: req.params.localAreaId, state: null, updated: true})

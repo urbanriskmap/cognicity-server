@@ -16,12 +16,12 @@ let cache = apicache.middleware;
 const cacheResponse = (duration) => cache(duration, config.CACHE);
 
 // Configure our JWT checker
-// TODO: Move to single auth0 mechanism once they support SPA auth using API
-/*
-secret: new Buffer(config.AUTH0_SECRET, 'base64'),
-audience: config.AUTH0_CLIENT_ID
-*/
 const jwtCheck = jwt({
+  secret: new Buffer(config.AUTH0_SECRET),
+  audience: config.AUTH0_CLIENT_ID
+});
+// TODO: Move to single auth0 mechanism once they support SPA auth using API
+/*const jwtCheck = jwt({
   credentialsRequired: config.SECURE_AUTH0,
   secret: jwks.expressJwtSecret({
       cache: true,
@@ -32,7 +32,7 @@ const jwtCheck = jwt({
   audience: config.AUTH0_AUDIENCE,
   issuer: config.AUTH0_ISSUER,
   algorithms: ['RS256']
-});
+});*/
 
 // Setup dbgeo
 dbgeo.defaults = {

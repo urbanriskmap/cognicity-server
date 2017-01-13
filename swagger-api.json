@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2016-12-06T23:04:54Z",
+    "version": "2017-01-13T15:33:17Z",
     "title": "cognicity"
   },
   "host": "data.petabencana.id",
@@ -9,7 +9,62 @@
     "https"
   ],
   "paths": {
+    "/": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "type": "http_proxy"
+        }
+      }
+    },
     "/cards": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id/cards",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "type": "http_proxy"
+        }
+      },
       "options": {
         "consumes": [
           "application/json"
@@ -55,7 +110,7 @@
         }
       }
     },
-    "/cards/{cardId+}": {
+    "/cards/{cardId}": {
       "options": {
         "consumes": [
           "application/json"
@@ -112,24 +167,340 @@
             "type": "string"
           }
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "404 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "409": {
+            "description": "409 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "400": {
+              "statusCode": "400",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "404": {
+              "statusCode": "404",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "409": {
+              "statusCode": "409",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "500": {
+              "statusCode": "500",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id/cards/{cardId}",
+          "requestParameters": {
+            "integration.request.path.cardId": "method.request.path.cardId"
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "ANY",
+          "type": "http"
+        }
+      }
+    },
+    "/cards/{cardId}/images": {
+      "post": {
+        "consumes": [
+          "image/jpeg",
+          "image/png",
+          "image/gif"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "cardId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "404 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "409": {
+            "description": "409 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            ".*\\\"statusCode\\\":400.*": {
+              "statusCode": "400",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "responseTemplates": {
+                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
+              }
+            },
+            ".*\\\"statusCode\\\":404.*": {
+              "statusCode": "404",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "responseTemplates": {
+                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
+              }
+            },
+            ".*\\\"statusCode\\\":409.*": {
+              "statusCode": "409",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "responseTemplates": {
+                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
+              }
+            },
+            ".*\\\"statusCode\\\":50*.*": {
+              "statusCode": "500",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "responseTemplates": {
+                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
+              }
+            }
+          },
+          "requestTemplates": {
+            "image/png": "{\n\"cardId\": \"$input.params('cardId')\",\n\"contentType\": \"image/png\",\n\"base64Image\": \"$input.body\"\n}",
+            "image/jpeg": "{\n\"cardId\": \"$input.params('cardId')\",\n\"contentType\": \"image/jpeg\",\n\"base64Image\": \"$input.body\"\n}",
+            "image/gif": "{\n\"cardId\": \"$input.params('cardId')\",\n\"contentType\": \"image/gif\",\n\"base64Image\": \"$input.body\"\n}"
+          },
+          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:cognicity-lambda-cards/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'POST,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/cities": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "geoformat",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
               "statusCode": "200"
             }
           },
-          "uri": "https://api-server.petabencana.id/cards/{cardId}",
-          "requestParameters": {
-            "integration.request.path.cardId": "method.request.path.cardId"
+          "uri": "https://${stageVariables.env}.petabencana.id/cities",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "type": "http_proxy"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
           },
           "passthroughBehavior": "when_no_match",
-          "httpMethod": "ANY",
-          "cacheNamespace": "v4ugo8",
-          "cacheKeyParameters": [
-            "method.request.path.cardId"
-          ],
-          "type": "http_proxy"
+          "type": "mock"
         }
       }
     },
@@ -197,6 +568,11 @@
             }
           }
         },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
@@ -206,7 +582,7 @@
               }
             }
           },
-          "uri": "https://api-server.petabencana.id/feeds/qlue",
+          "uri": "https://${stageVariables.env}.petabencana.id/feeds/qlue",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "type": "http"
@@ -262,6 +638,26 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "geoformat",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "200 response",
@@ -284,9 +680,20 @@
               }
             }
           },
-          "uri": "https://api-server.petabencana.id/floodgauges/",
+          "uri": "https://${stageVariables.env}.petabencana.id/floodgauges",
+          "requestParameters": {
+            "integration.request.querystring.city": "method.request.querystring.city",
+            "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
+            "integration.request.querystring.format": "method.request.querystring.format"
+          },
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
+          "cacheNamespace": "so358j",
+          "cacheKeyParameters": [
+            "method.request.querystring.city",
+            "method.request.querystring.format",
+            "method.request.querystring.geoformat"
+          ],
           "type": "http"
         }
       },
@@ -386,6 +793,12 @@
         ],
         "parameters": [
           {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -399,7 +812,7 @@
               "statusCode": "200"
             }
           },
-          "uri": "https://api-server.petabencana.id/floodgauges/{id}",
+          "uri": "https://${stageVariables.env}.petabencana.id/floodgauges/{id}",
           "requestParameters": {
             "integration.request.path.id": "method.request.path.id"
           },
@@ -407,7 +820,8 @@
           "httpMethod": "ANY",
           "cacheNamespace": "p829iq",
           "cacheKeyParameters": [
-            "method.request.path.id"
+            "method.request.path.id",
+            "method.request.querystring.format"
           ],
           "type": "http_proxy"
         }
@@ -417,6 +831,32 @@
       "get": {
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "minimum_state",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "geoformat",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
@@ -440,7 +880,116 @@
               }
             }
           },
-          "uri": "https://api-server.petabencana.id/floods/",
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/",
+          "requestParameters": {
+            "integration.request.querystring.city": "method.request.querystring.city",
+            "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
+            "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state",
+            "integration.request.querystring.format": "method.request.querystring.format"
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "type": "http"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/floods/states": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "minimum_state",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/states",
+          "requestParameters": {
+            "integration.request.querystring.city": "method.request.querystring.city",
+            "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state",
+            "integration.request.querystring.format": "method.request.querystring.format"
+          },
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "type": "http"
@@ -542,6 +1091,12 @@
         ],
         "parameters": [
           {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -555,7 +1110,7 @@
               "statusCode": "200"
             }
           },
-          "uri": "https://api-server.petabencana.id/floods/{id}",
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/{id}",
           "requestParameters": {
             "integration.request.path.id": "method.request.path.id"
           },
@@ -563,7 +1118,8 @@
           "httpMethod": "ANY",
           "cacheNamespace": "8q9uet",
           "cacheKeyParameters": [
-            "method.request.path.id"
+            "method.request.path.id",
+            "method.request.querystring.format"
           ],
           "type": "http_proxy"
         }
@@ -670,6 +1226,24 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "geoformat",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {},
@@ -679,7 +1253,7 @@
               "statusCode": "200"
             }
           },
-          "uri": "https://api-server.petabencana.id/infrastructure/{type}",
+          "uri": "https://${stageVariables.env}.petabencana.id/infrastructure/{type}",
           "requestParameters": {
             "integration.request.path.type": "method.request.path.type"
           },
@@ -687,7 +1261,10 @@
           "httpMethod": "ANY",
           "cacheNamespace": "qtdnlp",
           "cacheKeyParameters": [
-            "method.request.path.type"
+            "method.request.path.type",
+            "method.request.querystring.city",
+            "method.request.querystring.format",
+            "method.request.querystring.geoformat"
           ],
           "type": "http_proxy"
         }
@@ -697,6 +1274,26 @@
       "get": {
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "geoformat",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
@@ -720,7 +1317,12 @@
               }
             }
           },
-          "uri": "https://api-server.petabencana.id/reports/",
+          "uri": "https://${stageVariables.env}.petabencana.id/reports",
+          "requestParameters": {
+            "integration.request.querystring.city": "method.request.querystring.city",
+            "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
+            "integration.request.querystring.format": "method.request.querystring.format"
+          },
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "type": "http"
@@ -822,6 +1424,12 @@
         ],
         "parameters": [
           {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -835,19 +1443,114 @@
               "statusCode": "200"
             }
           },
-          "uri": "https://api-server.petabencana.id/reports/{id}",
+          "uri": "https://${stageVariables.env}.petabencana.id/reports/{id}",
           "requestParameters": {
             "integration.request.path.id": "method.request.path.id"
           },
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
-          "cacheNamespace": "newhip",
+          "cacheNamespace": "5tep32",
           "cacheKeyParameters": [
             "method.request.path.id"
           ],
           "type": "http_proxy"
         }
       }
+    },
+    "/twilio": {
+      "post": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            ".*": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "responseTemplates": {
+                "text/xml": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n$errorMessageObj.message\n"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/x-www-form-urlencoded": "{\n        \"reqbody\":\"$input.path('$')\"\n}"
+          },
+          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:twilio/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'POST,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header"
     }
   },
   "definitions": {
@@ -859,6 +1562,9 @@
   "x-amazon-apigateway-binary-media-types": [
     "application/gzip",
     "application/x-gzip",
-    "application/x-compressed"
+    "application/x-compressed",
+    "image/png",
+    "image/jpeg",
+    "image/gif"
   ]
 }

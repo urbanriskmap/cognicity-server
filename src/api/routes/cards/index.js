@@ -26,7 +26,7 @@ export default ({ config, db, logger }) => {
 	let api = Router();
 
 	// Create a new card and if successful return generated cardId
-	api.post('/', jwtCheck,
+	api.post('/',
 		validate({
 			body: Joi.object().keys({
 				username: Joi.string().required(),
@@ -79,7 +79,7 @@ export default ({ config, db, logger }) => {
 	);
 
 	// Update a card record with a report
-	api.put('/:cardId', jwtCheck, validate({
+	api.put('/:cardId', validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200).required(),
@@ -126,7 +126,7 @@ export default ({ config, db, logger }) => {
 	);
 
 	// Update a card report with new details including the image URL
-	api.patch('/:cardId', jwtCheck, validate({
+	api.patch('/:cardId', validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
 			water_depth: Joi.number().integer().min(0).max(200),

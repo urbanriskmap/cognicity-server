@@ -17,7 +17,7 @@ export default ({ config, db, logger }) => {
 	// Create a new qlue record in the database
 	// TODO: What is mandatory around title / text, any rules AND/OR?
 	// TODO: Bulk endpoint for multiple POSTs
-	api.post('/qlue', jwtCheck, validate({
+	api.post('/qlue', validate({
 			body: Joi.object().keys({
 				post_id: Joi.number().integer().required(),
 				created_at: Joi.date().iso().required(),
@@ -40,10 +40,10 @@ export default ({ config, db, logger }) => {
 			})
 	);
 
-	// Create a new qlue record in the database
+	// Create a new detik record in the database
 	// TODO: What is mandatory around title / text, any rules AND/OR?
 	// TODO: Bulk endpoint for multiple POSTs
-	api.post('/detik', jwtCheck, validate({
+	api.post('/detik', validate({
 			body: Joi.object().keys({
 				contribution_id: Joi.number().integer().required(),
 				created_at: Joi.date().iso().required(),

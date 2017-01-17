@@ -48,7 +48,7 @@ export default (config, db, logger) => ({
 	}),
 
 	// Update the REM state and append to the log
-	updateREMState: (localAreaId, state) => new Promise((resolve, reject) => {
+	updateREMState: (localAreaId, state, username) => new Promise((resolve, reject) => {
 
 		// Setup a timestamp with current date/time in ISO format
 		let timestamp = (new Date).toISOString();
@@ -67,8 +67,7 @@ export default (config, db, logger) => ({
 				query: `INSERT INTO ${config.TABLE_REM_STATUS_LOG}
 					( local_area, state, changed, username )
 					VALUES ( $1, $2, $3, $4 )`,
-				values: [ localAreaId, state, timestamp, 'rem' ]
-				// TODO: Get username from token
+				values: [ localAreaId, state, timestamp, username ]
 			}
 		]
 
@@ -84,7 +83,7 @@ export default (config, db, logger) => ({
 	}),
 
 	// Remove the REM state record and append to the log
-	clearREMState: (localAreaId) => new Promise((resolve, reject) => {
+	clearREMState: (localAreaId, username) => new Promise((resolve, reject) => {
 
 		// Setup a timestamp with current date/time in ISO format
 		let timestamp = (new Date).toISOString();
@@ -100,8 +99,7 @@ export default (config, db, logger) => ({
 				query: `INSERT INTO ${config.TABLE_REM_STATUS_LOG}
 					( local_area, state, changed, username )
 					VALUES ( $1, $2, $3, $4 )`,
-				values: [ localAreaId, null, timestamp, 'rem' ]
-				// TODO: Get username from token
+				values: [ localAreaId, null, timestamp, username ]
 			}
 		]
 

@@ -58,3 +58,7 @@ Run `npm run -s build` to build.
 
 ### Development
 Run `npm run dev` to start the development server for local testing.
+
+### API Notes
+Full API documentation at https://docs.petabencana.id, here are notes specifically related to development
+- dbgeo expects time stamps from database to be in UTC (i.e. not a local timezone)

@@ -73,8 +73,7 @@ const init = () => new Promise((resolve, reject) => {
 	config.COMPRESS && !config.CACHE && app.use(compression());
 
 	// Provide CORS support (not required if behind API gateway)
-	//config.CORS && app.use(cors());
-	app.use(cors());
+	config.CORS && app.use(cors({ exposedHeaders: config.CORS_HEADERS }));
 
 	// Provide response time header in response
 	config.RESPONSE_TIME && app.use(responseTime());

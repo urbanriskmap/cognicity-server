@@ -7,7 +7,7 @@ export default (config, db, logger) => ({
 	all: (city) => new Promise((resolve, reject) => {
 
 		// Setup query
-		let query = `SELECT pkey, created_at at time zone 'ICT' created_at, source,
+		let query = `SELECT pkey, created_at at time zone 'IST' created_at, source,
 			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
 			FROM ${config.TABLE_REPORTS}
 			WHERE created_at >= to_timestamp($1)

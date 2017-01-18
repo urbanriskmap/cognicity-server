@@ -13,6 +13,16 @@ import validate from 'celebrate';
 // Import ID generator
 import shortid from 'shortid';
 
+// Import image upload capabilities
+import AWS from 'aws-sdk';
+var s3 = new AWS.S3(
+  {
+    accessKeyId : process.env.accessKeyId || '' ,
+    secretAccessKey : process.env.secretAccessKey  || ''
+  });
+
+
+
 // Caching
 import apicache from 'apicache';
 const CACHE_GROUP_CARDS = '/cards';
@@ -124,6 +134,32 @@ export default ({ config, db, logger }) => {
 			}
 		}
 	);
+
+  //Gives an s3 signed url for the frontend to upload an image to
+  api.get('/:cardId/images', validate({
+    params: { cardId: Joi.string().min(7).max(14).required() }
+  }),
+  (req, res, next) => {
+    let s3params = {
+      Bucket: 'mapchennai',
+      Key: req.params.cardId + ".png",
+      ContentType:req.query.file_type
+    };
+    s3.getSignedUrl('putObject', s3params, (err, data) => {
+      if (err){
+        logger.error('could not get signed url from S3');
+        logger.error(err);
+      } else {
+        var returnData = {
+          signedRequest : data,
+          url: "https://"+s3params.Bucket + ".s3.amazonaws.com/" + s3params.Key
+        };
+        logger.debug( "s3 signed request: " + returnData.signedRequest);
+        res.write(JSON.stringify(returnData));
+        res.end();
+      }
+    });
+  });
 
 	// Update a card report with new details including the image URL
 	api.patch('/:cardId', jwtCheck, validate({

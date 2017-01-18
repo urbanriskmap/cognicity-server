@@ -18,7 +18,9 @@ import AWS from 'aws-sdk';
 var s3 = new AWS.S3(
   {
     accessKeyId : process.env.accessKeyId || '' ,
-    secretAccessKey : process.env.secretAccessKey  || ''
+    secretAccessKey : process.env.secretAccessKey  || '',
+    signatureVersion: 'v4',
+    region: 'ap-south-1' 
   });
 
 
@@ -142,7 +144,7 @@ export default ({ config, db, logger }) => {
   (req, res, next) => {
     let s3params = {
       Bucket: 'mapchennai',
-      Key: req.params.cardId + ".png",
+      Key: 'resized/' + req.params.cardId + ".png",
       ContentType:req.query.file_type
     };
     s3.getSignedUrl('putObject', s3params, (err, data) => {
@@ -152,11 +154,33 @@ export default ({ config, db, logger }) => {
       } else {
         var returnData = {
           signedRequest : data,
-          url: "https://"+s3params.Bucket + ".s3.amazonaws.com/" + s3params.Key
+          url: 'https://s3.ap-south-1.amazonaws.com/mapchennai/' + s3params.Key
         };
-        logger.debug( "s3 signed request: " + returnData.signedRequest);
-        res.write(JSON.stringify(returnData));
-        res.end();
+        //write the url into the db under image_url for this card 
+
+        cards(config, db, logger).byCardId(req.params.cardId)
+          .then((card) => {
+            if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId,
+              message: `No card exists with id '${req.params.cardId}'` })
+            else { 
+              // Try and submit the report and update the card
+              cards(config, db, logger).updateReport(card, {image_url: returnData.url})
+              .then((data) => {
+                console.log(data);
+                clearCache();
+                logger.debug( "s3 signed request: " + returnData.signedRequest);
+                res.write(JSON.stringify(returnData));
+                res.end();
+                //res.status(200).json({ statusCode: 200, cardId: req.params.cardId, updated: true });
+              })
+              .catch((err) => {
+                logger.error(err);
+                next(err);
+              })
+            }
+
+
+          })
       }
     });
   });

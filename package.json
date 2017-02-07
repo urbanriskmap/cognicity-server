@@ -37,7 +37,7 @@
     "celebrate": "^4.0.1",
     "compression": "^1.6.2",
     "cors": "^2.8.1",
-    "dbgeo": "^1.0.0",
+    "dbgeo": "^1.0.1",
     "dotenv": "^4.0.0",
     "express": "^4.14.1",
     "express-jwt": "^5.1.0",

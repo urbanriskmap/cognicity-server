@@ -20,7 +20,7 @@ export default (config, db, logger) => ({
 
 		// Execute
 		logger.debug(query, values);
-		db.any(query, values).timeout(config.DB_TIMEOUT)
+		db.any(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
 	}),
@@ -39,7 +39,7 @@ export default (config, db, logger) => ({
 
 		// Execute
 		logger.debug(query, values);
-		db.oneOrNone(query, values).timeout(config.DB_TIMEOUT)
+		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
 	})

@@ -9,14 +9,14 @@ const pgp = require('pg-promise')({
 export default (config, logger) => new Promise((resolve, reject) => {
 
 	// Build the connection string
-	const cn = `postgres://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOSTNAME}:${config.DB_PORT}/${config.DB_NAME}?ssl=${config.DB_SSL}`;
+	const cn = `postgres://${config.PGUSERNAME}:${config.PGPASSWORD}@${config.PGHOST}:${config.PGPORT}/${config.PGDATABASE}?ssl=${config.PGSSL}`;
   logger.debug(cn);
 
 	// Setup the connection
 	let db = pgp(cn);
 
 	// Make sure we can connect, if so resolve, if not reject
-	db.proc('version').timeout(config.DB_TIMEOUT)
+	db.proc('version').timeout(config.PGTIMEOUT)
 		.then(() => resolve(db))
 		.catch((err) => {
 			logger.error(err);

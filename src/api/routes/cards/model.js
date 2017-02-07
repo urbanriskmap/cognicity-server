@@ -15,7 +15,7 @@ export default (config, db, logger) => ({
 
 		// Execute
 		logger.debug(query, values);
-		db.oneOrNone(query, values).timeout(config.DB_TIMEOUT)
+		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
 	}),
@@ -40,7 +40,7 @@ export default (config, db, logger) => ({
 
 		// Execute
 		logger.debug(query, values);
-		db.oneOrNone(query, values).timeout(config.DB_TIMEOUT)
+		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
 	}),
@@ -76,7 +76,7 @@ export default (config, db, logger) => ({
 		// Execute in a transaction as both INSERT and UPDATE must happen together
 		db.tx((t) => {
 			return t.batch(queries.map((query) => t.none(query.query, query.values)))
-		}).timeout(config.DB_TIMEOUT)
+		}).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
 	}),
@@ -110,7 +110,7 @@ export default (config, db, logger) => ({
 		// Execute in a transaction as both INSERT and UPDATE must happen together
 		db.tx((t) => {
 			return t.batch(queries.map((query) => t.none(query.query, query.values)))
-		}).timeout(config.DB_TIMEOUT)
+		}).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
 	})

@@ -11,7 +11,7 @@ export default (config, db, logger) => ({
 
 		// Execute
 		logger.debug(query);
-		db.any(query).timeout(config.DB_TIMEOUT)
+		db.any(query).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
 			.catch((err) => reject(err))
 	})

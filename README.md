@@ -28,7 +28,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `PGPORT`: Postgres DB port (default: `5432`)
 * `PGSSL`: SSL enabled on Postgres DB connection? (default: `false`)
 * `PGTIMEOUT`: Max duration on DB calls before timeout (in milliseconds) (default: `5000` i.e. 5 seconds)
-* `PGUSERNAME`: Postgres DB username (default: `postgres`)
+* `PGUSER`: Postgres DB username (default: `postgres`)
 * `FORMAT_DEFAULT`: Which format to return results in by default (default: `json`)
 * `FORMATS`: Formats supported by the system (as comma separated list) (default: `json,xml`)
 * `GEO_FORMAT_DEFAULT`: Which format to return geographic results in by default (default: `topojson`)

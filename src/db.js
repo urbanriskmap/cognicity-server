@@ -9,7 +9,7 @@ const pgp = require('pg-promise')({
 export default (config, logger) => new Promise((resolve, reject) => {
 
 	// Build the connection string
-	const cn = `postgres://${config.PGUSERNAME}:${config.PGPASSWORD}@${config.PGHOST}:${config.PGPORT}/${config.PGDATABASE}?ssl=${config.PGSSL}`;
+	const cn = `postgres://${config.PGUSER}:${config.PGPASSWORD}@${config.PGHOST}:${config.PGPORT}/${config.PGDATABASE}?ssl=${config.PGSSL}`;
   logger.debug(cn);
 
 	// Setup the connection

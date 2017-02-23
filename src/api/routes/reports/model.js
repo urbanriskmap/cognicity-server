@@ -4,7 +4,7 @@ export default (config, db, logger) => ({
 
 	// Return all reports within the defined max period
 	// Optional: city (Petabencana.id Instance Region 3 letter code)
-	all: (city) => new Promise((resolve, reject) => {
+	all: (city,timeperiod) => new Promise((resolve, reject) => {
 
 		// Setup query
 		let query = `SELECT pkey, created_at, source,
@@ -15,7 +15,12 @@ export default (config, db, logger) => ({
 			ORDER BY created_at DESC LIMIT $3`;
 
 		// Setup values
-		let timeWindow = (Date.now() / 1000) - config.API_REPORTS_TIME_WINDOW;
+		if (timeperiod) {
+			var timeWindow = Math.min(Number(timeperiod),config.API_REPORTS_TIME_WINDOW_MAX));
+		} else {
+			var timeWindow = (Date.now() / 1000) - config.API_REPORTS_TIME_WINDOW;
+		}
+
 		let values = [ timeWindow, city, config.API_REPORTS_LIMIT ]
 
 		// Execute

@@ -18,6 +18,7 @@ export default ({ config, db, logger }) => {
 		validate({
 			query: {
 				city: Joi.any().valid(config.REGION_CODES),
+				timeperiod: Joi.number().integer().positive().max(config.API_REPORTS_TIME_WINDOW_MAX),
 				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
 				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT)
 			}

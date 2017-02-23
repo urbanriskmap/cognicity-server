@@ -17,10 +17,12 @@ export default (config, db, logger) => ({
 		// Setup values
 		if (timeperiod) {
 			var timeWindow = Math.min(Number(timeperiod),config.API_REPORTS_TIME_WINDOW_MAX);
+			logger.debug(timeWindow);
 		} else {
 			var timeWindow = (Date.now() / 1000) - config.API_REPORTS_TIME_WINDOW;
 		}
 
+		logger.debug(timeWindow);
 		let values = [ timeWindow, city, config.API_REPORTS_LIMIT ]
 
 		// Execute

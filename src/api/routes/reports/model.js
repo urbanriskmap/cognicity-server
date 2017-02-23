@@ -16,7 +16,7 @@ export default (config, db, logger) => ({
 
 		// Setup values
 		if (timeperiod) {
-			var timeWindow = Math.min(Number(timeperiod),config.API_REPORTS_TIME_WINDOW_MAX));
+			var timeWindow = Math.min(Number(timeperiod),config.API_REPORTS_TIME_WINDOW_MAX);
 		} else {
 			var timeWindow = (Date.now() / 1000) - config.API_REPORTS_TIME_WINDOW;
 		}

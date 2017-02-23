@@ -23,7 +23,7 @@ export default ({ config, db, logger }) => {
 				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT)
 			}
 		}),
-		(req, res, next) => reports(config, db, logger).all(req.query.city)
+		(req, res, next) => reports(config, db, logger).all(req.query.city,req.query.timeperiod)
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);

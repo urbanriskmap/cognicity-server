@@ -18,11 +18,12 @@ export default ({ config, db, logger }) => {
 		validate({
 			query: {
 				city: Joi.any().valid(config.REGION_CODES),
+				timeperiod: Joi.number().integer().positive().max(config.API_REPORTS_TIME_WINDOW_MAX).default(config.API_REPORTS_TIME_WINDOW),
 				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
 				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT)
 			}
 		}),
-		(req, res, next) => reports(config, db, logger).all(req.query.city)
+		(req, res, next) => reports(config, db, logger).all(req.query.timeperiod, req.query.city)
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);

@@ -2,9 +2,12 @@ import Promise from 'bluebird';
 
 export default (config, db, logger) => ({
 
-	// Return all reports within the defined max period
-	// Optional: city (Petabencana.id Instance Region 3 letter code)
-	all: (city) => new Promise((resolve, reject) => {
+	/**
+	 * Return all reports within a defined time period, and optionally city
+	 * @param {integer} timeperiod Length of time period in seconds
+	 * @param {string} city Optional, instance region code (e.g. 'jbd')
+	 */
+	all: (timeperiod, city) => new Promise((resolve, reject) => {
 
 		// Setup query
 		let query = `SELECT pkey, created_at, source,
@@ -14,9 +17,9 @@ export default (config, db, logger) => ({
 			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
 			ORDER BY created_at DESC LIMIT $3`;
 
-		// Setup values
-		let timeWindow = (Date.now() / 1000) - config.API_REPORTS_TIME_WINDOW;
-		let values = [ timeWindow, city, config.API_REPORTS_LIMIT ]
+		var timeWindow = (Date.now() / 1000) - timeperiod;
+
+		let values = [ timeWindow, city, config.API_REPORTS_LIMIT ];
 
 		// Execute
 		logger.debug(query, values);

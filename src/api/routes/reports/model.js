@@ -14,12 +14,7 @@ export default (config, db, logger) => ({
 			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
 			ORDER BY created_at DESC LIMIT $3`;
 
-		// Setup values
-		if (timeperiod) {
-			var timeWindow = (Date.now() / 1000) - Math.min(Number(timeperiod),config.API_REPORTS_TIME_WINDOW_MAX);
-		} else {
-			var timeWindow = (Date.now() / 1000) - config.API_REPORTS_TIME_WINDOW;
-		}
+		var timeWindow = (Date.now() / 1000) - timeperiod);
 
 		let values = [ timeWindow, city, config.API_REPORTS_LIMIT ]
 

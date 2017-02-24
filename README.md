@@ -22,13 +22,13 @@ Server configuration parameters are stored in a configuration file which is pars
 * `COMPRESS`: Should the server gzip compress results? (default: `false`)
 * `CORS`: Should Cross Object Resource Sharing (CORS) be enabled (default: `false`)
 * `CORS_HEADERS`: CORS headers to use (default: `[Link]`)
-* `DB_HOSTNAME`: Postgres DB hostname (default: `127.0.0.1`)
-* `DB_NAME`: Postgres DB database name (default: `cognicity`)
-* `DB_PASSWORD`: Postgres DB password (default: `p@ssw0rd`)
-* `DB_PORT`: Postgres DB port (default: `5432`)
-* `DB_SSL`: SSL enabled on Postgres DB connection? (default: `false`)
-* `DB_TIMEOUT`: Max duration on DB calls before timeout (in milliseconds) (default: `5000` i.e. 5 seconds)
-* `DB_USERNAME`: Postgres DB username (default: `postgres`)
+* `PGHOST`: Postgres DB hostname (default: `127.0.0.1`)
+* `PGDATABASE`: Postgres DB database name (default: `cognicity`)
+* `PGPASSWORD`: Postgres DB password (default: `p@ssw0rd`)
+* `PGPORT`: Postgres DB port (default: `5432`)
+* `PGSSL`: SSL enabled on Postgres DB connection? (default: `false`)
+* `PGTIMEOUT`: Max duration on DB calls before timeout (in milliseconds) (default: `5000` i.e. 5 seconds)
+* `PGUSER`: Postgres DB username (default: `postgres`)
 * `FORMAT_DEFAULT`: Which format to return results in by default (default: `json`)
 * `FORMATS`: Formats supported by the system (as comma separated list) (default: `json,xml`)
 * `GEO_FORMAT_DEFAULT`: Which format to return geographic results in by default (default: `topojson`)
@@ -58,3 +58,7 @@ Run `npm run -s build` to build.
 
 ### Development
 Run `npm run dev` to start the development server for local testing.
+
+### API Notes
+Full API documentation at https://docs.petabencana.id, here are notes specifically related to development
+- dbgeo expects time stamps from database to be in UTC (i.e. not a local timezone)

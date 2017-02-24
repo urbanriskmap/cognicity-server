@@ -16,7 +16,7 @@ export default (config, db, logger) => ({
 
 		// Execute
 		logger.debug(query, values);
-		db.oneOrNone(query, values).timeout(config.DB_TIMEOUT)
+		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then(() => resolve({ post_id: body.post_id, created: true }))
 			.catch((err) => {
 				if (err.constraint === 'reports_post_id_key')
@@ -40,7 +40,7 @@ export default (config, db, logger) => ({
 
 		// Execute
 		logger.debug(query, values);
-		db.oneOrNone(query, values).timeout(config.DB_TIMEOUT)
+		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then(() => resolve({ contribution_id: body.contribution_id, created: true }))
 			.catch((err) => {
 				if (err.constraint === 'reports_contribution_id_key')

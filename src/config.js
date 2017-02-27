@@ -5,6 +5,8 @@ export default {
   API_FEEDS_QLUE_CITIES: (process.env.API_FEEDS_QLUE_CITIES || 'jabodetabek,bandung,surabaya').split(','),
   API_FEEDS_QLUE_DISASTER_TYPES: (process.env.API_FEEDS_QLUE_DISASTER_TYPES || 'flood').split(','),
   API_FEEDS_DETIK_DISASTER_TYPES: (process.env.API_FEEDS_DEIK_DISASTER_TYPES || 'flood').split(','),
+  API_FEEDS_ZURICH_CITIES: (process.env.ZURICH_FEEDS_QLUE_CITIES || 'jabodetabek,bandung,surabaya').split(','),
+  API_FEEDS_ZURICH_DISASTER_TYPES: (process.env.ZURICH_FEEDS_QLUE_DISASTER_TYPES || 'flood,fire,car_accident,power_failure,other').split(','),
   API_REPORTS_TIME_WINDOW: process.env.API_REPORTS_TIME_WINDOW || 3600,
   API_REPORTS_TIME_WINDOW_MAX: process.env.API_REPORTS_TIME_WINDOW_MAX || 604800, // 1w
   API_REPORTS_LIMIT: process.env.API_REPORTS_LIMIT,
@@ -51,6 +53,7 @@ export default {
   TABLE_FLOODGAUGE_REPORTS: process.env.TABLE_FLOODGAUGE_REPORTS || 'floodgauge.reports',
   TABLE_FEEDS_QLUE: process.env.TABLE_FEEDS_QLUE || 'qlue.reports',
   TABLE_FEEDS_DETIK: process.env.TABLE_FEEDS_DETIK || 'detik.reports',
+  TABLE_FEEDS_ZURICH: process.env.TABLE_FEEDS_DETIK || 'zurich.reports',
   TABLE_GRASP_CARDS: process.env.TABLE_GRASP_CARDS || 'grasp.cards',
   TABLE_GRASP_LOG: process.env.TABLE_GRASP_LOG || 'grasp.log',
   TABLE_GRASP_REPORTS: process.env.TABLE_GRASP_REPORTS || 'grasp.reports',

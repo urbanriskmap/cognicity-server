@@ -56,20 +56,20 @@ addZurichReport: (body) => new Promise((resolve, reject) => {
 
 	// Setup query
 	let query = `INSERT INTO ${config.TABLE_FEEDS_ZURICH}
-	(city, contribution_id, created_at, disaster_type, title, text, url, image_url, the_geom)
+	(city, post_id, created_at, disaster_type, title, text, url, image_url, the_geom)
 	VALUES ($1, $2, $3, $4, $5, $6, $7, $8, ST_SetSRID(ST_POINT($9, $10),4326))`;
 
 	// Setup values
-	let values = [ body.city, body.contribution_id, body.created_at, body.disaster_type, body.title, body.text,
+	let values = [ body.city, body.post_id, body.created_at, body.disaster_type, body.title, body.text,
 		body.url, body.image_url, body.location.longitude, body.location.latitude	]
 
 	// Execute
 	logger.debug(query, values);
 	db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
-		.then(() => resolve({ contribution_id: body.contribution_id, created: true }))
+		.then(() => resolve({ contribution_id: body.post_id, created: true }))
 		.catch((err) => {
-			if (err.constraint === 'reports_contribution_id_key')
-				resolve({ contribution_id: body.contribution_id, created: false, message: `${body.contribution_id} already exists in reports table`})
+			if (err.constraint === 'reports_post_id_key')
+				resolve({ contribution_id: body.post_id, created: false, message: `${body.post_id} already exists in reports table`})
 			else
 					reject(err)
 		})

@@ -1,7 +1,7 @@
 // Import dependencies
 import Promise from 'bluebird';
 import jwt from 'express-jwt';
-import jwks from 'jwks-rsa';
+// import jwks from 'jwks-rsa'; // See TODO below regarding Auth0 mechanism
 import dbgeo from 'dbgeo';
 
 // Import config

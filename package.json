@@ -1,6 +1,6 @@
 {
   "name": "cognicity-server",
-  "version": "3.0.0alpha",
+  "version": "3.0.0",
   "description": "Data Server for CogniCity",
   "main": "dist",
   "scripts": {
@@ -27,8 +27,8 @@
   },
   "repository": "https://github.com/urbanriskmap/cognicity-server-v3",
   "issues": "https://github.com/urbanriskmap/cognicity-server-v3/issues",
-  "author": "MIT Urban Risk Map Team",
-  "license": "MIT",
+  "author": "Tomas Holderness et al., MIT Urban Risk Lab",
+  "license": "GPL-3.0",
   "dependencies": {
     "api-error-handler": "^1.0.0",
     "apicache": "^0.8.3",

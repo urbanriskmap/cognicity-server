@@ -1,7 +1,7 @@
-## cognicity-server-v3
+## cognicity-server
 API Server for CogniCity
 
-[![Build Status](https://travis-ci.org/urbanriskmap/cognicity-server-v3.svg?branch=master)](https://travis-ci.org/urbanriskmap/cognicity-server-v3)
+[![Build Status](https://travis-ci.org/urbanriskmap/cognicity-server.svg?branch=master)](https://travis-ci.org/urbanriskmap/cognicity-server)
 
 ### Summary
 

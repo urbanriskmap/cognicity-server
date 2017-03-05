@@ -1,17 +1,36 @@
-## cognicity-server-v3
-API Server for Cognicity
+## cognicity-server
+API Server for CogniCity
 
-This is the NodeJS server which runs the Cognicity API used by the petabencana.id site.  ES6 Support is provided by Babel.
+[![Build Status](https://travis-ci.org/urbanriskmap/cognicity-server.svg?branch=master)](https://travis-ci.org/urbanriskmap/cognicity-server)
 
-**To Do**
-- Full README.md documentation to follow
+### Summary
 
+This is the NodeJS server which runs the CogniCity Data API used by Urban Risk Map instances, such as [PetaBencana.id](https://petabencana.id) site.  
+
+### Run
+ES6 Support is provided by Babel.
+
+1. Install requirements from the provided `package.json` by doing `npm install`.
+
+2. Copy the `sample.env` file to a local `.env` and fill-in the required parameters. This local file will be ignored by Git and so should be secret safe. Further details on configuration are described below.
+
+3. To run a local development instance of the server do `npm run dev`
 
 ### Configuration
-Server configuration parameters are stored in a configuration file which is parsed by index.js on startup. See config.js for full details example configuration. It is possible to run multiple server instances using different configuration files so long as a unique port is assigned to each instance.  For local development it is recommended that a `.env` file be created in the root directory rather than editing the config.js file directly - this file is specific to your local installation and is deliberately excluded from git to avoid checking sensitive information into Github.  A sample file has been provided, just rename this from sample.env to .env and edit the contents and you are good to go.  Any variable not defined in .env will pickup the default value below (also see config.js)—note that local environment variables will override both .env and config.js.  The following environment variables are currently supported:
+Server configuration parameters are stored in a configuration file which is parsed by index.js on startup. Local configuration parameters are imported from the `.env` into `src/config.js`.  See `config.js` for full details example configuration. Any variable not defined in `.env` will pickup the default value below (also see `config.js`)—note that local environment variables will override both `.env` and `config.js`.  The following environment variables are currently supported by the configurtion:
 
 * `APP_NAME`: Name of the application (default: `cognicity-server`)
+* `API_FEEDS_QLUE_CITIES`: Names of cities used by the Qlue data feed
+* `API_FEEDS_QLUE_DISASTER_TYPES`: Names of disaster types used by the Qlue data feed
+* `API_FEEDS_DETIK_DISASTER_TYPES`: Names of disaster types used by the Detik data feed
+* `API_REPORTS_TIME_WINDOW`: Time window for report data queries (default 1 hour)
+* `API_REPORTS_TIME_WINDOW_MAX`: Maximum limit for time window (default 1 week)
+* `API_REPORTS_LIMIT`: Total maximum number of reports to return in a single request
+* `API_FLOODGAUGE_REPORTS_TIME_WINDOW`: Time window for flood data (normally 12 hours)
+* `API_FLOODGAUGE_REPORTS_TIME_WINDOW`: Total maximum number of flood gauge records to return in a single request
+* `AUTH0_AUDIENCE`: Data API to be authenticated
 * `AUTH0_CLIENT_ID`: Auth0 client ID (NOTE: this is mandatory and no default value)
+* `AUTH0_ISSUER`: Web address of Auth0 instance
 * `AUTH0_SECRET`: Auth0 secret (NOTE: this is mandatory and no default value)
 * `BODY_LIMIT`: Maximum body size POST/PUT/PATCH (default: `100kb`)
 * `CACHE`: Should caching be enabled? (default: `false`)
@@ -35,6 +54,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `GEO_FORMATS`: Geographic formats supported by the system (as comma separated list) (default: `topojson,geojson,cap`)
 * `GEO_PRECISION`: Precision to use when rounding geographic coordinates (default: `10`)
 * `INFRASTRUCTURE_TYPES`: Infrastructure types supported (as comma separated list) (default: `floodgates,pumps,waterways`)
+* `LANGUAGES`: Supported languages
 * `LOG_CONSOLE`: In development mode we log to the console by default, in other environments this must be enabled if required by setting this parameter to `true` (default: `false`)
 * `LOG_DIR`: Which directory should logs be written to.  If blank, not supplied or the directory is not writable by the application this will default to the current directory
 * `LOG_JSON`: Should json format be used for logging (default: `false`)
@@ -46,19 +66,42 @@ Server configuration parameters are stored in a configuration file which is pars
 * `REGION_CODES`: Which region codes are supported (as comma separated list) (default: `jbd,bdg,sby`)
 * `RESPONSE_TIME`: Should the server return an `X-Response-Time` header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: `false`)
 * `SECURE_AUTH0`: Whether Auth0 JWT token security should be applied to secure routes (default: `false`)
+* `TABLE_FLOODGAUGE_REPORTS`: Postgres table name for flood-gauge reports
+* `TABLE_FEEDS_QLUE`: Postgres table name for Qlue feed
+* `TABLE_FEEDS_DETIK`: Postgres table name for Detik feed
+* `TABLE_GRASP_CARDS`: Postgres table name for Grasp Cards
+* `TABLE_GRASP_LOG`: Postgres table name for Grasp activity
+* `TABLE_GRASP_REPORTS`: Postgres table name for Grasp reports
+* `TABLE_INSTANCE_REGIONS`: Postgres table for operating regions
+* `TABLE_LOCAL_AREAS`: Postgres table for local areas data for each operating region
+* `TABLE_REM_STATUS`: Postgres table for current flood states from REM
+* `TABLE_REM_STATUS_LOG`: Postgres table for REM log
+* `TABLE_REPORTS`: Postgres table for reports
 
 A few points to note on config:
 
-* AWS Beanstalk: If you're deploying to [AWS Elastic Beanstalk](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html) you will need to configure environment variables for each of the above under Configuration -> Software configuration.
-
+* AWS Beanstalk: If you're deploying to [AWS Elastic Beanstalk](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html) you may need to configure environment variables for each of the above under Configuration -> Software configuration.
 
 ### Building
 Run `npm run -s build` to build.
 
+### Testing
+Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server-v3). Currently tests only run eslint.
 
-### Development
-Run `npm run dev` to start the development server for local testing.
+### Issue Tracking
+Issues are tracked using [GitHub](https://github.com/urbanriskmap/cognicity-server-v3/issues)
+
+### Release
+The release procedure is as follows:
+* Update the CHANGELOG.md file with the newly released version, date, and a high-level overview of changes. Commit the change.
+* Create a tag in git from the current head of master. The tag version should be the same as the version specified in the package.json file - this is the release version.
+* Update the version in the package.json file and commit the change.
+* Further development is now on the updated version number until the release process begins again.
 
 ### API Notes
-Full API documentation at https://docs.petabencana.id, here are notes specifically related to development
-- dbgeo expects time stamps from database to be in UTC (i.e. not a local timezone)
+Full API documentation at https://docs.petabencana.id. This documentation is stored in the [petabencana-docs](https://github.com/urbanriskmap/petabencana-docs) repository.
+
+- The dbgeo library expects timestamps from database to be in UTC (i.e. not a local timezone)
+
+### License
+See LICENSE.md

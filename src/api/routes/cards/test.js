@@ -18,7 +18,7 @@ const tests = [
       status: 200
     }
   }
-]
+];
 
 // Run the tests
 describe('GET /cards', () => {

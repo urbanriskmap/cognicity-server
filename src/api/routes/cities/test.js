@@ -11,7 +11,7 @@ const tests = [
     exp: {
       status: 200
     }
-  }]
+  }];
 
 // Run the tests
 describe('GET /cities', () => {

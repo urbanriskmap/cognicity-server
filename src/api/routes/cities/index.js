@@ -31,4 +31,4 @@ export default ({ config, db, logger }) => {
 	);
 
 	return api;
-}
+};

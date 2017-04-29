@@ -1,4 +1,4 @@
-require('dotenv').config({silent:true})
+require('dotenv').config({silent:true});
 
 export default {
   APP_NAME: process.env.APP_NAME || 'cognicity-server',
@@ -59,4 +59,4 @@ export default {
   TABLE_REM_STATUS: process.env.TABLE_REM_STATUS || 'cognicity.rem_status',
   TABLE_REM_STATUS_LOG: process.env.TABLE_REM_STATUS_LOG || 'cognicity.rem_status_log',
   TABLE_REPORTS: process.env.TABLE_REPORTS || 'cognicity.all_reports',
-}
+};

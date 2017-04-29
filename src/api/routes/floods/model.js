@@ -13,13 +13,13 @@ export default (config, db, logger) => ({
 			AND ($1 IS NULL OR area.instance_region_code=$1)`;
 
 		// Setup values
-		let values = [ city, minimum_state ]
+		let values = [ city, minimum_state ];
 
 		// Execute
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 
 	}),
 
@@ -34,16 +34,16 @@ export default (config, db, logger) => ({
 			(SELECT local_area, state, last_updated FROM ${config.TABLE_REM_STATUS}
 			WHERE state IS NOT NULL AND ($2 IS NULL OR state >= $2)) rs
 			ON la.pkey = rs.local_area
-			WHERE $1 IS NULL OR instance_region_code = $1`
+			WHERE $1 IS NULL OR instance_region_code = $1`;
 
 		// Setup values
-		let values = [ city, minimum_state ]
+		let values = [ city, minimum_state ];
 
 		// Execute
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 
 	}),
 
@@ -51,7 +51,7 @@ export default (config, db, logger) => ({
 	updateREMState: (localAreaId, state, username) => new Promise((resolve, reject) => {
 
 		// Setup a timestamp with current date/time in ISO format
-		let timestamp = (new Date).toISOString();
+		let timestamp = (new Date()).toISOString();
 
 		// Setup our queries
 		let queries = [
@@ -69,24 +69,24 @@ export default (config, db, logger) => ({
 					VALUES ( $1, $2, $3, $4 )`,
 				values: [ localAreaId, state, timestamp, username ]
 			}
-		]
+		];
 
 		// Log queries to debugger
 		for (let query of queries) logger.debug(query.query, query.values);
 
 		// Execute in a transaction as both INSERT and UPDATE must happen together
 		db.tx((t) => {
-			return t.batch(queries.map((query) => t.none(query.query, query.values)))
+			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	}),
 
 	// Remove the REM state record and append to the log
 	clearREMState: (localAreaId, username) => new Promise((resolve, reject) => {
 
 		// Setup a timestamp with current date/time in ISO format
-		let timestamp = (new Date).toISOString();
+		let timestamp = (new Date()).toISOString();
 
 		// Setup our queries
 		let queries = [
@@ -101,17 +101,17 @@ export default (config, db, logger) => ({
 					VALUES ( $1, $2, $3, $4 )`,
 				values: [ localAreaId, null, timestamp, username ]
 			}
-		]
+		];
 
 		// Log queries to debugger
 		for (let query of queries) logger.debug(query.query, query.values);
 
 		// Execute in a transaction as both INSERT and UPDATE must happen together
 		db.tx((t) => {
-			return t.batch(queries.map((query) => t.none(query.query, query.values)))
+			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	})
 
 });

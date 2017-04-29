@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 // XML builder used to create XML output
 import builder from 'xmlbuilder';
@@ -195,4 +195,4 @@ module.exports = class Cap {
 		return area;
 	}
 
-}
+};

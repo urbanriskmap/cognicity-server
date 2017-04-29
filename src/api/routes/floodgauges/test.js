@@ -30,7 +30,7 @@ const tests = [
       status: 404
     }
   }
-]
+];
 
 // Run the tests
 describe('GET /floodgauges', () => {

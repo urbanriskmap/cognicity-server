@@ -20,7 +20,7 @@ const CACHE_GROUP_CARDS = '/cards';
 // Function to clear out the cache
 const clearCache = () => {
 	apicache.clear(CACHE_GROUP_CARDS);
-}
+};
 
 export default ({ config, db, logger }) => {
 	let api = Router();
@@ -42,7 +42,7 @@ export default ({ config, db, logger }) => {
 				.catch((err) => {
 					logger.error(err);
 					next(err);
-				})
+				});
 		}
 	);
 
@@ -58,7 +58,7 @@ export default ({ config, db, logger }) => {
 				.catch((err) => {
 					logger.error(err);
 					next(err);
-				})
+				});
 		}
 	);
 
@@ -74,7 +74,7 @@ export default ({ config, db, logger }) => {
 				.catch((err) => {
 					logger.error(err);
 					next(err);
-				})
+				});
 		}
 	);
 
@@ -99,10 +99,10 @@ export default ({ config, db, logger }) => {
 				.then((card) => {
 					// If the card does not exist then return an error message
 					if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId,
-						message: `No card exists with id '${req.params.cardId}'` })
+						message: `No card exists with id '${req.params.cardId}'` });
 					// If the card already has received status then return an error message
 					else if (card && card.received) res.status(409).json({ statusCode: 409,
-						cardId: req.params.cardId, message: `Report already received for card '${req.params.cardId}'` })
+						cardId: req.params.cardId, message: `Report already received for card '${req.params.cardId}'` });
 					// We have a card and it has not yet had a report received
 					else {
 						// Try and submit the report and update the card
@@ -115,9 +115,9 @@ export default ({ config, db, logger }) => {
 							.catch((err) => {
 								logger.error(err);
 								next(err);
-							})
+							});
 					}
-				})
+				});
 			} catch(err) {
 				logger.error(err);
 				next(err);
@@ -141,7 +141,7 @@ export default ({ config, db, logger }) => {
 				.then((card) => {
 					// If the card does not exist then return an error message
 					if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId,
-						message: `No card exists with id '${req.params.cardId}'` })
+						message: `No card exists with id '${req.params.cardId}'` });
 					// We have a card
 					else {
 						// Try and submit the report and update the card
@@ -154,9 +154,9 @@ export default ({ config, db, logger }) => {
 							.catch((err) => {
 								logger.error(err);
 								next(err);
-							})
+							});
 					}
-				})
+				});
 			} catch(err) {
 				logger.error(err);
 				next(err);
@@ -165,4 +165,4 @@ export default ({ config, db, logger }) => {
 	);
 
 	return api;
-}
+};

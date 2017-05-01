@@ -20,7 +20,7 @@ var s3 = new AWS.S3(
     accessKeyId : process.env.accessKeyId || '' ,
     secretAccessKey : process.env.secretAccessKey  || '',
     signatureVersion: 'v4',
-    region: 'ap-south-1' 
+    region: 'ap-south-1'
   });
 
 
@@ -94,7 +94,17 @@ export default ({ config, db, logger }) => {
 	api.put('/:cardId', validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
-			water_depth: Joi.number().integer().min(0).max(200).required(),
+      disaster_type: Joi.string().valid(config.DISASTER_TYPES).required(),
+      card_data: Joi.object()
+        .keys({
+            flood_depth: Joi.number(),
+            report_type: Joi.string().valid(config.REPORT_TYPES).required()
+        })
+        .required()
+        .when('disaster_type', {
+            is: 'flood',
+            then: Joi.object({ flood_depth: Joi.number().integer().min(0).max(200).required() })		// b.c is required only when a is true
+        }),
 			text: Joi.string().allow(''),
 			image_url: Joi.string().allow(''),
 			created_at: Joi.date().iso().required(),
@@ -156,13 +166,13 @@ export default ({ config, db, logger }) => {
           signedRequest : data,
           url: 'https://s3.ap-south-1.amazonaws.com/mapchennai/' + s3params.Key
         };
-        //write the url into the db under image_url for this card 
+        //write the url into the db under image_url for this card
 
         cards(config, db, logger).byCardId(req.params.cardId)
           .then((card) => {
             if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId,
               message: `No card exists with id '${req.params.cardId}'` })
-            else { 
+            else {
               // Try and submit the report and update the card
               cards(config, db, logger).updateReport(card, {image_url: returnData.url})
               .then((data) => {

@@ -25,6 +25,10 @@ export default {
   CORS_HEADERS: process.env.CORS_HEADERS || ['Link'],
   DISASTER_TYPES: (process.env.DISASTER_TYPES || 'flood,prep').split(','),
   IMAGE_BUCKET: process.env.IMAGE_BUCKET || 'riskmap-image-uploads',
+  IMAGE_HOST: process.env.IMAGE_HOST ||
+  'images.riskmap.in',
+  AWS_REGION: process.env.AWS_REGION ||
+  'ap-south-1',
   PGHOST: process.env.PGHOST || '127.0.0.1',
   PGDATABASE: process.env.PGDATABASE || 'cognicity',
   PGPASSWORD: process.env.PGPASSWORD || 'p@ssw0rd',

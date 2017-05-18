@@ -154,7 +154,7 @@ export default ({ config, db, logger }) => {
   (req, res, next) => {
     let s3params = {
       Bucket: config.IMAGE_BUCKET,
-      Key: 'resized/' + req.params.cardId + ".jpg",
+      Key: 'originals/' + req.params.cardId + ".jpg",
       ContentType:req.query.file_type
     };
     s3.getSignedUrl('putObject', s3params, (err, data) => {
@@ -164,7 +164,7 @@ export default ({ config, db, logger }) => {
       } else {
         var returnData = {
           signedRequest : data,
-          url: 'https://s3.ap-south-1.amazonaws.com/' config.IMAGE_BUCKET+'/'+ s3params.Key
+          url: 'https://s3.'+config.AWS_REGION+'.amazonaws.com/' config.IMAGE_BUCKET+'/'+ s3params.Key
         };
         //write the url into the db under image_url for this card
 
@@ -174,7 +174,7 @@ export default ({ config, db, logger }) => {
               message: `No card exists with id '${req.params.cardId}'` })
             else {
               // Try and submit the report and update the card
-              cards(config, db, logger).updateReport(card, {image_url: returnData.url})
+              cards(config, db, logger).updateReport(card, {image_url: 'https://'+config.IMAGES_HOST+'/'+req.params.cardId+'.jpg' })
               .then((data) => {
                 console.log(data);
                 clearCache();

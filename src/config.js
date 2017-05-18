@@ -25,7 +25,7 @@ export default {
   CORS_HEADERS: process.env.CORS_HEADERS || ['Link'],
   DISASTER_TYPES: (process.env.DISASTER_TYPES || 'flood,prep').split(','),
   IMAGE_BUCKET: process.env.IMAGE_BUCKET || 'riskmap-image-uploads',
-  IMAGE_HOST: process.env.IMAGE_HOST ||
+  IMAGES_HOST: process.env.IMAGES_HOST ||
   'images.riskmap.in',
   AWS_REGION: process.env.AWS_REGION ||
   'ap-south-1',

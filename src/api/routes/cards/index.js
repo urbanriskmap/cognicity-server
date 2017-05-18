@@ -164,7 +164,7 @@ export default ({ config, db, logger }) => {
       } else {
         var returnData = {
           signedRequest : data,
-          url: 'https://s3.'+config.AWS_REGION+'.amazonaws.com/' config.IMAGE_BUCKET+'/'+ s3params.Key
+          url: 'https://s3.'+config.AWS_REGION+'.amazonaws.com/'+ config.IMAGE_BUCKET+'/'+ s3params.Key
         };
         //write the url into the db under image_url for this card
 

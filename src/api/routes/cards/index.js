@@ -153,8 +153,8 @@ export default ({ config, db, logger }) => {
   }),
   (req, res, next) => {
     let s3params = {
-      Bucket: 'mapchennai',
-      Key: 'resized/' + req.params.cardId + ".png",
+      Bucket: config.IMAGE_BUCKET,
+      Key: 'resized/' + req.params.cardId + ".jpg",
       ContentType:req.query.file_type
     };
     s3.getSignedUrl('putObject', s3params, (err, data) => {
@@ -164,7 +164,7 @@ export default ({ config, db, logger }) => {
       } else {
         var returnData = {
           signedRequest : data,
-          url: 'https://s3.ap-south-1.amazonaws.com/mapchennai/' + s3params.Key
+          url: 'https://s3.ap-south-1.amazonaws.com/' config.IMAGE_BUCKET+'/'+ s3params.Key
         };
         //write the url into the db under image_url for this card
 

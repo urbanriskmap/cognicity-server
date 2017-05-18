@@ -24,6 +24,7 @@ export default {
   CORS: process.env.CORS === 'true' || false,
   CORS_HEADERS: process.env.CORS_HEADERS || ['Link'],
   DISASTER_TYPES: (process.env.DISASTER_TYPES || 'flood,prep').split(','),
+  IMAGE_BUCKET: process.env.IMAGE_BUCKET || 'riskmap-image-uploads',
   PGHOST: process.env.PGHOST || '127.0.0.1',
   PGDATABASE: process.env.PGDATABASE || 'cognicity',
   PGPASSWORD: process.env.PGPASSWORD || 'p@ssw0rd',

@@ -25,7 +25,7 @@ const tests = [
     }
   },
   {
-    url: '/reports/1',
+    url: '/reports/0',
     exp: {
       status: 404
     }

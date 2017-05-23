@@ -10,7 +10,7 @@ const tests = [
   {
     url: '/feeds/qlue',
     exp: {
-      status: 200
+      status: 400
     }
   }
 ];
@@ -20,7 +20,7 @@ describe('GET /feeds', () => {
   it.each(tests, 'respond with correct response for test', (test, next) => {
     init().then((app) => {
       request(app)
-        .get(test.url)
+        .post(test.url)
         .end((err, res) => {
           if (err) next(err);
           assert.equal(res.status, test.exp.status);

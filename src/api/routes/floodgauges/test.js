@@ -25,7 +25,7 @@ const tests = [
     }
   },
   {
-    url: '/floodgauges/1',
+    url: '/floodgauges/0',
     exp: {
       status: 404
     }

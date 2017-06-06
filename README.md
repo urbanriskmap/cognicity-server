@@ -86,10 +86,10 @@ A few points to note on config:
 Run `npm run -s build` to build.
 
 ### Testing
-Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server-v3). Currently tests only run eslint.
+Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server). Currently tests only run eslint.
 
 ### Issue Tracking
-Issues are tracked using [GitHub](https://github.com/urbanriskmap/cognicity-server-v3/issues)
+Issues are tracked using [GitHub](https://github.com/urbanriskmap/cognicity-server/issues)
 
 ### Release
 The release procedure is as follows:

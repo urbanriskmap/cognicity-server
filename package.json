@@ -9,7 +9,7 @@
     "start": "node dist",
     "prestart": "npm run -s build",
     "test": "eslint src & npm run mocha",
-    "mocha": "mocha --compilers js:babel-core/register src/api/routes/reports/test.js src/api/routes/infrastructure/test.js src/api/routes/infrastructure/floods/test.js src/api/routes/floodgauges/test.js src/api/routes/feeds/test.js src/api/routes/cities/test.js src/api/routes/cards/test.js"
+    "mocha": "mocha --compilers js:babel-core/register src/api/routes/reports/test.js src/api/routes/infrastructure/test.js src/api/routes/infrastructure/floods/test.js src/api/routes/floodgauges/test.js src/api/routes/feeds/test.js src/api/routes/cities/test.js src/api/"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",

@@ -8,8 +8,15 @@
     "build": "babel src -s -D -d dist --presets es2015,stage-0",
     "start": "node dist",
     "prestart": "npm run -s build",
-    "test": "eslint src & npm run mocha",
-    "mocha": "mocha --compilers js:babel-core/register src/test/"
+    "mocha": "nyc mocha --compilers js:babel-core/register src/test/",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test": "eslint src & npm run mocha"
+  },
+    "nyc": {
+    "exclude": [
+      "**/test/**",
+      "build"
+    ]
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -61,6 +68,7 @@
     "eslint": "^3.19.0",
     "mocha": "^3.3.0",
     "nodemon": "^1.11.0",
+    "nyc": "^11.0.2",
     "supertest": "^3.0.0",
     "unit.js": "^2.0.0"
   },

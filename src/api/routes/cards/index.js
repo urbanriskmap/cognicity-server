@@ -40,7 +40,9 @@ export default ({ config, db, logger }) => {
 				.then((data) => data ? res.status(200).json({ cardId: cardId, created: true }) :
 					next(new Error('Failed to create card')))
 				.catch((err) => {
+					/* istanbul ignore next */
 					logger.error(err);
+					/* istanbul ignore next */
 					next(err);
 				});
 		}
@@ -56,7 +58,9 @@ export default ({ config, db, logger }) => {
 			cards(config, db, logger).byCardId(req.params.cardId)
 				.then((data) => data ? res.status(200).end() : res.status(404).end())
 				.catch((err) => {
+					/* istanbul ignore next */
 					logger.error(err);
+					/* istanbul ignore next */
 					next(err);
 				});
 		}
@@ -72,7 +76,9 @@ export default ({ config, db, logger }) => {
 			cards(config, db, logger).byCardId(req.params.cardId)
 				.then((data) => handleResponse(data, req, res, next))
 				.catch((err) => {
+					/* istanbul ignore next */
 					logger.error(err);
+					/* istanbul ignore next */
 					next(err);
 				});
 		}
@@ -113,13 +119,17 @@ export default ({ config, db, logger }) => {
 								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, created: true });
 							})
 							.catch((err) => {
+								/* istanbul ignore next */
 								logger.error(err);
+								/* istanbul ignore next */
 								next(err);
 							});
 					}
 				});
 			} catch(err) {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			}
 		}
@@ -153,12 +163,15 @@ export default ({ config, db, logger }) => {
 							})
 							.catch((err) => {
 								logger.error(err);
+								/* istanbul ignore next */
 								next(err);
 							});
 					}
 				});
 			} catch(err) {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			}
 		}

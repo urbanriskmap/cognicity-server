@@ -32,6 +32,38 @@ describe('Cognicity Server Testing Harness', function() {
  it('Server starts', function(done){
   init(config, initializeDb, routes, logger).then((app) => {
 
+    describe('Top level API endpoint', function(){
+      it('Gets current API version', function(done){
+        test.httpAgent(app)
+          .get('/')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res){
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            }
+            else {
+              done();
+            }
+          });
+      });
+
+      it('Can handle unknown routes', function(done){
+        test.httpAgent(app)
+          .get('/moon')
+          .expect(404)
+          .expect('Content-Type', /json/)
+          .end(function(err, res){
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            }
+            else {
+              done();
+            }
+          });
+      });
+    });
+
     // Reports endpoint
     describe('Reports endpoint', function() {
       // Can get reports
@@ -240,6 +272,160 @@ describe('Cognicity Server Testing Harness', function() {
                 }
              });
           });
+    });
+
+    // Floods endpoint
+    describe('Flood areas endpoint', function(){
+
+      // Put a flood
+      /*it ('Put a flood (PUT /floods/:id)', function(done){
+        let auth = { headers: { 'Authorization': 'Bearer ' + config.AUTH0_SECRET } }
+        test.httpAgent(app)
+          .put('/floods/5')
+          .set(auth)
+          .send({
+              "state": "2"
+          })
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res){
+            if (err){
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            }
+            else {
+              done();
+            }
+          });
+      });*/
+
+      // Get floods
+      it('Get floods (GET /floods)', function(done){
+          test.httpAgent(app)
+            .get('/floods')
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res){
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              }
+              else {
+                done();
+              }
+           });
+        });
+
+      // Can get reports in CAP format
+      it('Get all reports in CAP format (GET /floods?geoformat=cap)', function(done){
+          test.httpAgent(app)
+            .get('/floods?format=xml&geoformat=cap')
+            .expect(200)
+            .expect('Content-Type', /text/)
+            .end(function(err, res){
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              }
+              else {
+                done();
+              }
+           });
+        });
+    });
+
+    // Cards end to end test
+    describe('End-to-end card test', function() {
+
+      let cardId = '0';
+
+      // Request a card, submit and get resulting card detailsß
+      it('Get card one time link', function(done){
+          test.httpAgent(app)
+            .post('/cards')
+            .send({
+                "username": "testuser",
+                "network": "twitter",
+                "language": "en"
+            })
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res){
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              }
+              else {
+                cardId = res.body.cardId
+                test.value(res.body.created).is(true);
+                done();
+              }
+           });
+        });
+
+        // Request a card, submit and get resulting report
+        it('Put card data', function(done){
+            test.httpAgent(app)
+              .put('/cards/'+cardId)
+              .send({
+                  "water_depth": 20,
+                  "text": "big flood",
+                  "created_at": "2017-02-21T07:00:00+0700",
+                  "location": {
+                    "lat": -6.4,
+                    "lng": 106.6
+                  }
+              })
+              .expect(200)
+              .expect('Content-Type', /json/)
+              .end(function(err, res){
+                if (err) {
+                  test.fail(err.message + ' ' + JSON.stringify(res));
+                }
+                else {
+                  console.log(res.body);
+                  done();
+                }
+             });
+          });
+
+          // Request a card, submit and get resulting report
+          it('Put card data', function(done){
+              test.httpAgent(app)
+                .get('/cards/'+cardId)
+                .expect(200)
+                .expect('Content-Type', /json/)
+                .end(function(err, res){
+                  if (err) {
+                    test.fail(err.message + ' ' + JSON.stringify(res));
+                  }
+                  else {
+                    test.value(res.body.result.card_id).is(cardId);
+                    test.value(res.body.result.username).is('testuser');
+                    test.value(res.body.result.network).is('twitter')
+                    test.value(res.body.result.language).is('en')
+                    test.value(res.body.result.report.text).is('big flood')
+                    done();
+                  }
+               });
+            });
+
+            // Update a card
+            it('Update card data', function(done){
+                test.httpAgent(app)
+                  .patch('/cards/'+cardId)
+                  .send({
+                      "water_depth": 20,
+                      "text": "big flood",
+                      "image_url": "dummy image url"
+                  })
+                  .expect(200)
+                  .expect('Content-Type', /json/)
+                  .end(function(err, res){
+                    if (err) {
+                      test.fail(err.message + ' ' + JSON.stringify(res));
+                    }
+                    else {
+                      done();
+                    }
+                 });
+              });
     });
 
    return (done())

@@ -9,7 +9,7 @@
     "start": "node dist",
     "prestart": "npm run -s build",
     "test": "eslint src & npm run mocha",
-    "mocha": "mocha --compilers js:babel-core/register src/api/routes/reports/test.js src/api/routes/infrastructure/test.js src/api/routes/infrastructure/floods/test.js src/api/routes/floodgauges/test.js src/api/routes/feeds/test.js src/api/routes/cities/test.js src/api/"
+    "mocha": "mocha --compilers js:babel-core/register src/test/"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -58,12 +58,11 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
-    "chai": "^3.5.0",
     "eslint": "^3.19.0",
-    "it-each": "^0.3.1",
     "mocha": "^3.3.0",
     "nodemon": "^1.11.0",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "unit.js": "^2.0.0"
   },
   "engines": {
     "node": ">=6.9.1"

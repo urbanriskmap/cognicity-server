@@ -24,10 +24,38 @@ const logger = new (winston.Logger)({
   ]
 });
 
-// need to put in dummy data to database.
+// Put some sample data in the database
+const pg = require('pg');
+
+// need to put in dummy data to database?
 
 // Create a top-level testing harness
 describe('Cognicity Server Testing Harness', function() {
+
+ // Test pg config
+ let reportid = 0;
+ let PG_CONFIG_STRING = 'postgres://'+config.PGUSER+'@'+config.PGHOST+':'+config.PGPORT+'/'+config.PGDATABASE;
+
+ before ('Insert dummy data', function(done){
+
+   pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+     client.query("INSERT INTO cognicity.all_reports (fkey, created_at, text, source, status, disaster_type, lang, url, image_url, title, the_geom) VALUES (1, now(), 'test report', 'testing', 'confirmed', 'flood', 'en', 'no_url', 'no_url', 'no_title', ST_GeomFromText('POINT(106.816667 -6.2)', 4326)) RETURNING pkey", function(err, result){
+       reportid = result.rows[0].pkey;
+       pgDone();
+     });
+    });
+   pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+     client.query("INSERT INTO cognicity.rem_status (local_area, state, last_updated) VALUES (1, 1, now())", function(err){
+       if (err){
+         console.log(err);
+       }
+       else {
+         done();
+         pgDone();
+       }
+     });
+   });
+ });
 
  it('Server starts', function(done){
 
@@ -70,74 +98,6 @@ describe('Cognicity Server Testing Harness', function() {
           });
       });
     });
-
-    // Reports endpoint
-    describe('Reports endpoint', function() {
-      // Can get reports
-      it('Get all reports (GET /reports)', function(done){
-          test.httpAgent(app)
-            .get('/reports')
-            .expect(200)
-            .expect('Content-Type', /json/)
-            .end(function(err, res){
-              if (err) {
-                test.fail(err.message + ' ' + JSON.stringify(res));
-              }
-              else {
-                done();
-              }
-           });
-        });
-
-      // Can get reports by city
-      it('Get reports by city /reports?city=jbd', function(done){
-          test.httpAgent(app)
-            .get('/reports?city=jbd')
-            .expect(200)
-            .expect('Content-Type', /json/)
-            .end(function(err, res){
-              if (err) {
-                test.fail(err.message + ' ' + JSON.stringify(res));
-              }
-              else {
-                done();
-              }
-           });
-        });
-
-      // Catch report by city error
-      it('Get reports by city /reports?city=xxx', function(done){
-          test.httpAgent(app)
-            .get('/reports?city=xxx')
-            .expect(400)
-            .expect('Content-Type', /json/)
-            .end(function(err, res){
-              if (err) {
-                test.fail(err.message + ' ' + JSON.stringify(res));
-              }
-              else {
-                done();
-              }
-           });
-        });
-
-        // Can get reports
-        it('Has a get all reports/:id endpoint (GET /reports/:id)', function(done){
-            test.httpAgent(app)
-              .get('/reports/1')
-              .expect(200)
-              .expect('Content-Type', /json/)
-              .end(function(err, res){
-                if (err) {
-                  test.fail(err.message + ' ' + JSON.stringify(res));
-                }
-                else {
-                  done();
-                }
-             });
-          });
-
-     });
 
      // Cards endpoint
      describe('Cards endpoint', function() {
@@ -340,7 +300,8 @@ describe('Cognicity Server Testing Harness', function() {
       });
 
       // Put a flood
-      /*it ('Put a flood (PUT /floods/:id)', function(done){
+      /*
+      it ('Put a flood (PUT /floods/:id)', function(done){
         let auth = { headers: { 'Authorization': 'Bearer ' + config.AUTH0_SECRET } }
         test.httpAgent(app)
           .put('/floods/5')
@@ -377,7 +338,7 @@ describe('Cognicity Server Testing Harness', function() {
         });
 
       // Can get reports in CAP format
-      /*it('Get all reports in CAP format (GET /floods?geoformat=cap)', function(done){
+      it('Get all reports in CAP format (GET /floods?geoformat=cap)', function(done){
           test.httpAgent(app)
             .get('/floods?format=xml&geoformat=cap')
             .expect(200)
@@ -390,7 +351,7 @@ describe('Cognicity Server Testing Harness', function() {
                 done();
               }
            });
-        });*/
+        });
     });
 
     // Cards end to end test
@@ -490,7 +451,114 @@ describe('Cognicity Server Testing Harness', function() {
               });
     });
 
-   return (done())
+    // Reports endpoint
+    describe('Reports endpoint', function() {
+      // Can get reports
+      it('Get all reports (GET /reports)', function(done){
+          test.httpAgent(app)
+            .get('/reports')
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res){
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              }
+              else {
+                done();
+              }
+           });
+        });
+
+      // Can get reports by city
+      it('Get reports by city /reports?city=jbd', function(done){
+          test.httpAgent(app)
+            .get('/reports?city=jbd')
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res){
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              }
+              else {
+                done();
+              }
+           });
+        });
+
+      // Catch report by city error
+      it('Get reports by city /reports?city=xxx', function(done){
+          test.httpAgent(app)
+            .get('/reports?city=xxx')
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end(function(err, res){
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              }
+              else {
+                done();
+              }
+           });
+        });
+
+        // Can get reports
+        it('Has a get all reports/:id endpoint (GET /reports/:id)', function(done){
+            test.httpAgent(app)
+              .get('/reports/'+reportid)
+              .expect(200)
+              .expect('Content-Type', /json/)
+              .end(function(err, res){
+                if (err) {
+                  test.fail(err.message + ' ' + JSON.stringify(res));
+                }
+                else {
+                  done();
+                }
+             });
+          });
+          //return (done())
+     });
+
+     after ('Remove dummy data', function(done){
+       let queryObject = {
+         text: "DELETE FROM cognicity.all_reports WHERE pkey = $1;",
+         values: [ reportid ]
+       };
+       pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+         client.query(queryObject, function(){
+           if (err) {
+             console.log(err.message)
+             pgDone();
+             done();
+           }
+           else {
+             pgDone();
+             done();
+           }
+         });
+       });
+     });
+
+     after ('Remove dummy data', function(done){
+       let queryObject = {
+         text: "DELETE FROM cognicity.rem_status WHERE local_area = 1",
+         values: [ reportid ]
+       };
+       pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+         client.query(queryObject, function(){
+           if (err) {
+             console.log(err.message)
+             pgDone();
+             done();
+           }
+           else {
+             pgDone();
+             done();
+           }
+         });
+       });
+     });
+     return (done())
    });
   });
 });

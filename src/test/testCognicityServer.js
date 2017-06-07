@@ -423,7 +423,11 @@ describe('Cognicity Server Testing Harness', function() {
             test.httpAgent(app)
               .put('/cards/'+cardId)
               .send({
-                  "water_depth": 20,
+                  "disaster_type":"flood",
+                  "card_data":{
+                    "flood_depth": 20,
+                    "report_type": "flood"
+                  },
                   "text": "big flood",
                   "created_at": "2017-06-07T07:00:00+0700",
                   "location": {

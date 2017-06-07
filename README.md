@@ -86,7 +86,7 @@ A few points to note on config:
 Run `npm run -s build` to build.
 
 ### Testing
-Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server). Currently tests only run eslint.
+Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server). ESLint runs to check syntax. Integration tests, formed by chaining unit tests, are used to check the API. See src/test/ for scripts.
 
 ### Issue Tracking
 Issues are tracked using [GitHub](https://github.com/urbanriskmap/cognicity-server/issues)

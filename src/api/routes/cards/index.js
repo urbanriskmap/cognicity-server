@@ -13,6 +13,18 @@ import validate from 'celebrate';
 // Import ID generator
 import shortid from 'shortid';
 
+// Import image upload capabilities
+import AWS from 'aws-sdk';
+var s3 = new AWS.S3(
+  {
+    accessKeyId : process.env.accessKeyId || '' ,
+    secretAccessKey : process.env.secretAccessKey  || '',
+    signatureVersion: 'v4',
+    region: 'ap-south-1'
+  });
+
+
+
 // Caching
 import apicache from 'apicache';
 const CACHE_GROUP_CARDS = '/cards';
@@ -82,7 +94,17 @@ export default ({ config, db, logger }) => {
 	api.put('/:cardId', validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
-			water_depth: Joi.number().integer().min(0).max(200).required(),
+      disaster_type: Joi.string().valid(config.DISASTER_TYPES).required(),
+      card_data: Joi.object()
+        .keys({
+            flood_depth: Joi.number(),
+            report_type: Joi.string().valid(config.REPORT_TYPES).required()
+        })
+        .required()
+        .when('disaster_type', {
+            is: 'flood',
+            then: Joi.object({ flood_depth: Joi.number().integer().min(0).max(200).required() })		// b.c is required only when a is true
+        }),
 			text: Joi.string().allow(''),
 			image_url: Joi.string().allow(''),
 			created_at: Joi.date().iso().required(),
@@ -124,6 +146,54 @@ export default ({ config, db, logger }) => {
 			}
 		}
 	);
+
+  //Gives an s3 signed url for the frontend to upload an image to
+  api.get('/:cardId/images', validate({
+    params: { cardId: Joi.string().min(7).max(14).required() }
+  }),
+  (req, res, next) => {
+    let s3params = {
+      Bucket: config.IMAGE_BUCKET,
+      Key: 'originals/' + req.params.cardId + ".jpg",
+      ContentType:req.query.file_type
+    };
+    s3.getSignedUrl('putObject', s3params, (err, data) => {
+      if (err){
+        logger.error('could not get signed url from S3');
+        logger.error(err);
+      } else {
+        var returnData = {
+          signedRequest : data,
+          url: 'https://s3.'+config.AWS_REGION+'.amazonaws.com/'+ config.IMAGE_BUCKET+'/'+ s3params.Key
+        };
+        //write the url into the db under image_url for this card
+
+        cards(config, db, logger).byCardId(req.params.cardId)
+          .then((card) => {
+            if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId,
+              message: `No card exists with id '${req.params.cardId}'` })
+            else {
+              // Try and submit the report and update the card
+              cards(config, db, logger).updateReport(card, {image_url: 'https://'+config.IMAGES_HOST+'/'+req.params.cardId+'.jpg' })
+              .then((data) => {
+                console.log(data);
+                clearCache();
+                logger.debug( "s3 signed request: " + returnData.signedRequest);
+                res.write(JSON.stringify(returnData));
+                res.end();
+                //res.status(200).json({ statusCode: 200, cardId: req.params.cardId, updated: true });
+              })
+              .catch((err) => {
+                logger.error(err);
+                next(err);
+              })
+            }
+
+
+          })
+      }
+    });
+  });
 
 	// Update a card report with new details including the image URL
 	api.patch('/:cardId', validate({

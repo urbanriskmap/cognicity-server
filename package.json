@@ -33,6 +33,7 @@
   "dependencies": {
     "api-error-handler": "^1.0.0",
     "apicache": "^0.8.4",
+    "aws-sdk": "^2.7.24",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "celebrate": "^4.0.1",

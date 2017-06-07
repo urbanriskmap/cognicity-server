@@ -3,6 +3,9 @@
 .idea
 .swp
 
+# nyc test coverage
+.nyc_output
+
 /coverage
 /dist
 /node_modules

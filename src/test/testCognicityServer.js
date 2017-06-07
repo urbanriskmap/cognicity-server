@@ -36,16 +36,20 @@ describe('Cognicity Server Testing Harness', function() {
  let reportid = 0;
  let PG_CONFIG_STRING = 'postgres://'+config.PGUSER+'@'+config.PGHOST+':'+config.PGPORT+'/'+config.PGDATABASE;
 
+// Insert some dummy data
  before ('Insert dummy data', function(done){
+   let queryObject = {
+     text: `INSERT INTO ${config.TABLE_REPORTS} (fkey, created_at, text, source, status, disaster_type, lang, url, image_url, title, the_geom) VALUES (1, now(), 'test report', 'testing', 'confirmed', 'flood', 'en', 'no_url', 'no_url', 'no_title', ST_GeomFromText('POINT(106.816667 -6.2)', 4326)) RETURNING pkey`
+    };
 
    pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
-     client.query("INSERT INTO cognicity.all_reports (fkey, created_at, text, source, status, disaster_type, lang, url, image_url, title, the_geom) VALUES (1, now(), 'test report', 'testing', 'confirmed', 'flood', 'en', 'no_url', 'no_url', 'no_title', ST_GeomFromText('POINT(106.816667 -6.2)', 4326)) RETURNING pkey", function(err, result){
+     client.query(queryObject, function(err, result){
        reportid = result.rows[0].pkey;
        pgDone();
      });
     });
    pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
-     client.query("INSERT INTO cognicity.rem_status (local_area, state, last_updated) VALUES (1, 1, now())", function(err){
+     client.query(`INSERT INTO ${config.TABLE_REM_STATUS} (local_area, state, last_updated) VALUES (1, 1, now())`, function(err){
        if (err){
          console.log(err);
        }
@@ -58,7 +62,6 @@ describe('Cognicity Server Testing Harness', function() {
  });
 
  it('Server starts', function(done){
-
    // Test optional server params
   config.COMPRESS = true;
   config.CORS = true;
@@ -155,11 +158,47 @@ describe('Cognicity Server Testing Harness', function() {
 
     // Feeds endpoint
     describe('Feeds endpoint', function() {
-      // Can get cities
-      it('Return 400 for post to feeds/qlue', function(done){
+      // Can post to qlue
+      it('Return 200 for post to feeds/qlue', function(done){
           test.httpAgent(app)
             .post('/feeds/qlue')
-            .expect(400)
+            .send({
+                "post_id": "9999",
+                "created_at": "2017-06-07T14:32+0700",
+                "qlue_city": "surabaya",
+                "disaster_type": "flood",
+                "text": "test report",
+                "location":{
+                  "lat":45,
+                  "lng":45
+                }
+            })
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res){
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              }
+              else {
+                done();
+              }
+           });
+        });
+      // Can post to detik
+      it('Return 200 for post to feeds/detik', function(done){
+          test.httpAgent(app)
+            .post('/feeds/detik')
+            .send({
+                "contribution_id": "9999",
+                "created_at": "2017-06-07T14:32+0700",
+                "disaster_type": "flood",
+                "location":{
+                  "latitude":45,
+                  "longitude":45
+                },
+                "text":"test report"
+            })
+            .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res){
               if (err) {
@@ -302,7 +341,7 @@ describe('Cognicity Server Testing Harness', function() {
       // Put a flood
       /*
       it ('Put a flood (PUT /floods/:id)', function(done){
-        let auth = { headers: { 'Authorization': 'Bearer ' + config.AUTH0_SECRET } }
+        //let auth = { headers: { 'Authorization': 'Bearer ' + config.AUTH0_SECRET } }
         test.httpAgent(app)
           .put('/floods/5')
           .set(auth)
@@ -336,6 +375,22 @@ describe('Cognicity Server Testing Harness', function() {
               }
            });
         });
+
+        // Get floods
+        it('Get floods in geojson (GET /floods?format=json&geoformat=geojson)', function(done){
+            test.httpAgent(app)
+              .get('/floods/?format=json&geoformat=geojson')
+              .expect(200)
+              .expect('Content-Type', /json/)
+              .end(function(err, res){
+                if (err) {
+                  test.fail(err.message + ' ' + JSON.stringify(res));
+                }
+                else {
+                  done();
+                }
+             });
+          });
 
       // Can get reports in CAP format
       it('Get all reports in CAP format (GET /floods?geoformat=cap)', function(done){
@@ -389,7 +444,7 @@ describe('Cognicity Server Testing Harness', function() {
               .send({
                   "water_depth": 20,
                   "text": "big flood",
-                  "created_at": "2017-02-21T07:00:00+0700",
+                  "created_at": "2017-06-07T07:00:00+0700",
                   "location": {
                     "lat": -6.4,
                     "lng": 106.6
@@ -516,20 +571,39 @@ describe('Cognicity Server Testing Harness', function() {
                 }
              });
           });
-          //return (done())
      });
 
-     after ('Remove dummy data', function(done){
-       let queryObject = {
-         text: "DELETE FROM cognicity.all_reports WHERE pkey = $1;",
-         values: [ reportid ]
+    // Removes dummy data
+    describe('Cleans up', function() {
+       it ('Removes dummy report data', function(done){
+         let queryObject = {
+           text: `DELETE FROM ${config.TABLE_REPORTS} WHERE pkey = $1;`,
+           values: [ reportid ]
+         };
+         pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+           client.query(queryObject, function(){
+             if (err) {
+               console.log(err.message)
+               pgDone();
+             }
+             else {
+               pgDone();
+               done();
+             }
+           });
+         });
+       });
+
+     // Remove dummy data from reports table
+     it ('Removes dummy flood data', function(done){
+      let queryObject = {
+         text: `DELETE FROM ${config.TABLE_REM_STATUS} WHERE local_area = 1`,
        };
        pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
          client.query(queryObject, function(){
            if (err) {
              console.log(err.message)
              pgDone();
-             done();
            }
            else {
              pgDone();
@@ -539,17 +613,73 @@ describe('Cognicity Server Testing Harness', function() {
        });
      });
 
-     after ('Remove dummy data', function(done){
-       let queryObject = {
-         text: "DELETE FROM cognicity.rem_status WHERE local_area = 1",
-         values: [ reportid ]
+     // Remove dummy data from qlue table
+     it ('Removes dummy qlue data', function(done){
+      let queryObject = {
+         text: `DELETE FROM ${config.TABLE_FEEDS_QLUE} WHERE pkey = 9999`,
        };
        pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
          client.query(queryObject, function(){
            if (err) {
              console.log(err.message)
              pgDone();
+           }
+           else {
+             pgDone();
              done();
+           }
+         });
+       });
+     });
+
+     // Remove dummy qlue data from all reports table
+     it ('Removes dummy qlue data', function(done){
+      let queryObject = {
+         text: `DELETE FROM ${config.TABLE_REPORTS} WHERE fkey = 9999 AND source = 'qlue'`,
+       };
+       pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+         client.query(queryObject, function(){
+           if (err) {
+             console.log(err.message)
+             pgDone();
+           }
+           else {
+             pgDone();
+             done();
+           }
+         });
+       });
+     });
+
+     // Remove dummy data from detik table
+     it ('Removes dummy detik data', function(done){
+      let queryObject = {
+         text: `DELETE FROM ${config.TABLE_FEEDS_DETIK} WHERE pkey = 9999`,
+       };
+       pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+         client.query(queryObject, function(){
+           if (err) {
+             console.log(err.message)
+             pgDone();
+           }
+           else {
+             pgDone();
+             done();
+           }
+         });
+       });
+     });
+
+     // Remove dummy detik data from all reports table
+     it ('Removes dummy detik data', function(done){
+      let queryObject = {
+         text: `DELETE FROM ${config.TABLE_REPORTS} WHERE fkey = 9999 AND source = 'detik'`,
+       };
+       pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+         client.query(queryObject, function(){
+           if (err) {
+             console.log(err.message)
+             pgDone();
            }
            else {
              pgDone();
@@ -559,6 +689,7 @@ describe('Cognicity Server Testing Harness', function() {
        });
      });
      return (done())
+   });
    });
   });
 });

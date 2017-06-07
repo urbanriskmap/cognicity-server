@@ -26,7 +26,9 @@ export default ({ config, db, logger }) => {
 		(req, res, next) => floodgauges(config, db, logger).all()
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
   );
@@ -43,7 +45,9 @@ export default ({ config, db, logger }) => {
 		(req, res, next) => floodgauges(config, db, logger).byId(req.params.id)
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
 	);

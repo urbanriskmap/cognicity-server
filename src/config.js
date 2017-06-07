@@ -13,7 +13,7 @@ export default {
   AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE || 'https://data.petabencana.id',
   AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID || 'client_id',
   AUTH0_ISSUER: process.env.AUTH0_ISSUER || 'https://petabencana.au.auth0.com',
-  AUTH0_SECRET: process.env.AUTH0_SECRET || 'secret',
+  AUTH0_SECRET: process.env.AUTH0_SECRET || '',
   BODY_LIMIT: process.env.BODY_LIMIT || '100kb',
   CACHE: process.env.CACHE === 'true' || false,
   CACHE_DURATION_CARDS: process.env.CACHE_DURATION_CARDS || '1 minute',

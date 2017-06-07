@@ -168,6 +168,7 @@ module.exports = class Cap {
 			featurePolygons = feature.geometry.coordinates;
 		} else {
 			self.logger.error( "Cap: createInfo(): Geometry type '" + feature.geometry.type + "' not supported" );
+      /* istanbul ignore next */
 			return;
 		}
 
@@ -178,7 +179,9 @@ module.exports = class Cap {
 		for (let polygonIndex=0; polygonIndex<featurePolygons.length; polygonIndex++) {
 			// We assume all geometries to be simple Polygons with a single LineString (LinearRing)
 			if ( featurePolygons[polygonIndex].length > 1 ) {
+        /* istanbul ignore next */
 				self.logger.error( "Cap: createInfo(): Polygon with interior rings is not supported" );
+        /* istanbul ignore next */
 				return;
 			}
 

@@ -1,16 +1,18 @@
+dist: trusty
 language: node_js
 node_js:
    - "6.10.0"
 sudo: false
 
 addons:
-  postgresql: "9.4"
+  postgresql: "9.6"
 services: postgresql
 
 branches:
   only:
     - master
     - dev
+    - server-object-refactor
 
 before_install:
   - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi

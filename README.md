@@ -3,6 +3,8 @@ API Server for CogniCity
 
 [![Build Status](https://travis-ci.org/urbanriskmap/cognicity-server.svg?branch=master)](https://travis-ci.org/urbanriskmap/cognicity-server)
 
+[![Coverage Status](https://coveralls.io/repos/github/urbanriskmap/cognicity-server/badge.svg?branch=server-object-refactor)](https://coveralls.io/github/urbanriskmap/cognicity-server?branch=server-object-refactor)
+
 ### Summary
 
 This is the NodeJS server which runs the CogniCity Data API used by Urban Risk Map instances, such as [PetaBencana.id](https://petabencana.id) site.  

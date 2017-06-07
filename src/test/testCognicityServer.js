@@ -395,7 +395,7 @@ describe('Cognicity Server Testing Harness', function() {
 
       let cardId = '0';
 
-      // Request a card, submit and get resulting card detailsß
+      // Request a card, submit and get resulting card details
       it('Get card one time link', function(done){
           test.httpAgent(app)
             .post('/cards')

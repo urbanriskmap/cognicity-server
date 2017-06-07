@@ -338,28 +338,6 @@ describe('Cognicity Server Testing Harness', function() {
           });
       });
 
-      // Put a flood
-      /*
-      it ('Put a flood (PUT /floods/:id)', function(done){
-        //let auth = { headers: { 'Authorization': 'Bearer ' + config.AUTH0_SECRET } }
-        test.httpAgent(app)
-          .put('/floods/5')
-          .set(auth)
-          .send({
-              "state": "2"
-          })
-          .expect(200)
-          .expect('Content-Type', /json/)
-          .end(function(err, res){
-            if (err){
-              test.fail(err.message + ' ' + JSON.stringify(res));
-            }
-            else {
-              done();
-            }
-          });
-      });*/
-
       // Get floods
       it('Get floods (GET /floods)', function(done){
           test.httpAgent(app)

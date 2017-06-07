@@ -340,6 +340,7 @@ describe('Cognicity Server Testing Harness', function() {
 
       // Get floods
       it('Get floods (GET /floods)', function(done){
+        this.timeout(15000); // a lot of data is returned
           test.httpAgent(app)
             .get('/floods')
             .expect(200)
@@ -356,6 +357,7 @@ describe('Cognicity Server Testing Harness', function() {
 
         // Get floods
         it('Get floods in geojson (GET /floods?format=json&geoformat=geojson)', function(done){
+          this.timeout(15000); // a lot of data is returned
             test.httpAgent(app)
               .get('/floods/?format=json&geoformat=geojson')
               .expect(200)
@@ -372,6 +374,7 @@ describe('Cognicity Server Testing Harness', function() {
 
       // Can get reports in CAP format
       it('Get all reports in CAP format (GET /floods?geoformat=cap)', function(done){
+        this.timeout(15000); // a lot of data is returned
           test.httpAgent(app)
             .get('/floods?format=xml&geoformat=cap')
             .expect(200)

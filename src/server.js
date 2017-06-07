@@ -60,9 +60,11 @@ const init = (config, initializeDb, routes, logger) => new Promise((resolve, rej
 
 		})
 		.catch((err) => {
+			/* istanbul ignore next */
 			logger.error('DB Connection error: ' + err);
+			/* istanbul ignore next */
 			logger.error('Fatal error: Application shutting down');
-
+			/* istanbul ignore next */
 			// We cannot continue without a DB, reject
 			reject(err);
 		})

@@ -1,5 +1,3 @@
-/*/reports/0*/
-
 // Testing for CogniCity Server
 // Unit tests run together against live app, and database
 
@@ -26,10 +24,19 @@ const logger = new (winston.Logger)({
   ]
 });
 
+// need to put in dummy data to database.
+
 // Create a top-level testing harness
 describe('Cognicity Server Testing Harness', function() {
 
  it('Server starts', function(done){
+
+   // Test optional server params
+  config.COMPRESS = true;
+  config.CORS = true;
+  config.RESPONSE_TIME = true;
+
+  // Initialise
   init(config, initializeDb, routes, logger).then((app) => {
 
     describe('Top level API endpoint', function(){
@@ -98,11 +105,27 @@ describe('Cognicity Server Testing Harness', function() {
            });
         });
 
-        // Catch report by city error
-        it('Get reports by city /reports?city=xxx', function(done){
+      // Catch report by city error
+      it('Get reports by city /reports?city=xxx', function(done){
+          test.httpAgent(app)
+            .get('/reports?city=xxx')
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end(function(err, res){
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              }
+              else {
+                done();
+              }
+           });
+        });
+
+        // Can get reports
+        it('Has a get all reports/:id endpoint (GET /reports/:id)', function(done){
             test.httpAgent(app)
-              .get('/reports?city=xxx')
-              .expect(400)
+              .get('/reports/1')
+              .expect(200)
               .expect('Content-Type', /json/)
               .end(function(err, res){
                 if (err) {
@@ -113,6 +136,7 @@ describe('Cognicity Server Testing Harness', function() {
                 }
              });
           });
+
      });
 
      // Cards endpoint
@@ -277,6 +301,44 @@ describe('Cognicity Server Testing Harness', function() {
     // Floods endpoint
     describe('Flood areas endpoint', function(){
 
+      // Test put flood auth
+      it ('Catch bad auth for put a flood (PUT /floods/:id)', function(done){
+        test.httpAgent(app)
+          .put('/floods/5')
+          .send({
+              "state": "2"
+          })
+          .expect(401)
+          .expect('Content-Type', /json/)
+          .end(function(err, res){
+            if (err){
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            }
+            else {
+              done();
+            }
+          });
+      });
+
+      // Test delete flood auth
+      it ('Catch bad auth for put a flood (PUT /floods/:id)', function(done){
+        test.httpAgent(app)
+          .delete('/floods/5')
+          .send({
+              "username": "testing"
+          })
+          .expect(401)
+          .expect('Content-Type', /json/)
+          .end(function(err, res){
+            if (err){
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            }
+            else {
+              done();
+            }
+          });
+      });
+
       // Put a flood
       /*it ('Put a flood (PUT /floods/:id)', function(done){
         let auth = { headers: { 'Authorization': 'Bearer ' + config.AUTH0_SECRET } }
@@ -315,7 +377,7 @@ describe('Cognicity Server Testing Harness', function() {
         });
 
       // Can get reports in CAP format
-      it('Get all reports in CAP format (GET /floods?geoformat=cap)', function(done){
+      /*it('Get all reports in CAP format (GET /floods?geoformat=cap)', function(done){
           test.httpAgent(app)
             .get('/floods?format=xml&geoformat=cap')
             .expect(200)
@@ -328,7 +390,7 @@ describe('Cognicity Server Testing Harness', function() {
                 done();
               }
            });
-        });
+        });*/
     });
 
     // Cards end to end test

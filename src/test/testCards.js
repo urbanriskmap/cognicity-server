@@ -96,6 +96,7 @@ export default function (app){
 
          // Get signed URL for card image
          it('Get card image link', function(done){
+            this.timeout(15000); // nested call
              test.httpAgent(app)
                .get('/cards/'+cardId+'/images')
                .expect(200)

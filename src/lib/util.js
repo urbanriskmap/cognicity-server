@@ -61,7 +61,11 @@ const handleGeoResponse = (data, req, res, next) => {
     res.status(404).json({ statusCode: 404, found: false, result: null }) :
       formatGeo(data, req.query.geoformat)
         .then((formatted) => res.status(200).json({ statusCode: 200, result: formatted }))
-        .catch((err) => next(err));
+        /* istanbul ignore next */
+        .catch((err) => {
+          /* istanbul ignore next */
+          next(err)
+        });
 };
 
 // Handle a regular response, send back result or 404

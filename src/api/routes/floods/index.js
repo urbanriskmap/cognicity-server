@@ -75,7 +75,9 @@ export default ({ config, db, logger }) => {
 							.catch((err) => next(err))
 				)
 				.catch((err) => {
+					/* istanbul ignore next */
 					logger.error(err);
+					/* istanbul ignore next */
 					next(err);
 				});
 		}
@@ -95,7 +97,9 @@ export default ({ config, db, logger }) => {
 			floods(config, db, logger).all(req.query.city, req.query.minimum_state)
 				.then((data) => res.status(200).json({statusCode: 200, result: data}))
 				.catch((err) => {
+					/* istanbul ignore next */
 					logger.error(err);
+					/* istanbul ignore next */
 					next(err);
 				});
 		}
@@ -117,8 +121,11 @@ export default ({ config, db, logger }) => {
 				clearCache();
 				res.status(200).json({localAreaId: req.params.localAreaId, state: req.body.state, updated: true});
 			})
+			/* istanbul ignore next */
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
   );
@@ -136,8 +143,11 @@ export default ({ config, db, logger }) => {
 				clearCache();
 				res.status(200).json({localAreaId: req.params.localAreaId, state: null, updated: true});
 			})
+			/* istanbul ignore next */
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
 	);

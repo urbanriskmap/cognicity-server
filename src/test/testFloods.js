@@ -98,6 +98,39 @@ describe('Flood areas endpoint', function(){
       });
 
       // Get floods
+      it('Get severe floods (GET /floods?minimum_state=3)', function(done){
+        this.timeout(15000); // a lot of data is returned
+          test.httpAgent(app)
+            .get('/floods?minimum_state=3')
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res){
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              }
+              else {
+                done();
+              }
+           });
+        });
+
+      // Just get flood states
+      it('Get flood states without geo (GET /floods/states)', function(done){
+          test.httpAgent(app)
+            .get('/floods/states')
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res){
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              }
+              else {
+                done();
+              }
+           });
+        });
+
+      // Get geographic floods
       it('Get floods in geojson (GET /floods?format=json&geoformat=geojson)', function(done){
         this.timeout(15000); // a lot of data is returned
           test.httpAgent(app)

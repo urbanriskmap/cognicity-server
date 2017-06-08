@@ -18,7 +18,10 @@ export default (config, db, logger) => ({
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
 			/* istanbul ignore next */
-			.catch((err) => reject(err));
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)}
+			);
 	}),
 
 	// Return specific card by id
@@ -44,7 +47,10 @@ export default (config, db, logger) => ({
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
 			/* istanbul ignore next */
-			.catch((err) => reject(err));
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			})
 	}),
 
 	// Add an entry to the reports table and then update the card record accordingly
@@ -79,7 +85,9 @@ export default (config, db, logger) => ({
 		db.tx((t) => {
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
+			/* istanbul ignore next */
 			.then((data) => resolve(data))
+			/* istanbul ignore next */
 			.catch((err) => reject(err));
 	}),
 
@@ -113,7 +121,9 @@ export default (config, db, logger) => ({
 		db.tx((t) => {
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
+			/* istanbul ignore next */
 			.then((data) => resolve(data))
+			/* istanbul ignore next */
 			.catch((err) => reject(err));
 	})
 

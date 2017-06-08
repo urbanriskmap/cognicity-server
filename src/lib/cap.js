@@ -167,6 +167,7 @@ module.exports = class Cap {
 		} else if ( feature.geometry.type === "MultiPolygon" ) {
 			featurePolygons = feature.geometry.coordinates;
 		} else {
+      /* istanbul ignore next */
 			self.logger.error( "Cap: createInfo(): Geometry type '" + feature.geometry.type + "' not supported" );
       /* istanbul ignore next */
 			return;

@@ -94,8 +94,24 @@ export default function (app){
             });
          });
 
+         // Get signed URL for card image
+         it('Get card image link', function(done){
+             test.httpAgent(app)
+               .get('/cards/'+cardId+'/images')
+               .expect(200)
+               .end(function(err, res){
+                 if (err) {
+                   test.fail(err.message + ' ' + JSON.stringify(res));
+                 }
+                 else {
+                   console.log(res.body);
+                   done();
+                 }
+              });
+           });
+
          // Request a card, submit and get resulting report
-         it('Put card data', function(done){
+         it('Get card data', function(done){
              test.httpAgent(app)
                .get('/cards/'+cardId)
                .expect(200)

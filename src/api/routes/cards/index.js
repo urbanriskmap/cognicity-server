@@ -169,7 +169,9 @@ export default ({ config, db, logger }) => {
     };
     s3.getSignedUrl('putObject', s3params, (err, data) => {
       if (err){
+        /* istanbul ignore next */
         logger.error('could not get signed url from S3');
+        /* istanbul ignore next */
         logger.error(err);
       } else {
         var returnData = {
@@ -194,7 +196,9 @@ export default ({ config, db, logger }) => {
                 //res.status(200).json({ statusCode: 200, cardId: req.params.cardId, updated: true });
               })
               .catch((err) => {
+                /* istanbul ignore next */
                 logger.error(err);
+                /* istanbul ignore next */
                 next(err);
               })
             }
@@ -232,6 +236,7 @@ export default ({ config, db, logger }) => {
 								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, updated: true });
 							})
 							.catch((err) => {
+                /* istanbul ignore next */
 								logger.error(err);
 								/* istanbul ignore next */
 								next(err);

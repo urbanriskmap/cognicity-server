@@ -12,7 +12,7 @@ export default (config, db, logger) => ({
 
 		// Setup values
 		let values = [ body.post_id, body.created_at, body.disaster_type, body.text, body.image_url,
-			body.title, body.qlue_city, body.location.lng, body.location.lat  ]
+			body.title, body.qlue_city, body.location.lng, body.location.lat  ];
 
 		// Execute
 		logger.debug(query, values);
@@ -20,10 +20,10 @@ export default (config, db, logger) => ({
 			.then(() => resolve({ post_id: body.post_id, created: true }))
 			.catch((err) => {
 				if (err.constraint === 'reports_post_id_key')
-					resolve({ post_id: body.post_id, created: false, message: `${body.post_id} already exists in reports table` })
+					resolve({ post_id: body.post_id, created: false, message: `${body.post_id} already exists in reports table` });
 				else
-					reject(err)
-			})
+					reject(err);
+			});
 	}),
 
 	// Add a detik report
@@ -36,7 +36,7 @@ export default (config, db, logger) => ({
 
 		// Setup values
 		let values = [ body.contribution_id, body.created_at, body.disaster_type, body.title, body.text,
-			body.url, body.image_url, body.location.longitude, body.location.latitude	]
+			body.url, body.image_url, body.location.longitude, body.location.latitude	];
 
 		// Execute
 		logger.debug(query, values);
@@ -44,9 +44,9 @@ export default (config, db, logger) => ({
 			.then(() => resolve({ contribution_id: body.contribution_id, created: true }))
 			.catch((err) => {
 				if (err.constraint === 'reports_contribution_id_key')
-					resolve({ contribution_id: body.contribution_id, created: false, message: `${body.contribution_id} already exists in reports table`})
+					resolve({ contribution_id: body.contribution_id, created: false, message: `${body.contribution_id} already exists in reports table`});
 				else
-						reject(err)
-			})
+						reject(err);
+			});
 	})
 });

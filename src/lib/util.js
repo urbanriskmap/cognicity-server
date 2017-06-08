@@ -1,7 +1,7 @@
 // Import dependencies
 import Promise from 'bluebird';
 import jwt from 'express-jwt';
-import jwks from 'jwks-rsa';
+// import jwks from 'jwks-rsa'; // See TODO below regarding Auth0 mechanism
 import dbgeo from 'dbgeo';
 
 // Import config
@@ -9,7 +9,7 @@ import config from '../config';
 
 // Caching
 import apicache from 'apicache';
-apicache.options({ debug: config.LOG_LEVEL === 'debug', statusCodes: { include: [200] } })
+apicache.options({ debug: config.LOG_LEVEL === 'debug', statusCodes: { include: [200] } });
 let cache = apicache.middleware;
 
 // Cache response if enabled
@@ -40,7 +40,7 @@ dbgeo.defaults = {
   geometryColumn: 'the_geom',
   geometryType: 'wkb',
   precision: config.GEO_PRECISION
-}
+};
 
 // Format the geographic response with the required geo format
 const formatGeo = (body, outputFormat) => new Promise((resolve, reject) => {
@@ -51,8 +51,8 @@ const formatGeo = (body, outputFormat) => new Promise((resolve, reject) => {
 	dbgeo.parse(body, { outputFormat }, (err, formatted) => {
 		if (err) reject(err);
 		resolve(formatted);
-	})
-})
+	});
+});
 
 // Handle a geo response, send back a correctly formatted json object with
 // status 200 or not found 404, catch and forward any errors in the process
@@ -61,16 +61,16 @@ const handleGeoResponse = (data, req, res, next) => {
     res.status(404).json({ statusCode: 404, found: false, result: null }) :
       formatGeo(data, req.query.geoformat)
         .then((formatted) => res.status(200).json({ statusCode: 200, result: formatted }))
-        .catch((err) => next(err))
-}
+        .catch((err) => next(err));
+};
 
 // Handle a regular response, send back result or 404
 const handleResponse = (data, req, res) => {
   return !data ?
     res.status(404).json({ statusCode: 404, found: false, result: null }) :
-    res.status(200).json({ statusCode: 200, result: data })
-}
+    res.status(200).json({ statusCode: 200, result: data });
+};
 
 module.exports = {
   cacheResponse, formatGeo, handleResponse, handleGeoResponse, jwtCheck
-}
+};

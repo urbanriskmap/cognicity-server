@@ -11,13 +11,13 @@ export default (config, db, logger) => ({
 			WHERE ($1 IS NULL OR tags->>'instance_region_code'=$1)`;
 
 		// Setup values
-		let values = [ city ]
+		let values = [ city ];
 
 		// Execute
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	})
 
 });

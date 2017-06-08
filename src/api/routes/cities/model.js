@@ -13,7 +13,7 @@ export default (config, db, logger) => ({
 		logger.debug(query);
 		db.any(query).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	})
 
 });

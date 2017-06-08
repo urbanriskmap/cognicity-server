@@ -1,4 +1,4 @@
-require('dotenv').config({silent:true})
+require('dotenv').config({silent:true});
 
 export default {
   APP_NAME: process.env.APP_NAME || 'cognicity-server',
@@ -11,9 +11,9 @@ export default {
   API_FLOODGAUGE_REPORTS_TIME_WINDOW: process.env.API_FLOODGAUGE_REPORTS_TIME_WINDOW || 43200,
   API_FLOODGAUGE_REPORTS_LIMIT: process.env.API_FLOODGAUGE_REPORTS_LIMIT,
   AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE || 'https://data.petabencana.id',
-  AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+  AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID || 'client_id',
   AUTH0_ISSUER: process.env.AUTH0_ISSUER || 'https://petabencana.au.auth0.com',
-  AUTH0_SECRET: process.env.AUTH0_SECRET,
+  AUTH0_SECRET: process.env.AUTH0_SECRET || 'secret',
   BODY_LIMIT: process.env.BODY_LIMIT || '100kb',
   CACHE: process.env.CACHE === 'true' || false,
   CACHE_DURATION_CARDS: process.env.CACHE_DURATION_CARDS || '1 minute',
@@ -66,4 +66,4 @@ export default {
   TABLE_REM_STATUS: process.env.TABLE_REM_STATUS || 'cognicity.rem_status',
   TABLE_REM_STATUS_LOG: process.env.TABLE_REM_STATUS_LOG || 'cognicity.rem_status_log',
   TABLE_REPORTS: process.env.TABLE_REPORTS || 'cognicity.all_reports',
-}
+};

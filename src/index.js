@@ -30,7 +30,9 @@ logger.level = config.LOG_LEVEL;
 
 // Check that log file directory can be written to
 try {
-	config.LOG_DIR !== '' && fs.accessSync(config.LOG_DIR, fs.W_OK);
+	if (config.LOG_DIR !== '') {
+		fs.accessSync(config.LOG_DIR, fs.W_OK);
+	}
 	logger.info(`Logging to ${config.LOG_DIR !== '' ? config.LOG_DIR : 'current working directory' }`);
 } catch(e) {
 	// If we cannot write to the desired directory then log in the current directory
@@ -45,7 +47,7 @@ logger.add(logger.transports.File, {
 	maxsize: config.LOG_MAX_FILE_SIZE, // Max size of each file
 	maxFiles: config.LOG_MAX_FILES, // Max number of files
 	level: config.LOG_LEVEL // Level of log messages
-})
+});
 
 // If we are not in development and console logging has not been requested then remove it
 if (config.NODE_ENV !== 'development' && !config.LOG_CONSOLE) {
@@ -70,13 +72,19 @@ const init = () => new Promise((resolve, reject) => {
 	app.use(morgan('combined', { stream : winstonStream }));
 
 	// Compress responses if required but only if caching is disabled
-	config.COMPRESS && !config.CACHE && app.use(compression());
+	if (config.COMPRESS && !config.CACHE) {
+		app.use(compression());
+	}
 
 	// Provide CORS support (not required if behind API gateway)
-	config.CORS && app.use(cors({ exposedHeaders: config.CORS_HEADERS }));
+	if (config.CORS) {
+		app.use(cors({ exposedHeaders: config.CORS_HEADERS }));
+	}
 
 	// Provide response time header in response
-	config.RESPONSE_TIME && app.use(responseTime());
+	if (config.RESPONSE_TIME) {
+		app.use(responseTime());
+	}
 
 	// Parse body messages into json
 	app.use(bodyParser.json({ limit : config.BODY_LIMIT }));
@@ -100,14 +108,14 @@ const init = () => new Promise((resolve, reject) => {
 
 			// We cannot continue without a DB, reject
 			reject(err);
-		})
-})
+		});
+});
 
 // If we exit immediately winston does not get a chance to write the last log message
 const exitWithStatus = (status) => {
 	logger.info(`Exiting with status ${status}`);
 	setTimeout(() => process.exit(status), 500);
-}
+};
 
 // Catch kill and interrupt signals and log a clean exit status
 process

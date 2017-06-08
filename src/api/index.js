@@ -49,4 +49,4 @@ export default ({ config, db, logger }) => {
 	api.use(errorHandler());
 
 	return api;
-}
+};

@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+   - "6.10.0"
+sudo: false
+
+addons:
+  postgresql: "9.4"
+services: postgresql
+
+branches:
+  only:
+    - master
+    - dev
+
+before_install:
+  - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
+  - git clone -b dev https://github.com/urbanriskmap/cognicity-schema.git urbanriskmap/cognicity-schema && cd urbanriskmap/cognicity-schema && bash build/run.sh && cd -
+
+install:
+  - npm install

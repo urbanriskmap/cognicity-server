@@ -15,10 +15,10 @@ const tests = [
   {
     url: '/cards/1',
     exp: {
-      status: 200
+      status: 400
     }
   }
-]
+];
 
 // Run the tests
 describe('GET /cards', () => {

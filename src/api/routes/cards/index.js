@@ -4,7 +4,7 @@ import { Router } from 'express';
 import cards from './model';
 
 // Import any required utility functions
-import { cacheResponse, handleResponse, jwtCheck } from '../../../lib/util';
+import { cacheResponse, handleResponse } from '../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';
@@ -32,7 +32,7 @@ const CACHE_GROUP_CARDS = '/cards';
 // Function to clear out the cache
 const clearCache = () => {
 	apicache.clear(CACHE_GROUP_CARDS);
-}
+};
 
 export default ({ config, db, logger }) => {
 	let api = Router();
@@ -54,7 +54,7 @@ export default ({ config, db, logger }) => {
 				.catch((err) => {
 					logger.error(err);
 					next(err);
-				})
+				});
 		}
 	);
 
@@ -70,7 +70,7 @@ export default ({ config, db, logger }) => {
 				.catch((err) => {
 					logger.error(err);
 					next(err);
-				})
+				});
 		}
 	);
 
@@ -86,7 +86,7 @@ export default ({ config, db, logger }) => {
 				.catch((err) => {
 					logger.error(err);
 					next(err);
-				})
+				});
 		}
 	);
 
@@ -94,6 +94,11 @@ export default ({ config, db, logger }) => {
 	api.put('/:cardId', validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
+
+      water_depth: Joi.number().integer().min(0).max(200).required(),
+      /*** TODO - re-enable this new card data structure when PetaBencana.id client-code is ready.
+      ... and remove hard-coded water_depth parameter above
+
       disaster_type: Joi.string().valid(config.DISASTER_TYPES).required(),
       card_data: Joi.object()
         .keys({
@@ -105,6 +110,7 @@ export default ({ config, db, logger }) => {
             is: 'flood',
             then: Joi.object({ flood_depth: Joi.number().integer().min(0).max(200).required() })		// b.c is required only when a is true
         }),
+      ***/
 			text: Joi.string().allow(''),
 			image_url: Joi.string().allow(''),
 			created_at: Joi.date().iso().required(),
@@ -121,10 +127,10 @@ export default ({ config, db, logger }) => {
 				.then((card) => {
 					// If the card does not exist then return an error message
 					if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId,
-						message: `No card exists with id '${req.params.cardId}'` })
+						message: `No card exists with id '${req.params.cardId}'` });
 					// If the card already has received status then return an error message
 					else if (card && card.received) res.status(409).json({ statusCode: 409,
-						cardId: req.params.cardId, message: `Report already received for card '${req.params.cardId}'` })
+						cardId: req.params.cardId, message: `Report already received for card '${req.params.cardId}'` });
 					// We have a card and it has not yet had a report received
 					else {
 						// Try and submit the report and update the card
@@ -137,9 +143,9 @@ export default ({ config, db, logger }) => {
 							.catch((err) => {
 								logger.error(err);
 								next(err);
-							})
+							});
 					}
-				})
+				});
 			} catch(err) {
 				logger.error(err);
 				next(err);
@@ -211,7 +217,7 @@ export default ({ config, db, logger }) => {
 				.then((card) => {
 					// If the card does not exist then return an error message
 					if (!card) res.status(404).json({ statusCode: 404, cardId: req.params.cardId,
-						message: `No card exists with id '${req.params.cardId}'` })
+						message: `No card exists with id '${req.params.cardId}'` });
 					// We have a card
 					else {
 						// Try and submit the report and update the card
@@ -224,9 +230,9 @@ export default ({ config, db, logger }) => {
 							.catch((err) => {
 								logger.error(err);
 								next(err);
-							})
+							});
 					}
-				})
+				});
 			} catch(err) {
 				logger.error(err);
 				next(err);
@@ -235,4 +241,4 @@ export default ({ config, db, logger }) => {
 	);
 
 	return api;
-}
+};

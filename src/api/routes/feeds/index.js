@@ -3,9 +3,6 @@ import { Router } from 'express';
 // Import our data model
 import feeds from './model';
 
-// Import any required utility functions
-import { jwtCheck } from '../../../lib/util';
-
 // Import validation dependencies
 import Joi from 'joi';
 import validate from 'celebrate';
@@ -67,4 +64,4 @@ export default ({ config, db, logger }) => {
 	);
 
 	return api;
-}
+};

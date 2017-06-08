@@ -25,7 +25,7 @@ export default (config, db, logger) => ({
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	}),
 
 	// Return specific report by id
@@ -38,13 +38,13 @@ export default (config, db, logger) => ({
 			WHERE pkey = $1`;
 
 		// Setup values
-		let values = [ id ]
+		let values = [ id ];
 
 		// Execute
 		logger.debug(query, values);
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	})
 
 });

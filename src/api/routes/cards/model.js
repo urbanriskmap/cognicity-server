@@ -11,13 +11,13 @@ export default (config, db, logger) => ({
 			VALUES ($1, $2, $3, $4, $5) RETURNING pkey`;
 
 		// Setup values
-		let values = [ cardId, body.username, body.network, body.language, false ]
+		let values = [ cardId, body.username, body.network, body.language, false ];
 
 		// Execute
 		logger.debug(query, values);
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	}),
 
 	// Return specific card by id
@@ -36,13 +36,13 @@ export default (config, db, logger) => ({
 			LIMIT 1`;
 
 		// Setup values
-		let values = [ cardId ]
+		let values = [ cardId ];
 
 		// Execute
 		logger.debug(query, values);
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	}),
 
 	// Add an entry to the reports table and then update the card record accordingly
@@ -54,9 +54,18 @@ export default (config, db, logger) => ({
 				query: `INSERT INTO ${config.TABLE_GRASP_REPORTS}
 					(card_id, card_data, text, created_at, disaster_type, status, the_geom)
 					VALUES ($1, $2, COALESCE($3,''), $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
+				values: [ card.card_id, { flood_depth: body.water_depth }, body.text,
+					body.created_at, 'flood', 'Confirmed', body.location.lng, body.location.lat  ]
+			},
+			/*** TODO - renable this query (and delete the one above) for updated data structure when PetaBencana.id client is ready
+			{
+				query: `INSERT INTO ${config.TABLE_GRASP_REPORTS}
+					(card_id, card_data, text, created_at, disaster_type, status, the_geom)
+					VALUES ($1, $2, COALESCE($3,''), $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
 				values: [ card.card_id, body.card_data, body.text,
 					body.created_at, body.disaster_type, 'Confirmed', body.location.lng, body.location.lat  ]
 			},
+			***/
 			{
 				query: `UPDATE ${config.TABLE_GRASP_CARDS}
 					SET received = TRUE WHERE card_id = $1`,
@@ -68,17 +77,17 @@ export default (config, db, logger) => ({
 							VALUES ($1, $2)`,
 				values: [ card.card_id, 'REPORT SUBMITTED' ]
 			}
-		]
+		];
 
 		// Log queries to debugger
 		for (let query of queries) logger.debug(query.query, query.values);
 
 		// Execute in a transaction as both INSERT and UPDATE must happen together
 		db.tx((t) => {
-			return t.batch(queries.map((query) => t.none(query.query, query.values)))
+			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	}),
 
 	// Update the reports table with new report details
@@ -102,17 +111,17 @@ export default (config, db, logger) => ({
 							VALUES ($1, $2)`,
 				values: [ card.card_id, 'REPORT UPDATES' ]
 			}
-		]
+		];
 
 		// Log queries to debugger
 		for (let query of queries) logger.debug(query.query, query.values);
 
 		// Execute in a transaction as both INSERT and UPDATE must happen together
 		db.tx((t) => {
-			return t.batch(queries.map((query) => t.none(query.query, query.values)))
+			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	})
 
 });

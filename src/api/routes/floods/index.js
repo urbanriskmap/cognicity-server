@@ -36,13 +36,13 @@ const REM_STATES = {
 		severity: 'Severe',
 		levelDescription: 'FLOODING OF OVER 150 CENTIMETERS'
 	}
-}
+};
 
 // Function to clear out the cache
 const clearCache = () => {
 	apicache.clear(CACHE_GROUP_FLOODS);
 	apicache.clear(CACHE_GROUP_FLOODS_STATES);
-}
+};
 
 export default ({ config, db, logger }) => {
 	let api = Router();
@@ -60,8 +60,8 @@ export default ({ config, db, logger }) => {
 		}),
 		(req, res, next) => {
 			req.apicacheGroup = CACHE_GROUP_FLOODS;
-			if (req.query.geoformat === 'cap' && req.query.format !== 'xml') res.status(400).json({ statusCode: 400, message: 'format must be \'xml\' when geoformat=\'cap\'' })
-			else if (config.GEO_FORMATS.indexOf(req.query.geoformat) > -1 && req.query.format !== 'json') res.status(400).json({ statusCode: 400, message: 'format must be \'json\' when geoformat IN (\'geojson\',\'topojson\')' })
+			if (req.query.geoformat === 'cap' && req.query.format !== 'xml') res.status(400).json({ statusCode: 400, message: 'format must be \'xml\' when geoformat=\'cap\'' });
+			else if (config.GEO_FORMATS.indexOf(req.query.geoformat) > -1 && req.query.format !== 'json') res.status(400).json({ statusCode: 400, message: 'format must be \'json\' when geoformat IN (\'geojson\',\'topojson\')' });
 			else floods(config, db, logger).allGeo(req.query.city, req.query.minimum_state)
 				.then((data) =>
 					req.query.geoformat === 'cap' ?
@@ -77,7 +77,7 @@ export default ({ config, db, logger }) => {
 				.catch((err) => {
 					logger.error(err);
 					next(err);
-				})
+				});
 		}
   );
 
@@ -97,7 +97,7 @@ export default ({ config, db, logger }) => {
 				.catch((err) => {
 					logger.error(err);
 					next(err);
-				})
+				});
 		}
   );
 
@@ -134,7 +134,7 @@ export default ({ config, db, logger }) => {
 		(req, res, next) => floods(config, db, logger).clearREMState(req.params.localAreaId, req.query.username)
 			.then(() => {
 				clearCache();
-				res.status(200).json({localAreaId: req.params.localAreaId, state: null, updated: true})
+				res.status(200).json({localAreaId: req.params.localAreaId, state: null, updated: true});
 			})
 			.catch((err) => {
 				logger.error(err);
@@ -143,4 +143,4 @@ export default ({ config, db, logger }) => {
 	);
 
 	return api;
-}
+};

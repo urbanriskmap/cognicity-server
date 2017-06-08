@@ -15,13 +15,13 @@ export default (config, db, logger) => ({
 
 		// Setup values
 		let timeWindow = (Date.now() / 1000) - config.API_FLOODGAUGE_REPORTS_TIME_WINDOW;
-		let values = [ timeWindow, city, config.API_FLOODGAUGE_REPORTS_LIMIT ]
+		let values = [ timeWindow, city, config.API_FLOODGAUGE_REPORTS_LIMIT ];
 
 		// Execute
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 
 	}),
 
@@ -37,13 +37,13 @@ export default (config, db, logger) => ({
 			GROUP BY gaugeid, the_geom, gaugenameid`;
 
 		// Setup values
-		let values = [ id ]
+		let values = [ id ];
 
 		// Execute
 		logger.debug(query, values);
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err))
+			.catch((err) => reject(err));
 	})
 
 });

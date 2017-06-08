@@ -122,7 +122,7 @@ module.exports = class Cap {
 			severity = "Severe";
 			levelDescription = "FLOODING OF OVER 150 CENTIMETERS";
 		} else {
-			self.logger.error("Cap: createInfo(): State " + feature.properties.state + " cannot be resolved to a severity");
+			self.logger.silly("Cap: createInfo(): State " + feature.properties.state + " cannot be resolved to a severity");
 			return;
 		}
 		info.severity = severity;

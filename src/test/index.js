@@ -21,6 +21,8 @@ const logger = new (winston.Logger)({
   ]
 });
 
+
+
 // Import tests
 import testServer from './testServer.js';
 import testCards from './testCards.js';
@@ -34,8 +36,6 @@ import testReports from './testReports.js';
 // Put some sample data in the database
 const pg = require('pg');
 
-// need to put in dummy data to database?
-
 // Create a top-level testing harness
 describe('Cognicity Server Testing Harness', function() {
 
@@ -44,6 +44,10 @@ let PG_CONFIG_STRING = 'postgres://'+config.PGUSER+'@'+config.PGHOST+':'+config.
 
 // Gloal report value
 let reportid = 0;
+
+// Auth JWT support
+const jwt = require('jsonwebtoken');
+let token = jwt.sign({},new Buffer(config.AUTH0_SECRET),{audience: config.AUTH0_CLIENT_ID});
 
 // Insert some dummy data
  before ('Insert dummy data', function(done){
@@ -85,7 +89,7 @@ let reportid = 0;
     testFeeds(app);
     testFloodgauges(app);
     testInfrastructure(app);
-    testFloods(app);
+    testFloods(app, token);
     testReports(app, reportid);
 
     // Removes dummy data

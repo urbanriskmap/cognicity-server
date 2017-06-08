@@ -22,5 +22,4 @@ export default (config, logger) => new Promise((resolve, reject) => {
 			logger.error(err);
 			reject(err);
 		});
-
 });

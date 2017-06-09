@@ -15,15 +15,6 @@ import shortid from 'shortid';
 
 // Import image upload capabilities
 import AWS from 'aws-sdk';
-var s3 = new AWS.S3(
-  {
-    accessKeyId : process.env.accessKeyId || '' ,
-    secretAccessKey : process.env.secretAccessKey  || '',
-    signatureVersion: 'v4',
-    region: 'ap-south-1'
-  });
-
-
 
 // Caching
 import apicache from 'apicache';
@@ -35,7 +26,18 @@ const clearCache = () => {
 };
 
 export default ({ config, db, logger }) => {
+
+  // Router
 	let api = Router();
+
+  // Create an S3 object
+  let s3 = new AWS.S3(
+    {
+      accessKeyId : config.AWS_S3_ACCESS_KEY_ID ,
+      secretAccessKey : config.AWS_S3_SECRET_ACCESS_KEY,
+      signatureVersion: config.AWS_S3_SIGNATURE_VERSION,
+      region: config.AWS_REGION
+    });
 
 	// Create a new card and if successful return generated cardId
 	api.post('/',

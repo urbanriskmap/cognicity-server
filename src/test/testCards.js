@@ -47,7 +47,7 @@ export default function (app){
            .post('/cards')
            .send({
                "username": "testuser",
-               "network": "twitter",
+               "network": "test network",
                "language": "en"
            })
            .expect(200)
@@ -89,7 +89,7 @@ export default function (app){
                    "flood_depth": 20,
                    "report_type": "flood"
                  },
-                 "text": "big flood",
+                 "text": "integration testing",
                  "created_at": "2017-06-07T07:00:00+0700",
                  "location": {
                    "lat": -6.4,
@@ -139,9 +139,9 @@ export default function (app){
                  else {
                    test.value(res.body.result.card_id).is(cardId);
                    test.value(res.body.result.username).is('testuser');
-                   test.value(res.body.result.network).is('twitter')
+                   test.value(res.body.result.network).is('test network')
                    test.value(res.body.result.language).is('en')
-                   test.value(res.body.result.report.text).is('big flood')
+                   test.value(res.body.result.report.text).is('integration testing')
                    done();
                  }
               });

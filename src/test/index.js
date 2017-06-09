@@ -44,36 +44,11 @@ describe('Cognicity Server Testing Harness', function() {
 let PG_CONFIG_STRING = 'postgres://'+config.PGUSER+'@'+config.PGHOST+':'+config.PGPORT+'/'+config.PGDATABASE;
 
 // Gloal report value
-let reportid = 0;
+let reportid = 1;
 
 // Auth JWT support
 const jwt = require('jsonwebtoken');
 let token = jwt.sign({},new Buffer(config.AUTH0_SECRET),{audience: config.AUTH0_CLIENT_ID});
-
-// Insert some dummy data
- before ('Insert dummy data', function(done){
-   let queryObject = {
-     text: `INSERT INTO ${config.TABLE_REPORTS} (fkey, created_at, text, source, status, disaster_type, lang, url, image_url, title, the_geom) VALUES (1, now(), 'test report', 'testing', 'confirmed', 'flood', 'en', 'no_url', 'no_url', 'no_title', ST_GeomFromText('POINT(106.816667 -6.2)', 4326)) RETURNING pkey`
-    };
-
-   pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
-     client.query(queryObject, function(err, result){
-       reportid = result.rows[0].pkey;
-       pgDone();
-     });
-    });
-   pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
-     client.query(`INSERT INTO ${config.TABLE_REM_STATUS} (local_area, state, last_updated) VALUES (1, 1, now())`, function(err){
-       if (err){
-         console.log(err);
-       }
-       else {
-         done();
-         pgDone();
-       }
-     });
-   });
- });
 
  it('Server starts', function(done){
    // Test optional server params
@@ -99,7 +74,7 @@ let token = jwt.sign({},new Buffer(config.AUTH0_SECRET),{audience: config.AUTH0_
     describe('Cleans up', function() {
        it ('Removes dummy report data', function(done){
          let queryObject = {
-           text: `DELETE FROM ${config.TABLE_REPORTS} WHERE pkey = $1;`,
+           text: `DELETE FROM ${config.TABLE_REPORTS} WHERE source = 'grasp' AND text = 'integration testing';`,
            values: [ reportid ]
          };
          pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
@@ -116,10 +91,67 @@ let token = jwt.sign({},new Buffer(config.AUTH0_SECRET),{audience: config.AUTH0_
          });
        });
 
-     // Remove dummy data from reports table
+       it ('Removes dummy cards data', function(done){
+         let queryObject = {
+           text: `DELETE FROM ${config.TABLE_GRASP_CARDS} WHERE username = 'testuser' AND network = 'test network';`,
+           values: [ reportid ]
+         };
+         pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+           client.query(queryObject, function(){
+             if (err) {
+               console.log(err.message)
+               pgDone();
+             }
+             else {
+               pgDone();
+               done();
+             }
+           });
+         });
+       });
+
+       it ('Removes dummy cards data', function(done){
+         let queryObject = {
+           text: `DELETE FROM ${config.TABLE_GRASP_REPORTS} WHERE text = 'integration testing';`,
+           values: [ reportid ]
+         };
+         pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+           client.query(queryObject, function(){
+             if (err) {
+               console.log(err.message)
+               pgDone();
+             }
+             else {
+               pgDone();
+               done();
+             }
+           });
+         });
+       });
+
+     // Remove dummy data from REM floods table
      it ('Removes dummy flood data', function(done){
       let queryObject = {
-         text: `DELETE FROM ${config.TABLE_REM_STATUS} WHERE local_area = 1`,
+         text: `DELETE FROM ${config.TABLE_REM_STATUS} WHERE local_area = 5`,
+       };
+       pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
+         client.query(queryObject, function(){
+           if (err) {
+             console.log(err.message)
+             pgDone();
+           }
+           else {
+             pgDone();
+             done();
+           }
+         });
+       });
+     });
+
+     // Remove dummy data from REM floods table
+     it ('Removes dummy flood data from log', function(done){
+      let queryObject = {
+         text: `DELETE FROM ${config.TABLE_REM_STATUS_LOG} WHERE username = testing`,
        };
        pg.connect(PG_CONFIG_STRING, function(err, client, pgDone){
          client.query(queryObject, function(){

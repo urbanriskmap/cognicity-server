@@ -1,9 +1,8 @@
+// Unit.js
 const test = require('unit.js');
 
 // Cap formatter helper
 import Cap from '../lib/cap';
-
-
 
 export default function (logger){
 

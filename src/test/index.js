@@ -32,6 +32,7 @@ import testInfrastructure from './testInfrastructure.js';
 import testFloods from './testFloods.js';
 import testReports from './testReports.js';
 import testCAP from './testCAP.js';
+import testDB from './testDB.js';
 
 // Put some sample data in the database
 const pg = require('pg');
@@ -92,6 +93,7 @@ let token = jwt.sign({},new Buffer(config.AUTH0_SECRET),{audience: config.AUTH0_
     testFloods(app, token);
     testReports(app, reportid);
     testCAP(logger);
+    testDB();
 
     // Removes dummy data
     describe('Cleans up', function() {

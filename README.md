@@ -73,7 +73,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `PGUSER`: Postgres DB username (default: `postgres`)
 * `PORT`: Which port should the application run on (default: `8001`)
 * `REGION_CODES`: Which region codes are supported (as comma separated list) (default: `jbd,bdg,sby`)
-* `REPORT_TYPES`: Classifiers for report types (default: `drain,desilting,canalrepair,treeclearing,flood`) 
+* `REPORT_TYPES`: Classifiers for report types (default: `drain,desilting,canalrepair,treeclearing,flood`)
 * `RESPONSE_TIME`: Should the server return an `X-Response-Time` header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: `false`)
 * `SECURE_AUTH0`: Whether Auth0 JWT token security should be applied to secure routes (default: `false`)
 * `TABLE_FLOODGAUGE_REPORTS`: Postgres table name for flood-gauge reports
@@ -96,7 +96,7 @@ A few points to note on config:
 Run `npm run -s build` to build.
 
 ### Testing
-Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server). ESLint runs to check syntax. Integration tests, formed by chaining unit tests, are used to check the API.  Coverage is provided by Istanbul and [Coveralls](https://coveralls.io/github/urbanriskmap/cognicity-server). See src/test/ for scripts.
+Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server). ESLint runs to check syntax. Integration tests, formed by chaining unit tests, are used to check the API.  Coverage is provided by Istanbul and [Coveralls](https://coveralls.io/github/urbanriskmap/cognicity-server). See src/test/ for scripts. Beware that integration tests may pollute tables (e.g. user tables in feeds), it is not recommended to run tests against prod databases with live data.
 
 ### Issue Tracking
 Issues are tracked using [GitHub](https://github.com/urbanriskmap/cognicity-server/issues)

@@ -17,10 +17,9 @@ import { init } from '../server.js';
 const winston = require('winston');
 const logger = new (winston.Logger)({
   transports: [
-    new (winston.transports.Console)({ raw: true }),
+    new (winston.transports.Console)({ raw: true, level: 'debug' }),
   ]
 });
-
 
 
 // Import tests
@@ -32,6 +31,7 @@ import testFloodgauges from './testFloodgauges.js';
 import testInfrastructure from './testInfrastructure.js';
 import testFloods from './testFloods.js';
 import testReports from './testReports.js';
+import testCAP from './testCAP.js';
 
 // Put some sample data in the database
 const pg = require('pg');
@@ -91,6 +91,7 @@ let token = jwt.sign({},new Buffer(config.AUTH0_SECRET),{audience: config.AUTH0_
     testInfrastructure(app);
     testFloods(app, token);
     testReports(app, reportid);
+    testCAP(logger);
 
     // Removes dummy data
     describe('Cleans up', function() {

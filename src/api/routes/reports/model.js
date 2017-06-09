@@ -49,7 +49,10 @@ export default (config, db, logger) => ({
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
 			/* istanbul ignore next */
-			.catch((err) => reject(err));
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	})
 
 });

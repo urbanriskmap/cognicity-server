@@ -64,6 +64,21 @@ export default function (app){
           });
        });
 
+       // Check HEAD request on cardId
+       it('Check HEAD request on cardId', function(done){
+           test.httpAgent(app)
+             .head('/cards/'+cardId)
+             .expect(200)
+             .end(function(err, res){
+               if (err) {
+                 test.fail(err.message + ' ' + JSON.stringify(res));
+               }
+               else {
+                 done();
+               }
+            });
+         });
+
        // Request a card, submit and get resulting report
        it('Put card data', function(done){
            test.httpAgent(app)

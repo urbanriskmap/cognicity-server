@@ -68,10 +68,12 @@ export default ({ config, db, logger }) => {
 						// If CAP format has been required first convert to geojson then to CAP
 						formatGeo(data, 'geojson')
 							.then((formatted) => res.status(200).set('Content-Type', 'text/xml').send(cap.geoJsonToAtomCap(formatted.features)))
+							/* istanbul ignore next */
 							.catch((err) => next(err)) :
 						// Otherwise hand off to geo formatter
 						formatGeo(data, req.query.geoformat)
 							.then((formatted) => res.status(200).json({ statusCode: 200, result: formatted }))
+							/* istanbul ignore next */
 							.catch((err) => next(err))
 				)
 				.catch((err) => {

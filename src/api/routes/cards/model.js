@@ -85,10 +85,12 @@ export default (config, db, logger) => ({
 		db.tx((t) => {
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
-			/* istanbul ignore next */
 			.then((data) => resolve(data))
 			/* istanbul ignore next */
-			.catch((err) => reject(err));
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	}),
 
 	// Update the reports table with new report details
@@ -121,10 +123,12 @@ export default (config, db, logger) => ({
 		db.tx((t) => {
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
-			/* istanbul ignore next */
 			.then((data) => resolve(data))
 			/* istanbul ignore next */
-			.catch((err) => reject(err));
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	})
 
 });

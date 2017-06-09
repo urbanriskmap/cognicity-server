@@ -73,9 +73,9 @@ export default function (logger){
     });
 
     // Test bad geometry will bubble up internall within CAP module
-    it('Test bad geometry', function(done){
+    it('Test unsupported complex polygon geometry (interior rings)', function(done){
       // dummy data (polygon)
-      let feature = {"type":"Feature","geometry":{"type":"Point","coordinates":[106.8367359996,-6.2305420003]},"properties":{"area_id":"1346","geom_id":"3171100002004000","area_name":"RW 04","parent_name":"KUNINGAN TIMUR","city_name":"Jakarta","state":1,"last_updated":"2017-03-31T02:45:52.574Z"}}
+      let feature = {"type":"Feature","geometry":{"type":"Polygon","coordinates" : [[ [ 0 , 0 ] , [ 3 , 6 ] , [ 6 , 1 ] , [ 0 , 0 ] ],   [ [ 2 , 2 ] , [ 3 , 3 ] , [ 4 , 2 ] , [ 2 , 2 ] ]]}, "properties":{"area_id":"1346","geom_id":"3171100002004000","area_name":"RW 04","parent_name":"KUNINGAN TIMUR","city_name":"Jakarta","state":1,"last_updated":"2017-03-31T02:45:52.574Z"}}
 
       let result = cap.createInfo(feature);
       test.value(result).is(undefined)

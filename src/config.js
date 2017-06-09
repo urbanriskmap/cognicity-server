@@ -34,7 +34,7 @@ export default {
   GEO_FORMATS: (process.env.GEO_FORMATS || 'geojson,topojson').split(','),
   GEO_PRECISION: process.env.GEO_PRECISION || 10,
   IMAGE_BUCKET: process.env.IMAGE_BUCKET || 'testing-riskmap-image-uploads',
-  IMAGES_HOST: process.env.IMAGES_HOST || 'images.riskmap.in',
+  IMAGES_HOST: process.env.IMAGES_HOST || 'images.petabencana.in',
   INFRASTRUCTURE_TYPES: (process.env.INFRASTRUCTURE_TYPES || 'floodgates,pumps,waterways').split(','),
   LANGUAGES: (process.env.LANGUAGES || 'en,id').split(','),
   LOG_CONSOLE: process.env.LOG_CONSOLE === 'true' || false,

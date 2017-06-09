@@ -33,6 +33,10 @@ Server configuration parameters are stored in a configuration file which is pars
 * `AUTH0_AUDIENCE`: Data API to be authenticated
 * `AUTH0_CLIENT_ID`: Auth0 client ID (NOTE: this is mandatory and no default value)
 * `AUTH0_ISSUER`: Web address of Auth0 instance
+* `AWS_REGION`: Region for AWS Infrastructure
+* `AWS_S3_ACCESS_KEY_ID`: Access key ID for AWS S3 bucket
+* `AWS_S3_SECRET_ACCESS_KEY`: Access key secret for AWS S3 bucket
+* `AWS_S3_SIGNATURE_VERSION`: Version of AWS S3 signature to use
 * `AUTH0_SECRET`: Auth0 secret (NOTE: this is mandatory and no default value)
 * `BODY_LIMIT`: Maximum body size POST/PUT/PATCH (default: `100kb`)
 * `CACHE`: Should caching be enabled? (default: `false`)
@@ -43,6 +47,14 @@ Server configuration parameters are stored in a configuration file which is pars
 * `COMPRESS`: Should the server gzip compress results? (default: `false`)
 * `CORS`: Should Cross Object Resource Sharing (CORS) be enabled (default: `false`)
 * `CORS_HEADERS`: CORS headers to use (default: `[Link]`)
+* `DISASTER_TYPES`: Disaster type keywords for report classification (default: `flood,prep`)
+* `FORMAT_DEFAULT`: Which format to return results in by default (default: `json`)
+* `FORMATS`: Formats supported by the system (as comma separated list) (default: `json,xml`)
+* `GEO_FORMAT_DEFAULT`: Which format to return geographic results in by default (default: `topojson`)
+* `GEO_FORMATS`: Geographic formats supported by the system (as comma separated list) (default: `topojson,geojson,cap`)
+* `GEO_PRECISION`: Precision to use when rounding geographic coordinates (default: `10`)
+* `IMAGE_BUCKET`: AWS S3 bucket for image uploads (default: `testing-riskmap-image-uploads`)
+* `IMAGES_HOST`: Endpoint for image hosting (default: `images.petabencana.id`),
 * `PGHOST`: Postgres DB hostname (default: `127.0.0.1`)
 * `PGDATABASE`: Postgres DB database name (default: `cognicity`)
 * `PGPASSWORD`: Postgres DB password (default: `p@ssw0rd`)
@@ -50,11 +62,6 @@ Server configuration parameters are stored in a configuration file which is pars
 * `PGSSL`: SSL enabled on Postgres DB connection? (default: `false`)
 * `PGTIMEOUT`: Max duration on DB calls before timeout (in milliseconds) (default: `5000` i.e. 5 seconds)
 * `PGUSER`: Postgres DB username (default: `postgres`)
-* `FORMAT_DEFAULT`: Which format to return results in by default (default: `json`)
-* `FORMATS`: Formats supported by the system (as comma separated list) (default: `json,xml`)
-* `GEO_FORMAT_DEFAULT`: Which format to return geographic results in by default (default: `topojson`)
-* `GEO_FORMATS`: Geographic formats supported by the system (as comma separated list) (default: `topojson,geojson,cap`)
-* `GEO_PRECISION`: Precision to use when rounding geographic coordinates (default: `10`)
 * `INFRASTRUCTURE_TYPES`: Infrastructure types supported (as comma separated list) (default: `floodgates,pumps,waterways`)
 * `LANGUAGES`: Supported languages
 * `LOG_CONSOLE`: In development mode we log to the console by default, in other environments this must be enabled if required by setting this parameter to `true` (default: `false`)
@@ -88,7 +95,7 @@ A few points to note on config:
 Run `npm run -s build` to build.
 
 ### Testing
-Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server). ESLint runs to check syntax. Integration tests, formed by chaining unit tests, are used to check the API. See src/test/ for scripts.
+Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server). ESLint runs to check syntax. Integration tests, formed by chaining unit tests, are used to check the API.  Coverage is provided by Istanbul and [Coveralls](https://coveralls.io/github/urbanriskmap/cognicity-server). See src/test/ for scripts.
 
 ### Issue Tracking
 Issues are tracked using [GitHub](https://github.com/urbanriskmap/cognicity-server/issues)

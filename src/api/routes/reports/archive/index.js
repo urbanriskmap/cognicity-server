@@ -1,12 +1,10 @@
 import { Router } from 'express';
 
 // Import our data model
-import reports from './model';
-
-import archive from './archive';
+import archive from './model';
 
 // Import any required utility functions
-import { cacheResponse, handleGeoResponse } from '../../../lib/util';
+import { cacheResponse, handleGeoResponse } from '../../../../lib/util';
 
 // Import validation dependencies
 import Joi from 'joi';
@@ -25,34 +23,13 @@ export default ({ config, db, logger }) => {
 				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT)
 			}
 		}),
-		(req, res, next) => reports(config, db, logger).all(req.query.timeperiod, req.query.city)
+		(req, res, next) => archive(config, db, logger).all(req.query.timeperiod, req.query.city)
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);
 				next(err);
 			})
 	);
-
-	// to get all reports between two dates
-	api.use('/archive', archive({config, db, logger}));
-
-	// Get a single report
-	api.get('/:id', cacheResponse('1 minute'),
-		validate({
-			params: { id: Joi.number().integer().required() } ,
-			query: {
-				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
-				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT)
-			}
-		}),
-		(req, res, next) => reports(config, db, logger).byId(req.params.id)
-			.then((data) => handleGeoResponse(data, req, res, next))
-			.catch((err) => {
-				logger.error(err);
-				next(err);
-			})
-	);
-
 
 	return api;
 };

@@ -31,6 +31,7 @@ import testFloodgauges from './testFloodgauges.js';
 import testInfrastructure from './testInfrastructure.js';
 import testFloods from './testFloods.js';
 import testReports from './testReports.js';
+import testReportsArchive from './testReportsArchive';
 import testCAP from './testCAP.js';
 import testDB from './testDB.js';
 
@@ -67,6 +68,7 @@ let token = jwt.sign({},new Buffer(config.AUTH0_SECRET),{audience: config.AUTH0_
     testInfrastructure(app);
     testFloods(app, token);
     testReports(app, reportid);
+    testReportsArchive(app);
     testCAP(logger);
     testDB();
 

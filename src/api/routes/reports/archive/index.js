@@ -7,7 +7,10 @@ import archive from './model';
 import { cacheResponse, handleGeoResponse } from '../../../../lib/util';
 
 // Import validation dependencies
-import Joi from 'joi';
+import BaseJoi from 'joi';
+import Extension from 'joi-date-extensions';
+const Joi = BaseJoi.extend(Extension);
+
 import validate from 'celebrate';
 
 export default ({ config, db, logger }) => {
@@ -18,12 +21,15 @@ export default ({ config, db, logger }) => {
 		validate({
 			query: {
 				city: Joi.any().valid(config.REGION_CODES),
-				timeperiod: Joi.number().integer().positive().max(config.API_REPORTS_TIME_WINDOW_MAX).default(config.API_REPORTS_TIME_WINDOW),
+        //start: Joi.date().format(['YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DDTHH:mm:ss+Z']),
+        //end: Joi.date().format(['YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DDTHH:mm:ss+Z']),
+        start: Joi.date().format(['YYYY-MM-DDTHH:mm:ssZ']).options({convert: true}),
+        end: Joi.date().format(['YYYY-MM-DDTHH:mm:ssZ']).options({convert: true}),
 				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
 				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT)
 			}
 		}),
-		(req, res, next) => archive(config, db, logger).all(req.query.timeperiod, req.query.city)
+		(req, res, next) => archive(config, db, logger).all(req.query.start, req.query.end, req.query.city)
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
 				logger.error(err);

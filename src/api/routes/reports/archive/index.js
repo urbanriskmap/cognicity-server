@@ -18,13 +18,12 @@ export default ({ config, db, logger }) => {
 
 	// Get a list of all reports
 	api.get('/', cacheResponse('1 minute'),
+
 		validate({
 			query: {
 				city: Joi.any().valid(config.REGION_CODES),
-        //start: Joi.date().format(['YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DDTHH:mm:ss+Z']),
-        //end: Joi.date().format(['YYYY-MM-DDTHH:mm:ssZ', 'YYYY-MM-DDTHH:mm:ss+Z']),
-        start: Joi.date().format(['YYYY-MM-DDTHH:mm:ssZ']).options({convert: true}),
-        end: Joi.date().format(['YYYY-MM-DDTHH:mm:ssZ']).options({convert: true}),
+        start: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ'),
+        end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').options({convert: true}),
 				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
 				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT)
 			}

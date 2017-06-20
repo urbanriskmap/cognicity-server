@@ -22,8 +22,9 @@ export default ({ config, db, logger }) => {
 		validate({
 			query: {
 				city: Joi.any().valid(config.REGION_CODES),
-        start: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ'),
-        end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').options({convert: true}),
+        start: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
+        end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
+				// TODO we should restrict output to geo/topojson only. CAP format doesn't make sense for historic data.
 				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
 				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT)
 			}

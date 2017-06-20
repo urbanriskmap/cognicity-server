@@ -18,9 +18,13 @@ export default (config, db, logger) => ({
 		// Execute
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
-			.then((data) => resolve(data))
-			.catch((err) => reject(err));
-
+			.then((data) => {
+				resolve(data)
+			})
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	}),
 
 	// Get all flood reports for a given city
@@ -42,9 +46,14 @@ export default (config, db, logger) => ({
 		// Execute
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
-			.then((data) => resolve(data))
-			.catch((err) => reject(err));
-
+			.then((data) => {
+				resolve(data)
+			})
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	}),
 
 	// Update the REM state and append to the log
@@ -78,8 +87,14 @@ export default (config, db, logger) => ({
 		db.tx((t) => {
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
-			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			.then((data) => {
+				resolve(data)
+			})
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	}),
 
 	// Remove the REM state record and append to the log
@@ -110,8 +125,14 @@ export default (config, db, logger) => ({
 		db.tx((t) => {
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
-			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			.then((data) => {
+				resolve(data)
+			})
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err);
+			})
 	})
 
 });

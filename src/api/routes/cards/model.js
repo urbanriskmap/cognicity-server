@@ -17,7 +17,11 @@ export default (config, db, logger) => ({
 		logger.debug(query, values);
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)}
+			);
 	}),
 
 	// Return specific card by id
@@ -42,7 +46,11 @@ export default (config, db, logger) => ({
 		logger.debug(query, values);
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			})
 	}),
 
 	// Add an entry to the reports table and then update the card record accordingly
@@ -54,8 +62,8 @@ export default (config, db, logger) => ({
 				query: `INSERT INTO ${config.TABLE_GRASP_REPORTS}
 					(card_id, card_data, text, created_at, disaster_type, status, the_geom)
 					VALUES ($1, $2, COALESCE($3,''), $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
-				values: [ card.card_id, { flood_depth: body.water_depth }, body.text,
-					body.created_at, 'flood', 'Confirmed', body.location.lng, body.location.lat  ]
+				values: [ card.card_id, body.card_data, body.text,
+					body.created_at, body.disaster_type, 'Confirmed', body.location.lng, body.location.lat  ]
 			},
 			{
 				query: `UPDATE ${config.TABLE_GRASP_CARDS}
@@ -78,7 +86,11 @@ export default (config, db, logger) => ({
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	}),
 
 	// Update the reports table with new report details
@@ -112,7 +124,11 @@ export default (config, db, logger) => ({
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	})
 
 });

@@ -3,6 +3,8 @@ API Server for CogniCity
 
 [![Build Status](https://travis-ci.org/urbanriskmap/cognicity-server.svg?branch=master)](https://travis-ci.org/urbanriskmap/cognicity-server)
 
+[![Coverage Status](https://coveralls.io/repos/github/urbanriskmap/cognicity-server/badge.svg?branch=server-object-refactor)](https://coveralls.io/github/urbanriskmap/cognicity-server?branch=server-object-refactor)
+
 ### Summary
 
 This is the NodeJS server which runs the CogniCity Data API used by Urban Risk Map instances, such as [PetaBencana.id](https://petabencana.id) site.  
@@ -31,6 +33,10 @@ Server configuration parameters are stored in a configuration file which is pars
 * `AUTH0_AUDIENCE`: Data API to be authenticated
 * `AUTH0_CLIENT_ID`: Auth0 client ID (NOTE: this is mandatory and no default value)
 * `AUTH0_ISSUER`: Web address of Auth0 instance
+* `AWS_REGION`: Region for AWS Infrastructure
+* `AWS_S3_ACCESS_KEY_ID`: Access key ID for AWS S3 bucket
+* `AWS_S3_SECRET_ACCESS_KEY`: Access key secret for AWS S3 bucket
+* `AWS_S3_SIGNATURE_VERSION`: Version of AWS S3 signature to use
 * `AUTH0_SECRET`: Auth0 secret (NOTE: this is mandatory and no default value)
 * `BODY_LIMIT`: Maximum body size POST/PUT/PATCH (default: `100kb`)
 * `CACHE`: Should caching be enabled? (default: `false`)
@@ -38,21 +44,17 @@ Server configuration parameters are stored in a configuration file which is pars
 * `CACHE_DURATION_FLOODS`: How long should floods be cached for? (default: '1 hour')
 * `CACHE_DURATION_FLOODS_STATES`: How long should flood states be cached for? (default: '1 hour')
 * `CACHE_DURATION_INFRASTRUCTURE`: How long should infrastructure be cached for? (default: '1 hour')
-* `COMPRESS`: Should the server gzip compress results? (default: `false`)
+* `COMPRESS`: Should the server gzip compress results? Only works if CACHE is disabled. (default: `false`)
 * `CORS`: Should Cross Object Resource Sharing (CORS) be enabled (default: `false`)
 * `CORS_HEADERS`: CORS headers to use (default: `[Link]`)
-* `PGHOST`: Postgres DB hostname (default: `127.0.0.1`)
-* `PGDATABASE`: Postgres DB database name (default: `cognicity`)
-* `PGPASSWORD`: Postgres DB password (default: `p@ssw0rd`)
-* `PGPORT`: Postgres DB port (default: `5432`)
-* `PGSSL`: SSL enabled on Postgres DB connection? (default: `false`)
-* `PGTIMEOUT`: Max duration on DB calls before timeout (in milliseconds) (default: `5000` i.e. 5 seconds)
-* `PGUSER`: Postgres DB username (default: `postgres`)
+* `DISASTER_TYPES`: Disaster type keywords for report classification (default: `flood,prep`)
 * `FORMAT_DEFAULT`: Which format to return results in by default (default: `json`)
 * `FORMATS`: Formats supported by the system (as comma separated list) (default: `json,xml`)
 * `GEO_FORMAT_DEFAULT`: Which format to return geographic results in by default (default: `topojson`)
 * `GEO_FORMATS`: Geographic formats supported by the system (as comma separated list) (default: `topojson,geojson,cap`)
 * `GEO_PRECISION`: Precision to use when rounding geographic coordinates (default: `10`)
+* `IMAGE_BUCKET`: AWS S3 bucket for image uploads (default: `testing-riskmap-image-uploads`)
+* `IMAGES_HOST`: Endpoint for image hosting (default: `images.petabencana.id`),
 * `INFRASTRUCTURE_TYPES`: Infrastructure types supported (as comma separated list) (default: `floodgates,pumps,waterways`)
 * `LANGUAGES`: Supported languages
 * `LOG_CONSOLE`: In development mode we log to the console by default, in other environments this must be enabled if required by setting this parameter to `true` (default: `false`)
@@ -62,8 +64,16 @@ Server configuration parameters are stored in a configuration file which is pars
 * `LOG_MAX_FILE_SIZE`: Maximum size of log file in bytes before rotating (default: `1024 * 1024 * 100` i.e. `100mb`)
 * `LOG_MAX_FILES`: Maximum number of log files before rotation (default: `10`)
 * `NODE_ENV`: Which environment are we in.  Environments are: development, test, staging, production (default: `development`)
+* `PGHOST`: Postgres DB hostname (default: `127.0.0.1`)
+* `PGDATABASE`: Postgres DB database name (default: `cognicity`)
+* `PGPASSWORD`: Postgres DB password (default: `p@ssw0rd`)
+* `PGPORT`: Postgres DB port (default: `5432`)
+* `PGSSL`: SSL enabled on Postgres DB connection? (default: `false`)
+* `PGTIMEOUT`: Max duration on DB calls before timeout (in milliseconds) (default: `5000` i.e. 5 seconds)
+* `PGUSER`: Postgres DB username (default: `postgres`)
 * `PORT`: Which port should the application run on (default: `8001`)
 * `REGION_CODES`: Which region codes are supported (as comma separated list) (default: `jbd,bdg,sby`)
+* `REPORT_TYPES`: Classifiers for report types (default: `drain,desilting,canalrepair,treeclearing,flood`)
 * `RESPONSE_TIME`: Should the server return an `X-Response-Time` header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: `false`)
 * `SECURE_AUTH0`: Whether Auth0 JWT token security should be applied to secure routes (default: `false`)
 * `TABLE_FLOODGAUGE_REPORTS`: Postgres table name for flood-gauge reports
@@ -86,10 +96,10 @@ A few points to note on config:
 Run `npm run -s build` to build.
 
 ### Testing
-Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server-v3). Currently tests only run eslint.
+Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server). ESLint runs to check syntax. Integration tests, formed by chaining unit tests, are used to check the API.  Coverage is provided by Istanbul and [Coveralls](https://coveralls.io/github/urbanriskmap/cognicity-server). See src/test/ for scripts. Beware that integration tests may pollute tables (e.g. user tables in feeds), it is not recommended to run tests against prod databases with live data.
 
 ### Issue Tracking
-Issues are tracked using [GitHub](https://github.com/urbanriskmap/cognicity-server-v3/issues)
+Issues are tracked using [GitHub](https://github.com/urbanriskmap/cognicity-server/issues)
 
 ### Release
 The release procedure is as follows:

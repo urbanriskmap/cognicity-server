@@ -25,7 +25,11 @@ export default (config, db, logger) => ({
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	}),
 
 	// Return specific report by id
@@ -44,7 +48,11 @@ export default (config, db, logger) => ({
 		logger.debug(query, values);
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	})
 
 });

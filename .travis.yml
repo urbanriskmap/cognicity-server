@@ -8,7 +8,7 @@ addons:
   postgresql: "9.6"
   apt:
     packages:
-      - postgresql-9.6-postgis-2.3
+      - postgresql-9.6-postgis-
 services: postgresql
 
 branches:
@@ -16,6 +16,7 @@ branches:
     - master
     - dev
     - server-object-refactor
+    - report-archive
 
 before_install:
   - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi

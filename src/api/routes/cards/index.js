@@ -15,15 +15,6 @@ import shortid from 'shortid';
 
 // Import image upload capabilities
 import AWS from 'aws-sdk';
-var s3 = new AWS.S3(
-  {
-    accessKeyId : process.env.accessKeyId || '' ,
-    secretAccessKey : process.env.secretAccessKey  || '',
-    signatureVersion: 'v4',
-    region: 'ap-south-1'
-  });
-
-
 
 // Caching
 import apicache from 'apicache';
@@ -35,7 +26,18 @@ const clearCache = () => {
 };
 
 export default ({ config, db, logger }) => {
+
+  // Router
 	let api = Router();
+
+  // Create an S3 object
+  let s3 = new AWS.S3(
+    {
+      accessKeyId : config.AWS_S3_ACCESS_KEY_ID ,
+      secretAccessKey : config.AWS_S3_SECRET_ACCESS_KEY,
+      signatureVersion: config.AWS_S3_SIGNATURE_VERSION,
+      region: config.AWS_REGION
+    });
 
 	// Create a new card and if successful return generated cardId
 	api.post('/',
@@ -52,7 +54,9 @@ export default ({ config, db, logger }) => {
 				.then((data) => data ? res.status(200).json({ cardId: cardId, created: true }) :
 					next(new Error('Failed to create card')))
 				.catch((err) => {
+					/* istanbul ignore next */
 					logger.error(err);
+					/* istanbul ignore next */
 					next(err);
 				});
 		}
@@ -68,7 +72,9 @@ export default ({ config, db, logger }) => {
 			cards(config, db, logger).byCardId(req.params.cardId)
 				.then((data) => data ? res.status(200).end() : res.status(404).end())
 				.catch((err) => {
+					/* istanbul ignore next */
 					logger.error(err);
+					/* istanbul ignore next */
 					next(err);
 				});
 		}
@@ -84,7 +90,9 @@ export default ({ config, db, logger }) => {
 			cards(config, db, logger).byCardId(req.params.cardId)
 				.then((data) => handleResponse(data, req, res, next))
 				.catch((err) => {
+					/* istanbul ignore next */
 					logger.error(err);
+					/* istanbul ignore next */
 					next(err);
 				});
 		}
@@ -141,13 +149,17 @@ export default ({ config, db, logger }) => {
 								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, created: true });
 							})
 							.catch((err) => {
+								/* istanbul ignore next */
 								logger.error(err);
+								/* istanbul ignore next */
 								next(err);
 							});
 					}
 				});
 			} catch(err) {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			}
 		}
@@ -165,7 +177,9 @@ export default ({ config, db, logger }) => {
     };
     s3.getSignedUrl('putObject', s3params, (err, data) => {
       if (err){
+        /* istanbul ignore next */
         logger.error('could not get signed url from S3');
+        /* istanbul ignore next */
         logger.error(err);
       } else {
         var returnData = {
@@ -190,7 +204,9 @@ export default ({ config, db, logger }) => {
                 //res.status(200).json({ statusCode: 200, cardId: req.params.cardId, updated: true });
               })
               .catch((err) => {
+                /* istanbul ignore next */
                 logger.error(err);
+                /* istanbul ignore next */
                 next(err);
               })
             }
@@ -228,13 +244,17 @@ export default ({ config, db, logger }) => {
 								res.status(200).json({ statusCode: 200, cardId: req.params.cardId, updated: true });
 							})
 							.catch((err) => {
+                /* istanbul ignore next */
 								logger.error(err);
+								/* istanbul ignore next */
 								next(err);
 							});
 					}
 				});
 			} catch(err) {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			}
 		}

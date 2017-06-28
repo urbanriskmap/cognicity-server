@@ -122,7 +122,7 @@ module.exports = class Cap {
 			severity = "Severe";
 			levelDescription = "FLOODING OF OVER 150 CENTIMETERS";
 		} else {
-			self.logger.error("Cap: createInfo(): State " + feature.properties.state + " cannot be resolved to a severity");
+			self.logger.silly("Cap: createInfo(): State " + feature.properties.state + " cannot be resolved to a severity");
 			return;
 		}
 		info.severity = severity;
@@ -167,7 +167,9 @@ module.exports = class Cap {
 		} else if ( feature.geometry.type === "MultiPolygon" ) {
 			featurePolygons = feature.geometry.coordinates;
 		} else {
+      /* istanbul ignore next */
 			self.logger.error( "Cap: createInfo(): Geometry type '" + feature.geometry.type + "' not supported" );
+      /* istanbul ignore next */
 			return;
 		}
 
@@ -178,7 +180,9 @@ module.exports = class Cap {
 		for (let polygonIndex=0; polygonIndex<featurePolygons.length; polygonIndex++) {
 			// We assume all geometries to be simple Polygons with a single LineString (LinearRing)
 			if ( featurePolygons[polygonIndex].length > 1 ) {
+        /* istanbul ignore next */
 				self.logger.error( "Cap: createInfo(): Polygon with interior rings is not supported" );
+        /* istanbul ignore next */
 				return;
 			}
 

@@ -19,7 +19,7 @@ export default ({ config, db, logger }) => {
 				post_id: Joi.number().integer().required(),
 				created_at: Joi.date().iso().required(),
 				title: Joi.string().allow(''),
-				text: Joi.string().allow(''),
+				text: Joi.string().allow('').required(),
 				image_url: Joi.string(),
 				qlue_city: Joi.string().valid(config.API_FEEDS_QLUE_CITIES).required(),
 				disaster_type: Joi.string().valid(config.API_FEEDS_QLUE_DISASTER_TYPES).required(),
@@ -32,7 +32,9 @@ export default ({ config, db, logger }) => {
 		(req, res, next) => feeds(config, db, logger).addQlueReport(req.body)
 			.then((data) => res.json(data))
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
 	);
@@ -45,7 +47,7 @@ export default ({ config, db, logger }) => {
 				contribution_id: Joi.number().integer().required(),
 				created_at: Joi.date().iso().required(),
 				title: Joi.string().allow(''),
-				text: Joi.string().allow(''),
+				text: Joi.string().allow('').required(),
 				url: Joi.string().allow(''),
 				image_url: Joi.string(),
 				disaster_type: Joi.string().valid(config.API_FEEDS_DETIK_DISASTER_TYPES).required(),
@@ -58,7 +60,9 @@ export default ({ config, db, logger }) => {
 		(req, res, next) => feeds(config, db, logger).addDetikReport(req.body)
 			.then((data) => res.json(data))
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
 	);

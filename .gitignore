@@ -1,10 +1,14 @@
 .DS_Store
 .env
 .idea
-.swp
+*.swp
+
+# nyc test coverage
+.nyc_output
 
 /coverage
 /dist
 /node_modules
 
 *.log
+.nyc_output/

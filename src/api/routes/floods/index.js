@@ -68,14 +68,18 @@ export default ({ config, db, logger }) => {
 						// If CAP format has been required first convert to geojson then to CAP
 						formatGeo(data, 'geojson')
 							.then((formatted) => res.status(200).set('Content-Type', 'text/xml').send(cap.geoJsonToAtomCap(formatted.features)))
+							/* istanbul ignore next */
 							.catch((err) => next(err)) :
 						// Otherwise hand off to geo formatter
 						formatGeo(data, req.query.geoformat)
 							.then((formatted) => res.status(200).json({ statusCode: 200, result: formatted }))
+							/* istanbul ignore next */
 							.catch((err) => next(err))
 				)
 				.catch((err) => {
+					/* istanbul ignore next */
 					logger.error(err);
+					/* istanbul ignore next */
 					next(err);
 				});
 		}
@@ -95,7 +99,9 @@ export default ({ config, db, logger }) => {
 			floods(config, db, logger).all(req.query.city, req.query.minimum_state)
 				.then((data) => res.status(200).json({statusCode: 200, result: data}))
 				.catch((err) => {
+					/* istanbul ignore next */
 					logger.error(err);
+					/* istanbul ignore next */
 					next(err);
 				});
 		}
@@ -117,8 +123,11 @@ export default ({ config, db, logger }) => {
 				clearCache();
 				res.status(200).json({localAreaId: req.params.localAreaId, state: req.body.state, updated: true});
 			})
+			/* istanbul ignore next */
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
   );
@@ -136,8 +145,11 @@ export default ({ config, db, logger }) => {
 				clearCache();
 				res.status(200).json({localAreaId: req.params.localAreaId, state: null, updated: true});
 			})
+			/* istanbul ignore next */
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
 	);

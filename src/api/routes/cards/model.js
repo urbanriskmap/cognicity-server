@@ -17,7 +17,11 @@ export default (config, db, logger) => ({
 		logger.debug(query, values);
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)}
+			);
 	}),
 
 	// Return specific card by id
@@ -42,7 +46,11 @@ export default (config, db, logger) => ({
 		logger.debug(query, values);
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			})
 	}),
 
 	// Add an entry to the reports table and then update the card record accordingly
@@ -87,7 +95,11 @@ export default (config, db, logger) => ({
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	}),
 
 	// Update the reports table with new report details
@@ -121,7 +133,11 @@ export default (config, db, logger) => ({
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err)
+			});
 	})
 
 });

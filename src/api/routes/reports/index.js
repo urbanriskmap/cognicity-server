@@ -3,6 +3,8 @@ import { Router } from 'express';
 // Import our data model
 import reports from './model';
 
+import archive from './archive';
+
 // Import any required utility functions
 import { cacheResponse, handleGeoResponse } from '../../../lib/util';
 
@@ -26,10 +28,15 @@ export default ({ config, db, logger }) => {
 		(req, res, next) => reports(config, db, logger).all(req.query.timeperiod, req.query.city)
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
 	);
+
+	// to get all reports between two dates
+	api.use('/archive', archive({config, db, logger}));
 
 	// Get a single report
 	api.get('/:id', cacheResponse('1 minute'),
@@ -43,10 +50,13 @@ export default ({ config, db, logger }) => {
 		(req, res, next) => reports(config, db, logger).byId(req.params.id)
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
 	);
+
 
 	return api;
 };

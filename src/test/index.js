@@ -44,7 +44,7 @@ describe('Cognicity Server Testing Harness', function() {
 // PG config string for dummy data inserts
 let PG_CONFIG_STRING = 'postgres://'+config.PGUSER+'@'+config.PGHOST+':'+config.PGPORT+'/'+config.PGDATABASE;
 
-// Gloal report value
+// Global report value
 let reportid = 1;
 
 // Auth JWT support

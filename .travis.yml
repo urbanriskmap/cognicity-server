@@ -1,8 +1,8 @@
-dist: trusty
+dist: precise
 language: node_js
 node_js:
    - "7"
-sudo: false
+sudo: true
 
 addons:
   postgresql: "9.6"

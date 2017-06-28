@@ -10,7 +10,8 @@
     "prestart": "npm run -s build",
     "mocha": "nyc mocha --compilers js:babel-core/register src/test/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "test": "eslint src & npm run mocha"
+    "lint": "eslint src",
+    "test": "npm run lint & npm run mocha"
   },
   "nyc": {
     "exclude": [
@@ -56,6 +57,7 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "morgan": "^1.8.1",
+    "node-pre-gyp": "^0.6.36",
     "pg-promise": "^5.6.8",
     "response-time": "^2.3.2",
     "shortid": "^2.2.8",
@@ -70,6 +72,9 @@
     "babel-register": "^6.24.1",
     "coveralls": "^2.13.1",
     "eslint": "^3.19.0",
+    "eslint-config-google": "^0.8.0",
+    "estraverse": "^4.2.0",
+    "esutils": "^2.0.2",
     "jsonwebtoken": "^7.4.1",
     "mocha": "^3.3.0",
     "nodemon": "^1.11.0",

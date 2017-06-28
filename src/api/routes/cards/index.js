@@ -102,11 +102,6 @@ export default ({ config, db, logger }) => {
 	api.put('/:cardId', validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
-
-      water_depth: Joi.number().integer().min(0).max(200).required(),
-      /*** TODO - re-enable this new card data structure when PetaBencana.id client-code is ready.
-      ... and remove hard-coded water_depth parameter above
-
       disaster_type: Joi.string().valid(config.DISASTER_TYPES).required(),
       card_data: Joi.object()
         .keys({
@@ -118,7 +113,6 @@ export default ({ config, db, logger }) => {
             is: 'flood',
             then: Joi.object({ flood_depth: Joi.number().integer().min(0).max(200).required() })		// b.c is required only when a is true
         }),
-      ***/
 			text: Joi.string().allow(''),
 			image_url: Joi.string().allow(''),
 			created_at: Joi.date().iso().required(),

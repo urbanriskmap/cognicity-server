@@ -33,7 +33,9 @@ export default ({ config, db, logger }) => {
 		(req, res, next) => archive(config, db, logger).all(req.query.start, req.query.end, req.query.city)
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
+				/* istanbul ignore next */
 				logger.error(err);
+				/* istanbul ignore next */
 				next(err);
 			})
 	);

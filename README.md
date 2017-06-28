@@ -5,6 +5,13 @@ API Server for CogniCity
 
 [![Coverage Status](https://coveralls.io/repos/github/urbanriskmap/cognicity-server/badge.svg?branch=server-object-refactor)](https://coveralls.io/github/urbanriskmap/cognicity-server?branch=server-object-refactor)
 
+DOI for current stable release [v3.0.0](https://github.com/urbanriskmap/cognicity-server/releases/tag/v3.0.0)
+
+
+[![DOI](https://zenodo.org/badge/73803254.svg)](https://zenodo.org/badge/latestdoi/73803254)
+
+
+
 ### Summary
 
 This is the NodeJS server which runs the CogniCity Data API used by Urban Risk Map instances, such as [PetaBencana.id](https://petabencana.id) site.  

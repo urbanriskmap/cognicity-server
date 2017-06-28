@@ -19,6 +19,55 @@ export default function (app){
          });
       });
 
+    it('Can get reports between given timestamps as geojson', function(done){
+        test.httpAgent(app)
+          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&format=json&geoformat=geojson')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res){
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            }
+            else {
+              test.value(res.body.result.type).is("FeatureCollection");
+              done();
+            }
+         });
+      });
+
+    it('Can get any reports by ID', function(done){
+        test.httpAgent(app)
+          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&format=json&geoformat=geojson')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res){
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            }
+            else {
+              test.value(res.body.result.type).is("FeatureCollection");
+              done();
+            }
+         });
+      });
+
+    it('Can get reports between given timestamps as topojson', function(done){
+        test.httpAgent(app)
+          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&format=json&geoformat=topojson')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res){
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            }
+            else {
+
+              test.value(res.body.result.type).is("Topology");
+              done();
+            }
+         });
+      });
+
     // Can catch no start parameter
     it('Required start parameter by default', function(done){
         test.httpAgent(app)

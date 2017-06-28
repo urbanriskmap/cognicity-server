@@ -109,13 +109,9 @@ export default (config, db, logger) => ({
 		let queries = [
 			{
 				query: `UPDATE ${config.TABLE_GRASP_REPORTS} SET
-					card_data = COALESCE($2, card_data),
-					text = COALESCE($3, text),
-					image_url = COALESCE($4, image_url)
+					image_url = COALESCE($2, image_url)
 					WHERE card_id = $1`,
-				values: [ card.card_id,
-					body.water_depth ? { flood_depth: body.water_depth } : null,
-					body.text, body.image_url ]
+				values: [ card.card_id, body.image_url ]
 			},
 			{
 				query: `INSERT INTO ${config.TABLE_GRASP_LOG}

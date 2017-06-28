@@ -215,9 +215,7 @@ export default ({ config, db, logger }) => {
 	api.patch('/:cardId', validate({
 		params: { cardId: Joi.string().min(7).max(14).required() },
 		body: Joi.object().keys({
-			water_depth: Joi.number().integer().min(0).max(200),
-			text: Joi.string().allow(''),
-			image_url: Joi.string()
+			image_url: Joi.string().required()
 		})
 	}),
 	(req, res, next) => {

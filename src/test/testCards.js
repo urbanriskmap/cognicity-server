@@ -152,8 +152,6 @@ export default function (app){
                test.httpAgent(app)
                  .patch('/cards/'+cardId)
                  .send({
-                     "water_depth": 20,
-                     "text": "big flood",
                      "image_url": "dummy image url"
                  })
                  .expect(200)

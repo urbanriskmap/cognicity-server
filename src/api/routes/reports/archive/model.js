@@ -1,13 +1,18 @@
+/**
+ * CogniCity Server /reports/archive data model
+ * @module src/api/reports/model/archive/model
+ **/
 import Promise from 'bluebird';
 
+/**
+ * Interact with historic report objects
+ * @alias module:src/api/reports/archive/model
+ * @param {Object} config Server configuration
+ * @param {Object} db PG Promise database instance
+ * @param {Object} logger Configured Winston logger instance
+ * @return {Object} Query results
+ */
 export default (config, db, logger) => ({
-	/**
-	 * Return all reports within a defined time period, and optionally city
-	 * @param {integer} start Timestamp as ISO 8601 string for start of window
-	 * @param {string} end Timestamp as ISO 8601 string for end of window
-	 * @param {string} city Optional, instance region code (e.g. 'jbd')\
-	 * @return {Object} Query result
-	 */
 	all: (start, end, city) => new Promise((resolve, reject) => {
 		// Setup query
 		let query = `SELECT pkey, created_at, source,

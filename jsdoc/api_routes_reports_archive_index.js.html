@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: server.js</title>
+    <title>JSDoc: Source: api/routes/reports/archive/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: server.js</h1>
+    <h1 class="page-title">Source: api/routes/reports/archive/index.js</h1>
 
     
 
@@ -27,94 +27,64 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * CogniCity Data Server Module
- * @module server
- * Core server module
+ * CogniCity Server /reports/archive endpoint
+ * @module src/api/reports/archive/index
  **/
-// Import
-import Promise from 'bluebird';
+import {Router} from 'express';
 
-// Express middleware and http
-import express from 'express';
-import http from 'http';
+// Import our data model
+import archive from './model';
 
-// Import express middlewares
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import compression from 'compression';
-import responseTime from 'response-time';
-import morgan from 'morgan'; // Express logging
+// Import any required utility functions
+import {cacheResponse, handleGeoResponse} from '../../../../lib/util';
 
+// Import validation dependencies
+import BaseJoi from 'joi';
+import Extension from 'joi-date-extensions';
+const Joi = BaseJoi.extend(Extension);
+
+import validate from 'celebrate';
 /**
- * Core server object
- * @alias module:server
- * @param {Object} config - configuration
- * @param {Object} initializeDb - database initialization
- * @param {Object} routes - routes
- * @param {Object} logger - logger
- * @return {Object} - Express server application
- **/
-// Function to initialize the api server
-const init = (config, initializeDb, routes, logger) =>
-	new Promise((resolve, reject) => {
-	// Create the server
-	let app = express();
-	app.server = http.createServer(app);
+ * Methods to get historic flood reports from database
+ * @alias module:src/api/reports/archive/index
+ * @param {Object} config Server configuration
+ * @param {Object} db PG Promise database instance
+ * @param {Object} logger Configured Winston logger instance
+ * @return {Object} api Express router object for reports route
+ */
+export default ({config, db, logger}) => {
+	let api = Router(); // eslint-disable-line new-cap
 
-	// Winston stream function for express so we can capture logs
-	const winstonStream = {
-		write: function(message) {
-			logger.info(message.slice(0, -1));
-		},
-	};
+	// Get a list of all reports
+	api.get('/', cacheResponse('1 minute'),
 
-	// Setup express logger
-	app.use(morgan('combined', {stream: winstonStream}));
+		validate({
+			query: {
+				city: Joi.any().valid(config.REGION_CODES),
+				// TODO - does it matter than end time can be "before" start time?
+				// - Can reference arguments using Joi.ref('start')
+        start: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
+        end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
+				// TODO we should restrict output to geo/topojson only.
+				// - CAP format doesn't make sense for historic data.
+				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
+				geoformat: Joi.any().valid(config.GEO_FORMATS)
+					.default(config.GEO_FORMAT_DEFAULT),
+			},
+		}),
+		(req, res, next) => archive(config, db, logger)
+			.all(req.query.start, req.query.end, req.query.city)
+			.then((data) => handleGeoResponse(data, req, res, next))
+			.catch((err) => {
+				/* istanbul ignore next */
+				logger.error(err);
+				/* istanbul ignore next */
+				next(err);
+			})
+	);
 
-	// Compress responses if required but only if caching is disabled
-	if (config.COMPRESS &amp;&amp; !config.CACHE) {
-		app.use(compression());
-	}
-
-	// Provide CORS support (not required if behind API gateway)
-	if (config.CORS) {
-		app.use(cors({exposedHeaders: config.CORS_HEADERS}));
-	}
-
-	// Provide response time header in response
-	if (config.RESPONSE_TIME) {
-		app.use(responseTime());
-	}
-
-	// Parse body messages into json
-	app.use(bodyParser.json({limit: config.BODY_LIMIT}));
-
-	// Try and connect to the db
-	initializeDb(config, logger)
-		.then((db) => {
-			// Log debug message
-			logger.debug('Successfully connected to DB');
-
-			// Mount the routes
-			app.use('/', routes({config, db, logger}));
-
-			// App is ready to go, resolve the promise
-			resolve(app);
-		})
-		.catch((err) => {
-			/* istanbul ignore next */
-			logger.error('DB Connection error: ' + err);
-			/* istanbul ignore next */
-			logger.error('Fatal error: Application shutting down');
-			/* istanbul ignore next */
-			// We cannot continue without a DB, reject
-			reject(err);
-		});
-});
-
-// Export the init function for use externally
-
-module.exports = {init};
+	return api;
+};
 </code></pre>
         </article>
     </section>

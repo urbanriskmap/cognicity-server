@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: server.js</title>
+    <title>JSDoc: Source: api/routes/infrastructure/model.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: server.js</h1>
+    <h1 class="page-title">Source: api/routes/infrastructure/model.js</h1>
 
     
 
@@ -27,94 +27,42 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * CogniCity Data Server Module
- * @module server
- * Core server module
+ * CogniCity Server /infrastructure data model
+ * @module src/api/infrastructure/model
  **/
-// Import
 import Promise from 'bluebird';
 
-// Express middleware and http
-import express from 'express';
-import http from 'http';
-
-// Import express middlewares
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import compression from 'compression';
-import responseTime from 'response-time';
-import morgan from 'morgan'; // Express logging
-
 /**
- * Core server object
- * @alias module:server
- * @param {Object} config - configuration
- * @param {Object} initializeDb - database initialization
- * @param {Object} routes - routes
- * @param {Object} logger - logger
- * @return {Object} - Express server application
- **/
-// Function to initialize the api server
-const init = (config, initializeDb, routes, logger) =>
-	new Promise((resolve, reject) => {
-	// Create the server
-	let app = express();
-	app.server = http.createServer(app);
+* Methods to get infrastructure layers from database
+ * @alias module:src/api/reports/model
+ * @param {Object} config Server configuration
+ * @param {Object} db PG Promise database instance
+ * @param {Object} logger Configured Winston logger instance
+ * @return {Object} Query results
+ */
+export default (config, db, logger) => ({
+	// A list of all infrastructure matching a given type
+	all: (city, type) => new Promise((resolve, reject) => {
+		// Setup query
+		let query = `SELECT name, the_geom
+			FROM infrastructure.${type}
+			WHERE ($1 IS NULL OR tags->>'instance_region_code'=$1)`;
 
-	// Winston stream function for express so we can capture logs
-	const winstonStream = {
-		write: function(message) {
-			logger.info(message.slice(0, -1));
-		},
-	};
+		// Setup values
+		let values = [city];
 
-	// Setup express logger
-	app.use(morgan('combined', {stream: winstonStream}));
-
-	// Compress responses if required but only if caching is disabled
-	if (config.COMPRESS &amp;&amp; !config.CACHE) {
-		app.use(compression());
-	}
-
-	// Provide CORS support (not required if behind API gateway)
-	if (config.CORS) {
-		app.use(cors({exposedHeaders: config.CORS_HEADERS}));
-	}
-
-	// Provide response time header in response
-	if (config.RESPONSE_TIME) {
-		app.use(responseTime());
-	}
-
-	// Parse body messages into json
-	app.use(bodyParser.json({limit: config.BODY_LIMIT}));
-
-	// Try and connect to the db
-	initializeDb(config, logger)
-		.then((db) => {
-			// Log debug message
-			logger.debug('Successfully connected to DB');
-
-			// Mount the routes
-			app.use('/', routes({config, db, logger}));
-
-			// App is ready to go, resolve the promise
-			resolve(app);
-		})
-		.catch((err) => {
+		// Execute
+		logger.debug(query, values);
+		db.any(query, values).timeout(config.PGTIMEOUT)
+			.then((data) => resolve(data))
 			/* istanbul ignore next */
-			logger.error('DB Connection error: ' + err);
-			/* istanbul ignore next */
-			logger.error('Fatal error: Application shutting down');
-			/* istanbul ignore next */
-			// We cannot continue without a DB, reject
-			reject(err);
-		});
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err);
+			});
+	}),
+
 });
-
-// Export the init function for use externally
-
-module.exports = {init};
 </code></pre>
         </article>
     </section>

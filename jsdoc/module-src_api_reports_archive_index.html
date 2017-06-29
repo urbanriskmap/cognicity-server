@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: server.js</title>
+    <title>JSDoc: Module: src/api/reports/archive/index</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,107 +17,327 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: server.js</h1>
+    <h1 class="page-title">Module: src/api/reports/archive/index</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * CogniCity Data Server Module
- * @module server
- * Core server module
- **/
-// Import
-import Promise from 'bluebird';
+        
+            
+        
+            
+        
+    
+</header>
 
-// Express middleware and http
-import express from 'express';
-import http from 'http';
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">CogniCity Server /reports/archive endpoint</div>
+        
 
-// Import express middlewares
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import compression from 'compression';
-import responseTime from 'response-time';
-import morgan from 'morgan'; // Express logging
+        
+            
 
-/**
- * Core server object
- * @alias module:server
- * @param {Object} config - configuration
- * @param {Object} initializeDb - database initialization
- * @param {Object} routes - routes
- * @param {Object} logger - logger
- * @return {Object} - Express server application
- **/
-// Function to initialize the api server
-const init = (config, initializeDb, routes, logger) =>
-	new Promise((resolve, reject) => {
-	// Create the server
-	let app = express();
-	app.server = http.createServer(app);
+    
 
-	// Winston stream function for express so we can capture logs
-	const winstonStream = {
-		write: function(message) {
-			logger.info(message.slice(0, -1));
-		},
-	};
+    <h4 class="name" id="module:src/api/reports/archive/index"><span class="type-signature"></span>(require("src/api/reports/archive/index"))<span class="signature">(config, db, logger)</span><span class="type-signature"> &rarr; {Object}</span></h4>
 
-	// Setup express logger
-	app.use(morgan('combined', {stream: winstonStream}));
+    
 
-	// Compress responses if required but only if caching is disabled
-	if (config.COMPRESS &amp;&amp; !config.CACHE) {
-		app.use(compression());
-	}
 
-	// Provide CORS support (not required if behind API gateway)
-	if (config.CORS) {
-		app.use(cors({exposedHeaders: config.CORS_HEADERS}));
-	}
 
-	// Provide response time header in response
-	if (config.RESPONSE_TIME) {
-		app.use(responseTime());
-	}
+<div class="description">
+    Methods to get historic flood reports from database
+</div>
 
-	// Parse body messages into json
-	app.use(bodyParser.json({limit: config.BODY_LIMIT}));
 
-	// Try and connect to the db
-	initializeDb(config, logger)
-		.then((db) => {
-			// Log debug message
-			logger.debug('Successfully connected to DB');
 
-			// Mount the routes
-			app.use('/', routes({config, db, logger}));
 
-			// App is ready to go, resolve the promise
-			resolve(app);
-		})
-		.catch((err) => {
-			/* istanbul ignore next */
-			logger.error('DB Connection error: ' + err);
-			/* istanbul ignore next */
-			logger.error('Fatal error: Application shutting down');
-			/* istanbul ignore next */
-			// We cannot continue without a DB, reject
-			reject(err);
-		});
-});
 
-// Export the init function for use externally
 
-module.exports = {init};
-</code></pre>
-        </article>
-    </section>
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Server configuration</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>db</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">PG Promise database instance</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>logger</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Configured Winston logger instance</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="api_routes_reports_archive_index.js.html">api/routes/reports/archive/index.js</a>, <a href="api_routes_reports_archive_index.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    api Express router object for reports route
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="api_routes_reports_archive_index.js.html">api/routes/reports/archive/index.js</a>, <a href="api_routes_reports_archive_index.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

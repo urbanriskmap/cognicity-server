@@ -1,14 +1,14 @@
-dist: trusty
+dist: precise
 language: node_js
 node_js:
    - "6.10.0"
 sudo: false
 
 addons:
-  postgresql: "9.6"
-  apt:
-    packages:
-      - postgresql-9.6-postgis-2.3
+  postgresql: "9.5"
+#  apt:
+#    packages:
+#      - postgresql-9.5-postgis-2.3
 
 branches:
   only:

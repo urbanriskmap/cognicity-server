@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-01-13T15:33:17Z",
+    "version": "2017-06-29T01:04:57Z",
     "title": "cognicity"
   },
   "host": "data-dev.petabencana.id",
@@ -256,12 +256,7 @@
       }
     },
     "/cards/{cardId}/images": {
-      "post": {
-        "consumes": [
-          "image/jpeg",
-          "image/png",
-          "image/gif"
-        ],
+      "get": {
         "produces": [
           "application/json"
         ],
@@ -284,38 +279,6 @@
                 "type": "string"
               }
             }
-          },
-          "400": {
-            "description": "400 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          },
-          "404": {
-            "description": "404 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          },
-          "409": {
-            "description": "409 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          },
-          "500": {
-            "description": "500 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
           }
         },
         "x-amazon-apigateway-integration": {
@@ -325,54 +288,15 @@
               "responseParameters": {
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
-            },
-            ".*\\\"statusCode\\\":400.*": {
-              "statusCode": "400",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "responseTemplates": {
-                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
-              }
-            },
-            ".*\\\"statusCode\\\":404.*": {
-              "statusCode": "404",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "responseTemplates": {
-                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
-              }
-            },
-            ".*\\\"statusCode\\\":409.*": {
-              "statusCode": "409",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "responseTemplates": {
-                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
-              }
-            },
-            ".*\\\"statusCode\\\":50*.*": {
-              "statusCode": "500",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "responseTemplates": {
-                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
-              }
             }
           },
-          "requestTemplates": {
-            "image/png": "{\n\"cardId\": \"$input.params('cardId')\",\n\"contentType\": \"image/png\",\n\"base64Image\": \"$input.body\"\n}",
-            "image/jpeg": "{\n\"cardId\": \"$input.params('cardId')\",\n\"contentType\": \"image/jpeg\",\n\"base64Image\": \"$input.body\"\n}",
-            "image/gif": "{\n\"cardId\": \"$input.params('cardId')\",\n\"contentType\": \"image/gif\",\n\"base64Image\": \"$input.body\"\n}"
+          "uri": "https://${stageVariables.env}.petabencana.id/cards/{cardId}/images",
+          "requestParameters": {
+            "integration.request.path.cardId": "method.request.path.cardId"
           },
-          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:cognicity-lambda-cards/invocations",
-          "passthroughBehavior": "when_no_templates",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "type": "http"
         }
       },
       "options": {
@@ -406,7 +330,7 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'POST,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
@@ -456,6 +380,11 @@
           "uri": "https://${stageVariables.env}.petabencana.id/cities",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
+          "cacheNamespace": "h1la88",
+          "cacheKeyParameters": [
+            "method.request.querystring.format",
+            "method.request.querystring.geoformat"
+          ],
           "type": "http_proxy"
         }
       },
@@ -830,7 +759,8 @@
     "/floods": {
       "get": {
         "produces": [
-          "application/json"
+          "application/json",
+          "text/xml"
         ],
         "parameters": [
           {
@@ -867,6 +797,9 @@
             "headers": {
               "Access-Control-Allow-Origin": {
                 "type": "string"
+              },
+              "Content-Type": {
+                "type": "string"
               }
             }
           }
@@ -876,6 +809,7 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
+                "method.response.header.Content-Type": "integration.response.header.Content-Type",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
             }
@@ -889,7 +823,42 @@
           },
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
+          "cacheNamespace": "nvy9s5",
+          "cacheKeyParameters": [
+            "method.request.querystring.city",
+            "method.request.querystring.format",
+            "method.request.querystring.geoformat",
+            "method.request.querystring.minimum_state"
+          ],
           "type": "http"
+        }
+      },
+      "head": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
         }
       },
       "options": {
@@ -992,6 +961,12 @@
           },
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
+          "cacheNamespace": "cxp4qo",
+          "cacheKeyParameters": [
+            "method.request.querystring.city",
+            "method.request.querystring.format",
+            "method.request.querystring.minimum_state"
+          ],
           "type": "http"
         }
       },
@@ -1283,13 +1258,19 @@
             "type": "string"
           },
           {
-            "name": "geoformat",
+            "name": "timeperiod",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "geoformat",
             "in": "query",
             "required": false,
             "type": "string"
@@ -1321,10 +1302,18 @@
           "requestParameters": {
             "integration.request.querystring.city": "method.request.querystring.city",
             "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
+            "integration.request.querystring.timeperiod": "method.request.querystring.timeperiod",
             "integration.request.querystring.format": "method.request.querystring.format"
           },
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
+          "cacheNamespace": "8vxlp8",
+          "cacheKeyParameters": [
+            "method.request.querystring.city",
+            "method.request.querystring.geoformat",
+            "method.request.querystring.timeperiod",
+            "method.request.querystring.format"
+          ],
           "type": "http"
         }
       },
@@ -1451,9 +1440,285 @@
           "httpMethod": "ANY",
           "cacheNamespace": "5tep32",
           "cacheKeyParameters": [
-            "method.request.path.id"
+            "method.request.path.id",
+            "method.request.querystring.format"
           ],
           "type": "http_proxy"
+        }
+      }
+    },
+    "/stats": {
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/stats/floodedRWsSummary": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:cognicity-statistics-${stageVariables.stage}-floodedRWsSummary/invocations",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/stats/floodedRegionsSummary": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:cognicity-statistics-${stageVariables.stage}-floodedRegionsSummary/invocations",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/stats/reportsSummary": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:cognicity-statistics-${stageVariables.stage}-reportsSummary/invocations",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
         }
       }
     },
@@ -1490,10 +1755,10 @@
               }
             }
           },
+          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:twilio/invocations",
           "requestTemplates": {
             "application/x-www-form-urlencoded": "{\n        \"reqbody\":\"$input.path('$')\"\n}"
           },
-          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:twilio/invocations",
           "passthroughBehavior": "when_no_templates",
           "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",

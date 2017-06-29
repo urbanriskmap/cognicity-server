@@ -1,3 +1,7 @@
+/*
+ * @file Run CogniCity Data Server
+ * @author Urban Risk Lab, 2017
+ */
 // Import express, fs and http
 import fs from 'fs';
 import path from 'path';

@@ -1,3 +1,8 @@
+/**
+ * CogniCity Server Database
+ * @module db
+ * Database initializer
+ **/
 import Promise from 'bluebird';
 
 // Import DB library
@@ -6,6 +11,12 @@ const pgp = require('pg-promise')({
   promiseLib: Promise, // Use bluebird for enhanced Promises
 });
 
+/**
+ * @alias module:db
+ * @param {Object} config - configuration
+ * @param {Object} logger - logger
+ * @return {Object} db - PG Promise database
+ **/
 export default (config, logger) => new Promise((resolve, reject) => {
 	// Build the connection string
 	const cn = `postgres://${config.PGUSER}:${config.PGPASSWORD}@${config.PGHOST}:${config.PGPORT}/${config.PGDATABASE}?ssl=${config.PGSSL}`;

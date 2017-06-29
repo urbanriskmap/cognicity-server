@@ -1,3 +1,9 @@
+/**
+ * CogniCity Data Server Module
+ * @module server
+ * Core server module
+ **/
+// Import
 import Promise from 'bluebird';
 
 // Express middleware and http
@@ -11,6 +17,14 @@ import compression from 'compression';
 import responseTime from 'response-time';
 import morgan from 'morgan'; // Express logging
 
+/**
+ * @alias module:server
+ * @param {Object} config - configuration
+ * @param {Object} initializeDb - database initialization
+ * @param {Object} routes - routes
+ * @param {Object} logger - logger
+ * @return {Object} - Express server application
+ **/
 // Function to initialize the api server
 const init = (config, initializeDb, routes, logger) =>
 	new Promise((resolve, reject) => {

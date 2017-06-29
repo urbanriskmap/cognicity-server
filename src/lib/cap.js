@@ -1,4 +1,9 @@
 'use strict';
+/**
+ * CogniCity CAP data format utility
+ * @module lib/cap
+ * @param {object} logger Configured Winston logger instance
+ */
 
 // XML builder used to create XML output
 import builder from 'xmlbuilder';
@@ -8,6 +13,7 @@ import moment from 'moment-timezone';
 module.exports = class Cap {
   /**
    * Setup the CAP object to user specified logger
+   * @alias module:lib/cap
    * @param {object} logger Configured Winston logger instance
    */
   constructor(logger) {

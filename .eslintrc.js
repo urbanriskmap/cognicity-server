@@ -1,5 +1,5 @@
 module.exports = {
     "extends": ["eslint:recommended", "google"],
     "parserOptions": { "ecmaVersion": 6, "sourceType": "module" },
-    "env": { "es6": true }
+    "env": { "es6": true, "node": true, "mocha": true }
 };

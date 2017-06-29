@@ -3,7 +3,7 @@ import Promise from 'bluebird';
 export default (config, db, logger) => ({
 
 	// Get all flood reports for a given city
-	all: (city, minimum_state) => new Promise((resolve, reject) => {
+	all: (city, minimumState) => new Promise((resolve, reject) => {
 		// Setup query
 		let query = `SELECT local_area as area_id, state, last_updated
 			FROM ${config.TABLE_REM_STATUS} status, ${config.TABLE_LOCAL_AREAS} area
@@ -12,7 +12,7 @@ export default (config, db, logger) => ({
 			AND ($1 IS NULL OR area.instance_region_code=$1)`;
 
 		// Setup values
-		let values = [city, minimum_state];
+		let values = [city, minimumState];
 
 		// Execute
 		logger.debug(query, values);
@@ -27,19 +27,19 @@ export default (config, db, logger) => ({
 	}),
 
 	// Get all flood reports for a given city
-	allGeo: (city, minimum_state) => new Promise((resolve, reject) => {
+	allGeo: (city, minimumState) => new Promise((resolve, reject) => {
 		// Setup query
 		let query = `SELECT la.the_geom, la.pkey as area_id, la.geom_id,
 			la.area_name, la.parent_name, la.city_name, rs.state, rs.last_updated
 			FROM ${config.TABLE_LOCAL_AREAS} la
-			${minimum_state ? 'JOIN' : 'LEFT JOIN'}
+			${minimumState ? 'JOIN' : 'LEFT JOIN'}
 			(SELECT local_area, state, last_updated FROM ${config.TABLE_REM_STATUS}
 			WHERE state IS NOT NULL AND ($2 IS NULL OR state >= $2)) rs
 			ON la.pkey = rs.local_area
 			WHERE $1 IS NULL OR instance_region_code = $1`;
 
 		// Setup values
-		let values = [city, minimum_state];
+		let values = [city, minimumState];
 
 		// Execute
 		logger.debug(query, values);

@@ -114,8 +114,7 @@ export default function(app) {
          });
 
          // Get signed URL for card image
-         it('Get card image link', function(done) {
-            this.timeout(15000); // nested call
+         it('Get card image link', (done) => {
              test.httpAgent(app)
                .get('/cards/'+cardId+'/images')
                .expect(200)
@@ -126,7 +125,7 @@ export default function(app) {
                    done();
                  }
               });
-           });
+           }).timeout(150000);
 
          // Request a card, submit and get resulting report
          it('Get card data', function(done) {

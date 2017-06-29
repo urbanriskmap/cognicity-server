@@ -67,9 +67,9 @@ module.exports = class Cap {
 
   /**
    * Create CAP ALERT object.
-   * See {@link `http://docs.oasis-open.org/emergency/cap/v1.2/
-                  CAP-v1.2-os.html#_Toc97699527|
-                  CAP specification 3.2.1 "alert" Element and Sub-elements`}
+   * See {@link `http://docs.oasis-open.org/emergency/cap/v1.2/`
+                  + `CAP-v1.2-os.html#_Toc97699527|`
+                  + `CAP specification 3.2.1 "alert" Element and Sub-elements`}
    * @param {object} feature petabencana.id GeoJSON feature
    * @return {object} Object representing ALERT element for xmlbuilder
    */
@@ -105,9 +105,9 @@ module.exports = class Cap {
 
   /**
    * Create a CAP INFO object.
-   * See {@link `http://docs.oasis-open.org/emergency/cap/v1.2/
-                  CAP-v1.2-os.html#_Toc97699542|
-                  CAP specification 3.2.2 "info" Element and Sub-elements`}
+   * See {@link `http://docs.oasis-open.org/emergency/cap/v1.2/`
+                  + `CAP-v1.2-os.html#_Toc97699542|`
+                  + `CAP specification 3.2.2 "info" Element and Sub-elements`}
    * @param {object} feature petabencana.id GeoJSON feature
    * @return {object} Object representing INFO element suitable for xmlbuilder
    */
@@ -168,9 +168,9 @@ module.exports = class Cap {
 
   /**
    * Create a CAP AREA object.
-   * See {@link `http://docs.oasis-open.org/emergency/cap/v1.2/
-                CAP-v1.2-os.html#_Toc97699550|
-                CAP specification 3.2.4 "area" Element and Sub-elements`}
+   * See {@link `http://docs.oasis-open.org/emergency/cap/v1.2/`
+                + `CAP-v1.2-os.html#_Toc97699550|`
+                + `CAP specification 3.2.4 "area" Element and Sub-elements`}
    * @param {object} feature petabencana.id GeoJSON feature
    * @return {object} Object representing AREA element for XML xmlbuilder
    */
@@ -199,10 +199,10 @@ module.exports = class Cap {
 
     // Construct CAP suitable polygon strings
     // (whitespace-delimited WGS84 coordinate pairs - e.g. "lat,lon lat,lon")
-    // See: `http://docs.oasis-open.org/emergency/cap/v1.2/
-    //          CAP-v1.2-os.html#_Toc97699550 - polygon`
-    // See: `http://docs.oasis-open.org/emergency/cap/v1.2/
-    //          CAP-v1.2-os.html#_Toc520973440`
+    // See: `http://docs.oasis-open.org/emergency/cap/v1.2/`
+    //          + `CAP-v1.2-os.html#_Toc97699550 - polygon`
+    // See: `http://docs.oasis-open.org/emergency/cap/v1.2/`
+    //          + `CAP-v1.2-os.html#_Toc520973440`
     self.logger.debug( 'Cap: createInfo(): '
                         + featurePolygons.length
                         + ' polygons detected for '

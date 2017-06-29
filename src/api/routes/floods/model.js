@@ -83,7 +83,8 @@ export default (config, db, logger) => ({
 
 			// Execute in a transaction as both INSERT and UPDATE must happen together
 			db.tx((t) => {
-				return t.batch(queries.map((query) => t.none(query.query, query.values)));
+				return t.batch(queries.map((query) =>
+				t.none(query.query, query.values)));
 			}).timeout(config.PGTIMEOUT)
 				.then((data) => {
 					resolve(data);

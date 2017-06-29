@@ -12,12 +12,13 @@ import responseTime from 'response-time';
 import morgan from 'morgan'; // Express logging
 
 // Function to initialize the api server
-const init = (config, initializeDb, routes, logger) => new Promise((resolve, reject) => {
+const init = (config, initializeDb, routes, logger) =>
+	new Promise((resolve, reject) => {
 	// Create the server
 	let app = express();
 	app.server = http.createServer(app);
 
-	// Winston stream function we can plug in to express so we can capture its logs along with our own
+	// Winston stream function for express so we can capture logs
 	const winstonStream = {
 		write: function(message) {
 			logger.info(message.slice(0, -1));

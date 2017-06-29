@@ -2,7 +2,7 @@ dist: precise
 language: node_js
 node_js:
    - "6.10.0"
-sudo: false
+sudo: true
 
 addons:
   postgresql: "9.5"

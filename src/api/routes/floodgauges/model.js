@@ -14,7 +14,8 @@ export default (config, db, logger) => ({
 			GROUP BY gaugeid, the_geom, gaugenameid LIMIT $3`;
 
 		// Setup values
-		let timeWindow = (Date.now() / 1000) - config.API_FLOODGAUGE_REPORTS_TIME_WINDOW;
+		let timeWindow = (Date.now() / 1000) -
+			config.API_FLOODGAUGE_REPORTS_TIME_WINDOW;
 		let values = [timeWindow, city, config.API_FLOODGAUGE_REPORTS_LIMIT];
 
 		// Execute

@@ -20,7 +20,8 @@ export default ({config, db, logger}) => {
       query: {
         city: Joi.any().valid(config.REGION_CODES),
         format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
-        geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT),
+        geoformat: Joi.any().valid(config.GEO_FORMATS)
+          .default(config.GEO_FORMAT_DEFAULT),
       },
     }),
     (req, res, next) => floodgauges(config, db, logger).all()
@@ -39,7 +40,8 @@ export default ({config, db, logger}) => {
       params: {id: Joi.number().integer().required()},
       query: {
         format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
-        geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT),
+        geoformat: Joi.any().valid(config.GEO_FORMATS)
+          .default(config.GEO_FORMAT_DEFAULT),
       },
     }),
     (req, res, next) => floodgauges(config, db, logger).byId(req.params.id)

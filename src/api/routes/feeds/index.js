@@ -9,7 +9,7 @@ import validate from 'celebrate';
 
 
 export default ({config, db, logger}) => {
-	let api = Router();
+	let api = Router(); // eslint-disable-line new-cap
 
 	// Create a new qlue record in the database
 	// TODO: What is mandatory around title / text, any rules AND/OR?
@@ -22,7 +22,8 @@ export default ({config, db, logger}) => {
 				text: Joi.string().allow('').required(),
 				image_url: Joi.string(),
 				qlue_city: Joi.string().valid(config.API_FEEDS_QLUE_CITIES).required(),
-				disaster_type: Joi.string().valid(config.API_FEEDS_QLUE_DISASTER_TYPES).required(),
+				disaster_type: Joi.string().valid(config.API_FEEDS_QLUE_DISASTER_TYPES)
+					.required(),
 				location: Joi.object().required().keys({
 					lat: Joi.number().min(-90).max(90).required(),
 					lng: Joi.number().min(-180).max(180).required(),
@@ -50,7 +51,8 @@ export default ({config, db, logger}) => {
 				text: Joi.string().allow('').required(),
 				url: Joi.string().allow(''),
 				image_url: Joi.string(),
-				disaster_type: Joi.string().valid(config.API_FEEDS_DETIK_DISASTER_TYPES).required(),
+				disaster_type: Joi.string().valid(config.API_FEEDS_DETIK_DISASTER_TYPES)
+					.required(),
 				location: Joi.object().required().keys({
 					latitude: Joi.number().min(-90).max(90).required(),
 					longitude: Joi.number().min(-180).max(180).required(),

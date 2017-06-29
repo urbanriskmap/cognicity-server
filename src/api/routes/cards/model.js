@@ -10,7 +10,7 @@ import Promise from 'bluebird';
 * @param {Object} config Server configuration
 * @param {Object} db PG Promise database instance
 * @param {Object} logger Configured Winston logger instance
-* @return {Object} data Query results
+* @return {Object} data Query methods
 **/
 export default (config, db, logger) => ({
   // Create a new card entry with the given cardId

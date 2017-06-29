@@ -1,3 +1,7 @@
+/**
+ * CogniCity Server /floods endpoint
+ * @module src/api/floods/index
+ **/
 import {Router} from 'express';
 
 // Import our data model
@@ -44,6 +48,14 @@ const clearCache = () => {
 	apicache.clear(CACHE_GROUP_FLOODS_STATES);
 };
 
+/**
+ * Endpoint specification for floods data
+ * @alias module:src/api/floods/index
+ * @param {Object} config Server configuration
+ * @param {Object} db PG Promise database instance
+ * @param {Object} logger Configured Winston logger instance
+ * @return {Object} api Express router object for reports route
+ */
 export default ({config, db, logger}) => {
 	let api = Router(); // eslint-disable-line new-cap
 	const cap = new Cap(logger); // Setup our cap formatter

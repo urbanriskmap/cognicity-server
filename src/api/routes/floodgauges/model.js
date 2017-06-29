@@ -1,7 +1,18 @@
+/**
+* CogniCity Server /floodgauges data model
+* @module src/api/floodgauges/model
+**/
 import Promise from 'bluebird';
 
+/**
+* Methods to get floodgauges layers from database
+* @alias module:src/api/floodgauges/model
+* @param {Object} config Server configuration
+* @param {Object} db PG Promise database instance
+* @param {Object} logger Configured Winston logger instance
+* @return {Object} Query methods
+*/
 export default (config, db, logger) => ({
-
 	// Return all flood gauge reports within the defined max period
 	// Optional: city (Petabencana.id Instance Region 3 letter code)
 	all: (city) => new Promise((resolve, reject) => {

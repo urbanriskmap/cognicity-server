@@ -1,3 +1,7 @@
+/**
+ * CogniCity Server /cities endpoint
+ * @module src/api/cities/index
+ **/
 import {Router} from 'express';
 
 // Import our data model
@@ -10,7 +14,14 @@ import {cacheResponse, handleGeoResponse} from '../../../lib/util';
 import Joi from 'joi';
 import validate from 'celebrate';
 
-
+/**
+ * Endpoint specification for cities data
+ * @alias module:src/api/cities/index
+ * @param {Object} config Server configuration
+ * @param {Object} db PG Promise database instance
+ * @param {Object} logger Configured Winston logger instance
+ * @return {Object} api Express router object for reports route
+ */
 export default ({config, db, logger}) => {
 	let api = Router(); // eslint-disable-line new-cap
 

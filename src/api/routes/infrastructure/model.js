@@ -6,11 +6,11 @@ import Promise from 'bluebird';
 
 /**
 * Methods to get infrastructure layers from database
- * @alias module:src/api/reports/model
+ * @alias module:src/api/infrastructure/model
  * @param {Object} config Server configuration
  * @param {Object} db PG Promise database instance
  * @param {Object} logger Configured Winston logger instance
- * @return {Object} Query results
+ * @return {Object} Query methods
  */
 export default (config, db, logger) => ({
 	// A list of all infrastructure matching a given type

@@ -1,6 +1,6 @@
 /**
  * CogniCity Server /reports/archive data model
- * @module src/api/reports/model/archive/model
+ * @module src/api/reports/archive/model
  **/
 import Promise from 'bluebird';
 
@@ -10,7 +10,7 @@ import Promise from 'bluebird';
  * @param {Object} config Server configuration
  * @param {Object} db PG Promise database instance
  * @param {Object} logger Configured Winston logger instance
- * @return {Object} Query results
+ * @return {Object} Query methods
  */
 export default (config, db, logger) => ({
 	all: (start, end, city) => new Promise((resolve, reject) => {

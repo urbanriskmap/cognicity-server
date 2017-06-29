@@ -10,7 +10,7 @@
  * @param {Object} config Server configuration
  * @param {Object} db PG Promise database instance
  * @param {Object} logger Configured Winston logger instance
- * @return {Object} Query results
+ * @return {Object} Query methods
  */
 export default (config, db, logger) => ({
 	all: (timeperiod, city) => new Promise((resolve, reject) => {

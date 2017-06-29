@@ -1,5 +1,17 @@
-import Promise from 'bluebird';
+/**
+ * CogniCity Server /feeds data model
+ * @module src/api/feeds/model
+ **/
+ import Promise from 'bluebird';
 
+ /**
+ * Methods to interact with feeds layers in database
+  * @alias module:src/api/feeds/model
+  * @param {Object} config Server configuration
+  * @param {Object} db PG Promise database instance
+  * @param {Object} logger Configured Winston logger instance
+  * @return {Object} Query methods
+  */
 export default (config, db, logger) => ({
 
   // Add a new qlue report

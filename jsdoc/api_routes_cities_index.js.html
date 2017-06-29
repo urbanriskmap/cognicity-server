@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: api/routes/cities/index.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: api/routes/cities/index.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * CogniCity Server /cities endpoint
+ * @module src/api/cities/index
+ **/
+import {Router} from 'express';
+
+// Import our data model
+import cities from './model';
+
+// Import any required utility functions
+import {cacheResponse, handleGeoResponse} from '../../../lib/util';
+
+// Import validation dependencies
+import Joi from 'joi';
+import validate from 'celebrate';
+
+/**
+ * Endpoint specification for cities data
+ * @alias module:src/api/cities/index
+ * @param {Object} config Server configuration
+ * @param {Object} db PG Promise database instance
+ * @param {Object} logger Configured Winston logger instance
+ * @return {Object} api Express router object for reports route
+ */
+export default ({config, db, logger}) => {
+	let api = Router(); // eslint-disable-line new-cap
+
+	// Get a list of infrastructure by type for a given city
+	api.get('/', cacheResponse('1 day'),
+		validate({
+			query: {
+				format: Joi.any().valid(config.FORMATS)
+					.default(config.FORMAT_DEFAULT),
+				geoformat: Joi.any().valid(config.GEO_FORMATS)
+					.default(config.GEO_FORMAT_DEFAULT),
+			},
+		}),
+		(req, res, next) => cities(config, db, logger).all()
+			.then((data) => handleGeoResponse(data, req, res, next))
+			.catch((err) => {
+				/* istanbul ignore next */
+				logger.error(err);
+				/* istanbul ignore next */
+				next(err);
+			})
+	);
+
+	return api;
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="db%250ADatabase%2520initializermodule_.html">db
+Database initializer</a></li><li><a href="module-lib_cap.html">lib/cap</a></li><li><a href="module-src_api_cards_index.html">src/api/cards/index</a></li><li><a href="module-src_api_cards_model.html">src/api/cards/model</a></li><li><a href="module-src_api_cities_index.html">src/api/cities/index</a></li><li><a href="module-src_api_cities_model.html">src/api/cities/model</a></li><li><a href="module-src_api_feeds_index.html">src/api/feeds/index</a></li><li><a href="module-src_api_feeds_model.html">src/api/feeds/model</a></li><li><a href="module-src_api_floodgauges_index.html">src/api/floodgauges/index</a></li><li><a href="module-src_api_floodgauges_model.html">src/api/floodgauges/model</a></li><li><a href="module-src_api_floods_index.html">src/api/floods/index</a></li><li><a href="module-src_api_floods_model.html">src/api/floods/model</a></li><li><a href="module-src_api_index.html">src/api/index</a></li><li><a href="module-src_api_infrastructure_index.html">src/api/infrastructure/index</a></li><li><a href="module-src_api_infrastructure_model.html">src/api/infrastructure/model</a></li><li><a href="module-src_api_reports_archive_index.html">src/api/reports/archive/index</a></li><li><a href="module-src_api_reports_archive_model.html">src/api/reports/archive/model</a></li><li><a href="module-src_api_reports_index.html">src/api/reports/index</a></li><li><a href="module-src_api_reports_model.html">src/api/reports/model</a></li><li><a href="server%250ACore%2520server%2520modulemodule_.html">server
+Core server module</a></li><li><a href="test_testCAP%250AA%2520module%2520to%2520test%2520the%2520CAP%2520data%2520format%2520utilitymodule_.html">test/testCAP
+A module to test the CAP data format utility</a></li><li><a href="test_testCards%250AA%2520module%2520to%2520test%2520the%2520_cards%2520endpointmodule_.html">test/testCards
+A module to test the /cards endpoint</a></li><li><a href="test_testCities%250AA%2520module%2520to%2520test%2520the%2520_cities%2520endpointmodule_.html">test/testCities
+A module to test the /cities endpoint</a></li><li><a href="test_testDB%250AA%2520module%2520to%2520test%2520the%2520db%2520utility%2520modulemodule_.html">test/testDB
+A module to test the db utility module</a></li><li><a href="test_testFeeds%250AA%2520module%2520to%2520test%2520the%2520_feeds%2520endpointmodule_.html">test/testFeeds
+A module to test the /feeds endpoint</a></li><li><a href="test_testFloods%250AA%2520module%2520to%2520test%2520the%2520_floods%2520endpointmodule_.html">test/testFloods
+A module to test the /floods endpoint</a></li><li><a href="test_testFloodsgauges%250AA%2520module%2520to%2520test%2520the%2520_floodgauges%2520endpointmodule_.html">test/testFloodsgauges
+A module to test the /floodgauges endpoint</a></li><li><a href="test_testInfrastructure%250AA%2520module%2520to%2520test%2520the%2520_infrastructure%2520endpointmodule_.html">test/testInfrastructure
+A module to test the /infrastructure endpoint</a></li><li><a href="test_testReports%250AA%2520module%2520to%2520test%2520the%2520_reports%2520endpointmodule_.html">test/testReports
+A module to test the /reports endpoint</a></li><li><a href="test_testReportsArchive%250AA%2520module%2520to%2520test%2520the%2520_reports_archive%2520endpointmodule_.html">test/testReportsArchive
+A module to test the /reports/archive endpoint</a></li><li><a href="test_testServer%250AA%2520module%2520to%2520test%2520top-level%2520API%2520routes%2520from%2520the%2520servermodule_.html">test/testServer
+A module to test top-level API routes from the server</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_cap.html">lib/cap</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jun 29 2017 16:38:52 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,5 +1,17 @@
-import Promise from 'bluebird';
+/**
+ * CogniCity Server /floods data model
+ * @module src/api/floods/model
+ **/
+ import Promise from 'bluebird';
 
+ /**
+ * Methods to interact with flood layers in database
+  * @alias module:src/api/floods/model
+  * @param {Object} config Server configuration
+  * @param {Object} db PG Promise database instance
+  * @param {Object} logger Configured Winston logger instance
+  * @return {Object} Query methods
+  */
 export default (config, db, logger) => ({
 
 	// Get all flood reports for a given city

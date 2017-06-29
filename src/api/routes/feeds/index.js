@@ -1,4 +1,8 @@
-import {Router} from 'express';
+/**
+ * CogniCity Server /feeds endpoint
+ * @module src/api/feeds/index
+ **/
+ import {Router} from 'express';
 
 // Import our data model
 import feeds from './model';
@@ -7,7 +11,14 @@ import feeds from './model';
 import Joi from 'joi';
 import validate from 'celebrate';
 
-
+/**
+ * Endpoint specification for feeds
+ * @alias module:src/api/feeds/index
+ * @param {Object} config Server configuration
+ * @param {Object} db PG Promise database instance
+ * @param {Object} logger Configured Winston logger instance
+ * @return {Object} api Express router object for reports route
+ */
 export default ({config, db, logger}) => {
 	let api = Router(); // eslint-disable-line new-cap
 

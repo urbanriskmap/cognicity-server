@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-06-29T00:56:38Z",
+    "version": "2017-06-29T01:04:57Z",
     "title": "cognicity"
   },
   "host": "data-dev.petabencana.id",
@@ -256,12 +256,7 @@
       }
     },
     "/cards/{cardId}/images": {
-      "post": {
-        "consumes": [
-          "image/jpeg",
-          "image/png",
-          "image/gif"
-        ],
+      "get": {
         "produces": [
           "application/json"
         ],
@@ -284,38 +279,6 @@
                 "type": "string"
               }
             }
-          },
-          "400": {
-            "description": "400 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          },
-          "404": {
-            "description": "404 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          },
-          "409": {
-            "description": "409 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          },
-          "500": {
-            "description": "500 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
           }
         },
         "x-amazon-apigateway-integration": {
@@ -325,54 +288,15 @@
               "responseParameters": {
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
-            },
-            ".*\\\"statusCode\\\":400.*": {
-              "statusCode": "400",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "responseTemplates": {
-                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
-              }
-            },
-            ".*\\\"statusCode\\\":404.*": {
-              "statusCode": "404",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "responseTemplates": {
-                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
-              }
-            },
-            ".*\\\"statusCode\\\":409.*": {
-              "statusCode": "409",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "responseTemplates": {
-                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
-              }
-            },
-            ".*\\\"statusCode\\\":50*.*": {
-              "statusCode": "500",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "responseTemplates": {
-                "application/json": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n{\n  \"statusCode\" : \"$errorMessageObj.statusCode\",\n  \"message\" : \"$errorMessageObj.message\"\n}"
-              }
             }
           },
-          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:cognicity-lambda-cards-${stageVariables.stage}/invocations",
-          "requestTemplates": {
-            "image/png": "{\n\"cardId\": \"$input.params('cardId')\",\n\"contentType\": \"image/png\",\n\"base64Image\": \"$input.body\"\n}",
-            "image/jpeg": "{\n\"cardId\": \"$input.params('cardId')\",\n\"contentType\": \"image/jpeg\",\n\"base64Image\": \"$input.body\"\n}",
-            "image/gif": "{\n\"cardId\": \"$input.params('cardId')\",\n\"contentType\": \"image/gif\",\n\"base64Image\": \"$input.body\"\n}"
+          "uri": "https://${stageVariables.env}.petabencana.id/cards/{cardId}/images",
+          "requestParameters": {
+            "integration.request.path.cardId": "method.request.path.cardId"
           },
-          "passthroughBehavior": "when_no_templates",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "type": "http"
         }
       },
       "options": {
@@ -406,7 +330,7 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'POST,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }

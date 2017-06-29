@@ -11,8 +11,8 @@ import * as test from 'unit.js';
 // - Entered through cards.js (or add a new call to cards here)
 
 /**
- * Test top-level server routes
- * @alias module:test/testServer
+ * Test reports archive endpoint
+ * @alias module:test/testReportsArchive
  * @param {Object} app - CogniCity server app object
  */
 export default function(app) {

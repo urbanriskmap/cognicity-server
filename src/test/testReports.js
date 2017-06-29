@@ -1,5 +1,17 @@
-const test = require('unit.js');
+/**
+ * testReports module
+ * @module test/testReports
+ * A module to test the /reports endpoint
+ */
 
+import * as test from 'unit.js';
+
+/**
+ * Test reports endpoint
+ * @alias module:test/testReports
+ * @param {Object} app - CogniCity server app object
+ * @param {Number} reportid - CogniCity report ID to test against
+ */
 export default function(app, reportid) {
   // Reports endpoint
   describe('Reports endpoint', function() {
@@ -49,7 +61,7 @@ export default function(app, reportid) {
       });
 
       // Can get reports
-      it('Has a get all reports/:id endpoint (GET /reports/:id)', function(done) {
+      it('Get all reports/:id endpoint (GET /reports/:id)', function(done) {
           test.httpAgent(app)
             .get('/reports/'+reportid)
             .expect(200)

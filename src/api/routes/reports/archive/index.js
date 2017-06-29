@@ -33,12 +33,9 @@ export default ({config, db, logger}) => {
 		validate({
 			query: {
 				city: Joi.any().valid(config.REGION_CODES),
-				// TODO - does it matter than end time can be "before" start time?
-				// - Can reference arguments using Joi.ref('start')
         start: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
-        end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
-				// TODO we should restrict output to geo/topojson only.
-				// - CAP format doesn't make sense for historic data.
+				end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ')
+					.min(Joi.ref('start')).required(),
 				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
 				geoformat: Joi.any().valid(config.GEO_FORMATS)
 					.default(config.GEO_FORMAT_DEFAULT),

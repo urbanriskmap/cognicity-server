@@ -94,10 +94,10 @@ export default function(app) {
          });
       });
 
-      // Can catch no UTC offset in end parameter
-      it('Required end parameter to have a UTC offset', function(done) {
+      // Catch end time before start time
+      it('Required end time to be after start time', function(done) {
           test.httpAgent(app)
-            .get('/reports/archive?start=2017-02-21T07:00:00%2B0700&end=2017-02-22T07:00:00')
+            .get('/reports/archive?start=2017-02-21T07:00:00%2B0700&end=2017-02-20T07:00:00')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(function(err, res) {

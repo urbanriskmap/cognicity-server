@@ -1,5 +1,17 @@
-const test = require('unit.js');
+/**
+ * testFloods module
+ * @module test/testFloods
+ * A module to test the /floods endpoint
+ */
 
+import * as test from 'unit.js';
+
+/**
+ * Test infrastructure endpoint
+ * @alias module:test/testFloods
+ * @param {Object} app - CogniCity server app object
+ * @param {Object} jwt - Sample JSON Web Token for testing endpoint auth
+ */
 export default function(app, jwt) {
 // Floods endpoint
 describe('Flood areas endpoint', function() {
@@ -122,7 +134,7 @@ describe('Flood areas endpoint', function() {
         });
 
       // Get geographic floods
-      it('Get floods in geojson (GET /floods?format=json&geoformat=geojson)', function(done) {
+      it('Get floods in geojson format', function(done) {
         this.timeout(15000); // a lot of data is returned
           test.httpAgent(app)
             .get('/floods/?format=json&geoformat=geojson')
@@ -138,7 +150,7 @@ describe('Flood areas endpoint', function() {
         });
 
     // Can get reports in CAP format
-    it('Get all reports in CAP format (GET /floods?geoformat=cap)', function(done) {
+    it('Get all reports in CAP format', function(done) {
       this.timeout(15000); // a lot of data is returned
         test.httpAgent(app)
           .get('/floods?format=xml&geoformat=cap')

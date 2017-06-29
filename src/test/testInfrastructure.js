@@ -1,5 +1,16 @@
-const test = require('unit.js');
+/**
+ * testInfrastructure module
+ * @module test/testInfrastructure
+ * A module to test the /infrastructure endpoint
+ */
 
+import * as test from 'unit.js';
+
+/**
+ * Test infrastructure endpoint
+ * @alias module:test/testInfrastructure
+ * @param {Object} app - CogniCity server app object
+ */
 export default function(app) {
   // Infrastructure endpoint
   describe('Infrastructure endpoint', function() {

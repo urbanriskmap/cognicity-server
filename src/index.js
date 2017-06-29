@@ -25,10 +25,12 @@ try {
 	if (config.LOG_DIR !== '') {
 		fs.accessSync(config.LOG_DIR, fs.W_OK);
 	}
-	logger.info(`Logging to ${config.LOG_DIR !== '' ? config.LOG_DIR : 'current working directory' }`);
+	logger.info(`Logging to ${config.LOG_DIR !== '' ? config.LOG_DIR :
+							'current working directory' }`);
 } catch (e) {
-	// If we cannot write to the desired directory then log in the current directory
-	logger.info(`Cannot log to '${config.LOG_DIR}', logging to current working directory instead`);
+	// If we cannot write to the desired directory then log tocurrent directory
+	logger.info(`Cannot log to '${config.LOG_DIR}',
+							logging to current working directory instead`);
 	config.LOG_DIR = '';
 }
 
@@ -41,12 +43,12 @@ logger.add(logger.transports.File, {
 	level: config.LOG_LEVEL, // Level of log messages
 });
 
-// If we are not in development and console logging has not been requested then remove it
+// If we are not in development and console logging not requested then remove it
 if (config.NODE_ENV !== 'development' && !config.LOG_CONSOLE) {
 	logger.remove(logger.transports.Console);
 }
 
-// If we exit immediately winston does not get a chance to write the last log message
+// If we exit immediately winston does not get chance to write last log message
 const exitWithStatus = (status) => {
 	logger.info(`Exiting with status ${status}`);
 	setTimeout(() => process.exit(status), 500);
@@ -67,7 +69,8 @@ process
 init(config, initializeDb, routes, logger).then((app) => {
 	// All good to go, start listening for requests
 	app.server.listen(config.PORT);
-	logger.info(`Application started, listening on port ${app.server.address().port}`);
+	logger.info(`Application started,`
+		+ `listening on port ${app.server.address().port}`);
 }).catch((err) => {
 	// Error has occurred, log and shutdown
 	logger.error('Error starting server: ' + err.message + ', ' + err.stack);

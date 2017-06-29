@@ -87,8 +87,7 @@ describe('Flood areas endpoint', function() {
     });
 
     // Get floods
-    it('Get floods (GET /floods)', function(done) {
-      this.timeout(15000); // a lot of data is returned
+    it('Get floods (GET /floods)', (done) => {
         test.httpAgent(app)
           .get('/floods')
           .expect(200)
@@ -100,11 +99,10 @@ describe('Flood areas endpoint', function() {
               done();
             }
          });
-      });
+      }).timeout(15000); // a lot of data is returned
 
       // Get floods
       it('Get severe floods (GET /floods?minimum_state=3)', function(done) {
-        this.timeout(15000); // a lot of data is returned
           test.httpAgent(app)
             .get('/floods?minimum_state=3')
             .expect(200)
@@ -116,7 +114,8 @@ describe('Flood areas endpoint', function() {
                 done();
               }
            });
-        });
+        }).timeout(15000); // a lot of data is returned
+
 
       // Just get flood states
       it('Get flood states without geo (GET /floods/states)', function(done) {
@@ -134,8 +133,7 @@ describe('Flood areas endpoint', function() {
         });
 
       // Get geographic floods
-      it('Get floods in geojson format', function(done) {
-        this.timeout(15000); // a lot of data is returned
+      it('Get floods in geojson format', (done) => {
           test.httpAgent(app)
             .get('/floods/?format=json&geoformat=geojson')
             .expect(200)
@@ -147,11 +145,10 @@ describe('Flood areas endpoint', function() {
                 done();
               }
            });
-        });
+        }).timeout(15000); // a lot of data is returned
 
     // Can get reports in CAP format
-    it('Get all reports in CAP format', function(done) {
-      this.timeout(15000); // a lot of data is returned
+    it('Get all reports in CAP format', (done) => {
         test.httpAgent(app)
           .get('/floods?format=xml&geoformat=cap')
           .expect(200)
@@ -163,6 +160,6 @@ describe('Flood areas endpoint', function() {
               done();
             }
          });
-      });
+      }).timeout(15000); // a lot of data is returned;
     });
 }

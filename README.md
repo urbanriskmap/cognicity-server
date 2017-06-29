@@ -105,6 +105,8 @@ Run `npm run -s build` to build.
 ### Testing
 Testing is run by [Travis](https://travis-ci.org/urbanriskmap/cognicity-server). ESLint runs to check syntax. Integration tests, formed by chaining unit tests, are used to check the API.  Coverage is provided by Istanbul and [Coveralls](https://coveralls.io/github/urbanriskmap/cognicity-server). See src/test/ for scripts. Beware that integration tests may pollute tables (e.g. user tables in feeds), it is not recommended to run tests against prod databases with live data. The default database (used for testing) is cognicity. Travis-ci creates a new schema instance for testing using https://github.com/urbanriskmap/cognicity-schema, see .travis.yml for more details.
 
+Code follows the [Google JavaScript style](https://google.github.io/styleguide/jsguide.html).ESLint is run with tests to enfoce style.
+
 ### Issue Tracking
 Issues are tracked using [GitHub](https://github.com/urbanriskmap/cognicity-server/issues)
 

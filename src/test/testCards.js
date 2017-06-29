@@ -1,5 +1,16 @@
-const test = require('unit.js');
+/**
+ * testCards module
+ * @module test/testCards
+ * A module to test the /cards endpoint
+ */
 
+import * as test from 'unit.js';
+
+/**
+ * Test cards endpoint
+ * @alias module:test/testCards
+ * @param {Object} app - CogniCity server app object
+ */
 export default function(app) {
   // Cards endpoint
   describe('Cards endpoint', function() {
@@ -19,7 +30,7 @@ export default function(app) {
       });
 
     // Can get reports
-    it('Return 400 if card requested with wrong ID (GET /cards/:id)', function(done) {
+    it('Return 400 if card ID is invalid (GET /cards/:id)', function(done) {
         test.httpAgent(app)
           .get('/cards/1')
           .expect(400)
@@ -97,7 +108,6 @@ export default function(app) {
                if (err) {
                  test.fail(err.message + ' ' + JSON.stringify(res));
                } else {
-                 console.log(res.body);
                  done();
                }
             });
@@ -113,7 +123,6 @@ export default function(app) {
                  if (err) {
                    test.fail(err.message + ' ' + JSON.stringify(res));
                  } else {
-                   console.log(res.body);
                    done();
                  }
               });
@@ -133,7 +142,8 @@ export default function(app) {
                    test.value(res.body.result.username).is('testuser');
                    test.value(res.body.result.network).is('test network');
                    test.value(res.body.result.language).is('en');
-                   test.value(res.body.result.report.text).is('integration testing');
+                   test.value(res.body.result.report.text)
+                    .is('integration testing');
                    done();
                  }
               });

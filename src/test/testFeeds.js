@@ -1,5 +1,16 @@
-const test = require('unit.js');
+/**
+ * testFeeds module
+ * @module test/testFeeds
+ * A module to test the /feeds endpoint
+ */
 
+import * as test from 'unit.js';
+
+/**
+ * Test feeds endpoint
+ * @alias module:test/testFeeds
+ * @param {Object} app - CogniCity server app object
+ */
 export default function(app) {
   // Feeds endpoint
   describe('Feeds endpoint', function() {

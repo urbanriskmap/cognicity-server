@@ -1,5 +1,16 @@
-const test = require('unit.js');
+/**
+ * testCities module
+ * @module test/testCities
+ * A module to test the /cities endpoint
+ */
 
+import * as test from 'unit.js';
+
+/**
+ * Test cities endpoint
+ * @alias module:test/testCities
+ * @param {Object} app - CogniCity server app object
+ */
 export default function(app) {
   // Cities endpoint
   describe('Cities endpoint', function() {

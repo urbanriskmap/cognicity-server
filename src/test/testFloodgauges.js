@@ -1,5 +1,16 @@
-const test = require('unit.js');
+/**
+ * testFloodsgauges module
+ * @module test/testFloodsgauges
+ * A module to test the /floodgauges endpoint
+ */
 
+import * as test from 'unit.js';
+
+/**
+ * Test floodgauges endpoint
+ * @alias module:test/testFloodsgauges
+ * @param {Object} app - CogniCity server app object
+ */
 export default function(app) {
   // Flood gauges endpoint
   describe('Flood gauges endpoint', function() {

@@ -1,7 +1,6 @@
 import Promise from 'bluebird';
 
 export default (config, db, logger) => ({
-
 	/**
 	 * Return all reports within a defined time period, and optionally city
 	 * @param {integer} timeperiod Length of time period in seconds
@@ -53,5 +52,4 @@ export default (config, db, logger) => ({
 				reject(err);
 			});
 	}),
-
 });

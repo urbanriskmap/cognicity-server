@@ -75,6 +75,7 @@
     "eslint-config-google": "^0.8.0",
     "estraverse": "^4.2.0",
     "esutils": "^2.0.2",
+    "jsdoc": "^3.4.3",
     "jsonwebtoken": "^7.4.1",
     "mocha": "^3.3.0",
     "nodemon": "^1.11.0",

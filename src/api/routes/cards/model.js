@@ -1,7 +1,18 @@
+/**
+ * CogniCity Server /cards data model
+ * @module src/api/cards/model
+ **/
 import Promise from 'bluebird';
 
+/**
+* Database interaction for Cards objects
+* @alias module:src/api/cards/model
+* @param {Object} config Server configuration
+* @param {Object} db PG Promise database instance
+* @param {Object} logger Configured Winston logger instance
+* @return {Object} data Query results
+**/
 export default (config, db, logger) => ({
-
   // Create a new card entry with the given cardId
   create: (cardId, body) => new Promise((resolve, reject) => {
     // Setup query

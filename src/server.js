@@ -18,6 +18,7 @@ import responseTime from 'response-time';
 import morgan from 'morgan'; // Express logging
 
 /**
+ * Core server object
  * @alias module:server
  * @param {Object} config - configuration
  * @param {Object} initializeDb - database initialization

@@ -23,6 +23,7 @@ import infrastructure from './routes/infrastructure';
 import reports from './routes/reports';
 
 /**
+* Build CogniCity Server Data API
 * @alias module:src/api/index
 * @param {Object} config Server configuration
 * @param {Object} db PG Promise database instance

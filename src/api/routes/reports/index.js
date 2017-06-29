@@ -1,4 +1,8 @@
-import {Router} from 'express';
+/**
+ * CogniCity Server /reports endpoint
+ * @module src/api/reports/index
+ **/
+ import {Router} from 'express';
 
 // Import our data model
 import reports from './model';
@@ -12,6 +16,14 @@ import {cacheResponse, handleGeoResponse} from '../../../lib/util';
 import Joi from 'joi';
 import validate from 'celebrate';
 
+/**
+ * Methods to get current flood reports from database
+ * @alias module:src/api/reports/index
+ * @param {Object} config Server configuration
+ * @param {Object} db PG Promise database instance
+ * @param {Object} logger Configured Winston logger instance
+ * @return {Object} api Express router object for reports route
+ */
 export default ({config, db, logger}) => {
 	let api = Router(); // eslint-disable-line new-cap
 

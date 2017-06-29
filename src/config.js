@@ -1,3 +1,8 @@
+/**
+ * CogniCity Server configuration
+ * @file config
+ * @return {Object} Server configuration
+*/
 /* eslint-disable max-len */
 require('dotenv').config({silent: true});
 

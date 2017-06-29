@@ -1,3 +1,7 @@
+/**
+ * CogniCity Server /cards endpoint
+ * @module src/api/cards/index
+ **/
 import {Router} from 'express';
 
 // Import our data model
@@ -25,6 +29,13 @@ const clearCache = () => {
   apicache.clear(CACHE_GROUP_CARDS);
 };
 
+/**
+* @alias module:src/api/cards/index
+* @param {Object} config Server configuration
+* @param {Object} db PG Promise database instance
+* @param {Object} logger Configured Winston logger instance
+* @return {Object} api Express router object for cards route
+**/
 export default ({config, db, logger}) => {
   // Router
   let api = Router(); // eslint-disable-line new-cap

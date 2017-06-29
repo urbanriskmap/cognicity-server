@@ -1,6 +1,6 @@
 /**
+ * Server utility functions
  * @file CogniCity Server Utility file
- * various functions to assist server
  **/
 
 // Import dependencies

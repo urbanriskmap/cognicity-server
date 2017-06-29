@@ -1,5 +1,9 @@
-// Testing for CogniCity Server
-// Unit tests run together against live app, and database
+/* eslint-disable no-console */
+/* @file Runs integration testing for CogniCity Server API.
+ * Unit tests are run in sequence against live app and database instance
+ *
+ * Tomas Holderness June 2017
+ */
 
 // Import config
 import config from '../config';
@@ -48,7 +52,9 @@ let reportid = 1;
 
 // Auth JWT support
 const jwt = require('jsonwebtoken');
-let token = jwt.sign({}, new Buffer(config.AUTH0_SECRET), {audience: config.AUTH0_CLIENT_ID});
+let token = jwt.sign({},
+  new Buffer(config.AUTH0_SECRET),
+  {audience: config.AUTH0_CLIENT_ID});
 
  it('Server starts', function(done) {
    // Test optional server params
@@ -74,7 +80,9 @@ let token = jwt.sign({}, new Buffer(config.AUTH0_SECRET), {audience: config.AUTH
     describe('Cleans up', function() {
        it('Removes dummy report data', function(done) {
          let queryObject = {
-           text: `DELETE FROM ${config.TABLE_REPORTS} WHERE source = 'grasp' AND text = 'integration testing';`,
+           text: `DELETE FROM ${config.TABLE_REPORTS}
+            WHERE source = 'grasp'
+            AND text = 'integration testing';`,
            values: [reportid],
          };
          pg.connect(PG_CONFIG_STRING, function(err, client, pgDone) {
@@ -92,7 +100,9 @@ let token = jwt.sign({}, new Buffer(config.AUTH0_SECRET), {audience: config.AUTH
 
        it('Removes dummy cards data', function(done) {
          let queryObject = {
-           text: `DELETE FROM ${config.TABLE_GRASP_CARDS} WHERE username = 'testuser' AND network = 'test network';`,
+           text: `DELETE FROM ${config.TABLE_GRASP_CARDS}
+            WHERE username = 'testuser'
+            AND network = 'test network';`,
            values: [reportid],
          };
          pg.connect(PG_CONFIG_STRING, function(err, client, pgDone) {
@@ -110,7 +120,8 @@ let token = jwt.sign({}, new Buffer(config.AUTH0_SECRET), {audience: config.AUTH
 
        it('Removes dummy cards data', function(done) {
          let queryObject = {
-           text: `DELETE FROM ${config.TABLE_GRASP_REPORTS} WHERE text = 'integration testing';`,
+           text: `DELETE FROM ${config.TABLE_GRASP_REPORTS}
+            WHERE text = 'integration testing';`,
            values: [reportid],
          };
          pg.connect(PG_CONFIG_STRING, function(err, client, pgDone) {
@@ -147,7 +158,8 @@ let token = jwt.sign({}, new Buffer(config.AUTH0_SECRET), {audience: config.AUTH
      // Remove dummy data from REM floods table
      it('Removes dummy flood data from log', function(done) {
       let queryObject = {
-         text: `DELETE FROM ${config.TABLE_REM_STATUS_LOG} WHERE username = testing`,
+         text: `DELETE FROM ${config.TABLE_REM_STATUS_LOG}
+          WHERE username = testing`,
        };
        pg.connect(PG_CONFIG_STRING, function(err, client, pgDone) {
          client.query(queryObject, function() {
@@ -183,7 +195,8 @@ let token = jwt.sign({}, new Buffer(config.AUTH0_SECRET), {audience: config.AUTH
      // Remove dummy qlue data from all reports table
      it('Removes dummy qlue data', function(done) {
       let queryObject = {
-         text: `DELETE FROM ${config.TABLE_REPORTS} WHERE fkey = 9999 AND source = 'qlue'`,
+         text: `DELETE FROM ${config.TABLE_REPORTS}
+          WHERE fkey = 9999 AND source = 'qlue'`,
        };
        pg.connect(PG_CONFIG_STRING, function(err, client, pgDone) {
          client.query(queryObject, function() {
@@ -219,7 +232,8 @@ let token = jwt.sign({}, new Buffer(config.AUTH0_SECRET), {audience: config.AUTH
      // Remove dummy detik data from all reports table
      it('Removes dummy detik data', function(done) {
       let queryObject = {
-         text: `DELETE FROM ${config.TABLE_REPORTS} WHERE fkey = 9999 AND source = 'detik'`,
+         text: `DELETE FROM ${config.TABLE_REPORTS}
+          WHERE fkey = 9999 AND source = 'detik'`,
        };
        pg.connect(PG_CONFIG_STRING, function(err, client, pgDone) {
          client.query(queryObject, function() {

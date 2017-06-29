@@ -12,7 +12,7 @@ export default (config, db, logger) => ({
 
     // Setup values
     let values = [body.post_id, body.created_at, body.disaster_type, body.text,
-      body.image_url,body.title, body.qlue_city, body.location.lng,
+      body.image_url, body.title, body.qlue_city, body.location.lng,
       body.location.lat];
 
     // Execute
@@ -23,7 +23,7 @@ export default (config, db, logger) => ({
         if (err.constraint === 'reports_post_id_key') {
           resolve({post_id: body.post_id, created: false,
             message: `${body.post_id} already exists in reports table`});
-        } else{
+        } else {
           reject(err);
         }
         });

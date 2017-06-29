@@ -12,7 +12,7 @@ import validate from 'celebrate';
 
 
 export default ({config, db, logger}) => {
-  let api = Router();
+  let api = Router(); // eslint-disable-line new-cap
 
   // Get a list of all flood gauge reports
   api.get('/', cacheResponse('1 minute'),

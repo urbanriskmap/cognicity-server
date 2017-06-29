@@ -20,7 +20,7 @@ import reports from './routes/reports';
 
 
 export default ({config, db, logger}) => {
-	let api = Router();
+	let api = Router(); // eslint-disable-line new-cap
 
 	// Return the API version
 	api.get('/', (req, res) => {
@@ -37,7 +37,7 @@ export default ({config, db, logger}) => {
 	api.use('/infrastructure', infrastructure({config, db, logger}));
 	api.use('/reports', reports({config, db, logger}));
 
-	// Handle validation errors (wording of messages can be overridden using err.isJoi)
+	// Handle validation errors (wording can be overridden using err.isJoi)
 	api.use(validate.errors());
 
 	// Handle not found errors

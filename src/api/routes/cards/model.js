@@ -58,10 +58,13 @@ export default (config, db, logger) => ({
     let queries = [
       {
         query: `INSERT INTO ${config.TABLE_GRASP_REPORTS}
-          (card_id, card_data, text, created_at, disaster_type, status, the_geom)
-          VALUES ($1, $2, COALESCE($3,''), $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
-        values: [ card.card_id, body.card_data, body.text,
-          body.created_at, body.disaster_type, 'Confirmed', body.location.lng, body.location.lat  ]
+          (card_id, card_data, text, created_at, disaster_type, status,
+            the_geom)
+          VALUES ($1, $2, COALESCE($3,''), $4, $5, $6,
+          ST_SetSRID(ST_Point($7,$8),4326))`,
+        values: [card.card_id, body.card_data, body.text,
+          body.created_at, body.disaster_type, 'Confirmed', body.location.lng,
+          body.location.lat],
       },
       {
         query: `UPDATE ${config.TABLE_GRASP_CARDS}

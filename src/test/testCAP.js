@@ -1,6 +1,6 @@
 /**
  * testCAP module
- * @module test/testCAP
+ * @module src/test/testCAP
  * A module to test the CAP data format utility
  */
 
@@ -10,7 +10,7 @@ import Cap from '../lib/cap';    // Cap formatter helper
 
 /**
  * Test CAP data format utility
- * @alias module:test/testCAP
+ * @function testCAP
  * @param {Object} logger - CogniCity Server logger object
  */
 export default function(logger) {

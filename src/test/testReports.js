@@ -8,7 +8,7 @@ import * as test from 'unit.js';
 
 /**
  * Test reports endpoint
- * @alias module:test/testReports
+ * @function testReports
  * @param {Object} app - CogniCity server app object
  * @param {Number} reportid - CogniCity report ID to test against
  */

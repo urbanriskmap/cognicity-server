@@ -8,7 +8,7 @@ import * as test from 'unit.js';
 
 /**
  * Test infrastructure endpoint
- * @alias module:test/testFloods
+ * @function testFloods
  * @param {Object} app - CogniCity server app object
  * @param {Object} jwt - Sample JSON Web Token for testing endpoint auth
  */

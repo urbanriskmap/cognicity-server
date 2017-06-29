@@ -30,6 +30,7 @@ const clearCache = () => {
 };
 
 /**
+* CogniCity Server /cards endpoint
 * @alias module:src/api/cards/index
 * @param {Object} config Server configuration
 * @param {Object} db PG Promise database instance

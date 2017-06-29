@@ -13,7 +13,7 @@ import * as test from 'unit.js';
 
 /**
  * Test reports archive endpoint
- * @alias module:test/testReportsArchive
+ * @function testReportsArchive
  * @param {Object} app - CogniCity server app object
  */
 export default function(app) {

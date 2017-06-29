@@ -8,7 +8,7 @@ import * as test from 'unit.js';
 
 /**
  * Test infrastructure endpoint
- * @alias module:test/testInfrastructure
+ * @function testInfrastructure
  * @param {Object} app - CogniCity server app object
  */
 export default function(app) {

@@ -8,7 +8,7 @@ import * as test from 'unit.js';
 
 /**
  * Test feeds endpoint
- * @alias module:test/testFeeds
+ * @function testFeeds
  * @param {Object} app - CogniCity server app object
  */
 export default function(app) {

@@ -13,7 +13,7 @@ const pgp = require('pg-promise')({
 
 /**
  * Database interaction for Cards objects
- * @alias module:db
+ * @function db
  * @param {Object} config - configuration
  * @param {Object} logger - logger
  * @return {Object} db - PG Promise database

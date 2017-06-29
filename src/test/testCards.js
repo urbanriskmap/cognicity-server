@@ -1,6 +1,6 @@
 /**
  * testCards module
- * @module test/testCards
+ * @module src/test/testCards
  * A module to test the /cards endpoint
  */
 
@@ -8,7 +8,7 @@ import * as test from 'unit.js';
 
 /**
  * Test cards endpoint
- * @alias module:test/testCards
+ * @function testCards
  * @param {Object} app - CogniCity server app object
  */
 export default function(app) {

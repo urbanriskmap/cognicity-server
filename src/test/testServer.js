@@ -8,7 +8,7 @@ import * as test from 'unit.js';
 
 /**
  * Test top-level server routes
- * @alias module:test/testServer
+ * @function testServer
  * @param {Object} app - CogniCity server app object
  */
 export default function(app) {

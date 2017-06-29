@@ -8,7 +8,7 @@ import * as test from 'unit.js';
 
 /**
  * Test floodgauges endpoint
- * @alias module:test/testFloodsgauges
+ * @function testFloodsgauges
  * @param {Object} app - CogniCity server app object
  */
 export default function(app) {

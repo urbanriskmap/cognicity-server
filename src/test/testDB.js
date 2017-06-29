@@ -10,7 +10,7 @@ import initializeDb from '../db'; // Database utility
 
 /**
  * Test db utility module
- * @alias module:test/testDB
+ * @function testDB
  */
 export default function() {
   describe('Test CogniCity Server Database Module', function() {

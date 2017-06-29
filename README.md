@@ -112,9 +112,18 @@ Code follows the [Google JavaScript style](https://google.github.io/styleguide/j
 ### Issue Tracking
 Issues are tracked using [GitHub](https://github.com/urbanriskmap/cognicity-server/issues)
 
+### Code documentation
+
+Internal code documentation is in the JSDoc format. Generated documentation is
+in the  jsdoc/ folder. To build documentation do:
+```sh
+npm run jsdoc
+```
+
 ### Release
 The release procedure is as follows:
 * Update the CHANGELOG.md file with the newly released version, date, and a high-level overview of changes. Commit the change.
+* Build code documentation and commit changes.
 * Create a tag in git from the current head of master. The tag version should be the same as the version specified in the package.json file - this is the release version.
 * Update the version in the package.json file and commit the change.
 * Further development is now on the updated version number until the release process begins again.

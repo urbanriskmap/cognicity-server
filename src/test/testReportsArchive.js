@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * testReportsArchive module
  * @module test/testReportsArchive

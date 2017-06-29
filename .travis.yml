@@ -19,7 +19,7 @@ branches:
 
 before_install:
   - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
-  - git clone -b dev https://github.com/urbanriskmap/cognicity-schema.git urbanriskmap/cognicity-schema && cd urbanriskmap/cognicity-schema && bash build/run.sh && cd -
+  - export DATABASE=cognicity_server_testing ; git clone -b dev https://github.com/urbanriskmap/cognicity-schema.git urbanriskmap/cognicity-schema && cd urbanriskmap/cognicity-schema && bash build/run.sh && cd -
 
 install:
   - npm install

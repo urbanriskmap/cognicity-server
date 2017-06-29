@@ -30,6 +30,36 @@ export default function(app, reportid) {
          });
       });
 
+    // Can get reports as geojson
+    it('Get all reports as geojson', function(done) {
+        test.httpAgent(app)
+          .get('/reports?format=json&geoformat=geojson')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            } else {
+              done();
+            }
+         });
+      });
+
+    // Can get reports as geojson
+    it('Get all reports as topojson', function(done) {
+        test.httpAgent(app)
+          .get('/reports?format=json&geoformat=topojson')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            } else {
+              done();
+            }
+         });
+      });
+
     // Can get reports by city
     it('Get reports by city /reports?city=jbd', function(done) {
         test.httpAgent(app)
@@ -60,8 +90,8 @@ export default function(app, reportid) {
          });
       });
 
-      // Can get reports
-      it('Get all reports/:id endpoint (GET /reports/:id)', function(done) {
+      // Can report by id
+      it('Get reports/:id endpoint', function(done) {
           test.httpAgent(app)
             .get('/reports/'+reportid)
             .expect(200)

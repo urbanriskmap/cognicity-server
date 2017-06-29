@@ -1,5 +1,16 @@
-const test = require('unit.js');
+/**
+ * testServer module
+ * @module test/testServer
+ * A module to test top-level API routes from the server
+ */
 
+import * as test from 'unit.js';
+
+/**
+ * Test top-level server routes
+ * @alias module:test/testServer
+ * @param {Object} app - CogniCity server app object
+ */
 export default function(app) {
   describe('Top level API endpoint', function() {
     it('Gets current API version', function(done) {

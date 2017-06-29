@@ -29,8 +29,8 @@ export default (config, db, logger) => ({
 	// Get all flood reports for a given city
 	allGeo: (city, minimum_state) => new Promise((resolve, reject) => {
 		// Setup query
-		let query = `SELECT la.the_geom, la.pkey as area_id, la.geom_id, la.area_name,
-			la.parent_name, la.city_name, rs.state, rs.last_updated
+		let query = `SELECT la.the_geom, la.pkey as area_id, la.geom_id,
+			la.area_name, la.parent_name, la.city_name, rs.state, rs.last_updated
 			FROM ${config.TABLE_LOCAL_AREAS} la
 			${minimum_state ? 'JOIN' : 'LEFT JOIN'}
 			(SELECT local_area, state, last_updated FROM ${config.TABLE_REM_STATUS}
@@ -55,44 +55,45 @@ export default (config, db, logger) => ({
 	}),
 
 	// Update the REM state and append to the log
-	updateREMState: (localAreaId, state, username) => new Promise((resolve, reject) => {
-		// Setup a timestamp with current date/time in ISO format
-		let timestamp = (new Date()).toISOString();
+	updateREMState: (localAreaId, state, username) =>
+		new Promise((resolve, reject) => {
+			// Setup a timestamp with current date/time in ISO format
+			let timestamp = (new Date()).toISOString();
 
-		// Setup our queries
-		let queries = [
-			{
-				query: `INSERT INTO ${config.TABLE_REM_STATUS}
-					( local_area, state, last_updated )
-					VALUES ( $1, $2, $3 )
-					ON CONFLICT (local_area) DO
-					UPDATE SET state=$2, last_updated=$3`,
-				values: [localAreaId, state, timestamp],
-			},
-			{
-				query: `INSERT INTO ${config.TABLE_REM_STATUS_LOG}
-					( local_area, state, changed, username )
-					VALUES ( $1, $2, $3, $4 )`,
-				values: [localAreaId, state, timestamp, username],
-			},
-		];
+			// Setup our queries
+			let queries = [
+				{
+					query: `INSERT INTO ${config.TABLE_REM_STATUS}
+						( local_area, state, last_updated )
+						VALUES ( $1, $2, $3 )
+						ON CONFLICT (local_area) DO
+						UPDATE SET state=$2, last_updated=$3`,
+					values: [localAreaId, state, timestamp],
+				},
+				{
+					query: `INSERT INTO ${config.TABLE_REM_STATUS_LOG}
+						( local_area, state, changed, username )
+						VALUES ( $1, $2, $3, $4 )`,
+					values: [localAreaId, state, timestamp, username],
+				},
+			];
 
-		// Log queries to debugger
-		for (let query of queries) logger.debug(query.query, query.values);
+			// Log queries to debugger
+			for (let query of queries) logger.debug(query.query, query.values);
 
-		// Execute in a transaction as both INSERT and UPDATE must happen together
-		db.tx((t) => {
-			return t.batch(queries.map((query) => t.none(query.query, query.values)));
-		}).timeout(config.PGTIMEOUT)
-			.then((data) => {
-				resolve(data);
-			})
-			/* istanbul ignore next */
-			.catch((err) => {
+			// Execute in a transaction as both INSERT and UPDATE must happen together
+			db.tx((t) => {
+				return t.batch(queries.map((query) => t.none(query.query, query.values)));
+			}).timeout(config.PGTIMEOUT)
+				.then((data) => {
+					resolve(data);
+				})
 				/* istanbul ignore next */
-				reject(err);
-			});
-	}),
+				.catch((err) => {
+					/* istanbul ignore next */
+					reject(err);
+				});
+		}),
 
 	// Remove the REM state record and append to the log
 	clearREMState: (localAreaId, username) => new Promise((resolve, reject) => {

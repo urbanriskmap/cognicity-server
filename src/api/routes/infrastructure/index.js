@@ -12,7 +12,7 @@ import validate from 'celebrate';
 
 
 export default ({config, db, logger}) => {
-	let api = Router();
+	let api = Router(); // eslint-disable-line new-cap
 
 	// Get a list of infrastructure by type for a given city
 	api.get('/:type', cacheResponse(config.CACHE_DURATION_INFRASTRUCTURE),
@@ -21,10 +21,12 @@ export default ({config, db, logger}) => {
 			query: {
 				city: Joi.any().valid(config.REGION_CODES),
 				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
-				geoformat: Joi.any().valid(config.GEO_FORMATS).default(config.GEO_FORMAT_DEFAULT),
+				geoformat: Joi.any().valid(config.GEO_FORMATS)
+									.default(config.GEO_FORMAT_DEFAULT),
 			},
 		}),
-		(req, res, next) => infrastructure(config, db, logger).all(req.query.city, req.params.type)
+		(req, res, next) => infrastructure(config, db, logger)
+			.all(req.query.city, req.params.type)
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
 				/* istanbul ignore next */

@@ -11,7 +11,8 @@
     "mocha": "nyc mocha --compilers js:babel-core/register src/test/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint src",
-    "test": "npm run lint & npm run mocha"
+    "test": "npm run lint & npm run mocha",
+    "jsdoc": "./node_modules/jsdoc/jsdoc.js -r -R README.md -d ./jsdoc/ src/"
   },
   "nyc": {
     "exclude": [

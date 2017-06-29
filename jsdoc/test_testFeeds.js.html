@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: test/testFeeds.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: test/testFeeds.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * testFeeds module
+ * @module test/testFeeds
+ * A module to test the /feeds endpoint
+ */
+
+import * as test from 'unit.js';
+
+/**
+ * Test feeds endpoint
+ * @alias module:test/testFeeds
+ * @param {Object} app - CogniCity server app object
+ */
+export default function(app) {
+  // Feeds endpoint
+  describe('Feeds endpoint', function() {
+    // Can post to qlue
+    it('Return 200 for post to feeds/qlue', function(done) {
+        test.httpAgent(app)
+          .post('/feeds/qlue')
+          .send({
+              'post_id': '9999',
+              'created_at': '2017-06-07T14:32+0700',
+              'qlue_city': 'surabaya',
+              'disaster_type': 'flood',
+              'text': 'test report',
+              'location': {
+                'lat': 45,
+                'lng': 45,
+              },
+          })
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            } else {
+              done();
+            }
+         });
+      });
+
+    // Catch duplicate post to qlue
+    it('Catch duplicate entry to feeds/qlue', function(done) {
+        test.httpAgent(app)
+          .post('/feeds/qlue')
+          .send({
+              'post_id': '9999',
+              'created_at': '2017-06-07T14:32+0700',
+              'qlue_city': 'surabaya',
+              'disaster_type': 'flood',
+              'text': 'test report',
+              'location': {
+                'lat': 45,
+                'lng': 45,
+              },
+          })
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            } else {
+              test.value(res.body.created).is(false);
+              done();
+            }
+         });
+      });
+
+    // Can post to detik
+    it('Return 200 for post to feeds/detik', function(done) {
+        test.httpAgent(app)
+          .post('/feeds/detik')
+          .send({
+              'contribution_id': '9999',
+              'created_at': '2017-06-07T14:32+0700',
+              'disaster_type': 'flood',
+              'location': {
+                'latitude': 45,
+                'longitude': 45,
+              },
+              'text': 'test report',
+          })
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            } else {
+              done();
+            }
+         });
+      });
+
+      // Catch duplicate post to detik
+      it('Return 200 for post to feeds/detik', function(done) {
+          test.httpAgent(app)
+            .post('/feeds/detik')
+            .send({
+                'contribution_id': '9999',
+                'created_at': '2017-06-07T14:32+0700',
+                'disaster_type': 'flood',
+                'location': {
+                  'latitude': 45,
+                  'longitude': 45,
+                },
+                'text': 'test report',
+            })
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              } else {
+                test.value(res.body.created).is(false);
+                done();
+              }
+           });
+        });
+  });
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="db%250ADatabase%2520initializermodule_.html">db
+Database initializer</a></li><li><a href="module-lib_cap.html">lib/cap</a></li><li><a href="module-src_api_cards_index.html">src/api/cards/index</a></li><li><a href="module-src_api_cards_model.html">src/api/cards/model</a></li><li><a href="module-src_api_index.html">src/api/index</a></li><li><a href="module-src_api_reports_index.html">src/api/reports/index</a></li><li><a href="module-src_api_reports_model.html">src/api/reports/model</a></li><li><a href="server%250ACore%2520server%2520modulemodule_.html">server
+Core server module</a></li><li><a href="test_testCAP%250AA%2520module%2520to%2520test%2520the%2520CAP%2520data%2520format%2520utilitymodule_.html">test/testCAP
+A module to test the CAP data format utility</a></li><li><a href="test_testCards%250AA%2520module%2520to%2520test%2520the%2520_cards%2520endpointmodule_.html">test/testCards
+A module to test the /cards endpoint</a></li><li><a href="test_testCities%250AA%2520module%2520to%2520test%2520the%2520_cities%2520endpointmodule_.html">test/testCities
+A module to test the /cities endpoint</a></li><li><a href="test_testDB%250AA%2520module%2520to%2520test%2520the%2520db%2520utility%2520modulemodule_.html">test/testDB
+A module to test the db utility module</a></li><li><a href="test_testFeeds%250AA%2520module%2520to%2520test%2520the%2520_feeds%2520endpointmodule_.html">test/testFeeds
+A module to test the /feeds endpoint</a></li><li><a href="test_testFloods%250AA%2520module%2520to%2520test%2520the%2520_floods%2520endpointmodule_.html">test/testFloods
+A module to test the /floods endpoint</a></li><li><a href="test_testFloodsgauges%250AA%2520module%2520to%2520test%2520the%2520_floodgauges%2520endpointmodule_.html">test/testFloodsgauges
+A module to test the /floodgauges endpoint</a></li><li><a href="test_testInfrastructure%250AA%2520module%2520to%2520test%2520the%2520_infrastructure%2520endpointmodule_.html">test/testInfrastructure
+A module to test the /infrastructure endpoint</a></li><li><a href="test_testReports%250AA%2520module%2520to%2520test%2520the%2520_reports%2520endpointmodule_.html">test/testReports
+A module to test the /reports endpoint</a></li><li><a href="test_testReportsArchive%250AA%2520module%2520to%2520test%2520the%2520_reports_archive%2520endpointmodule_.html">test/testReportsArchive
+A module to test the /reports/archive endpoint</a></li><li><a href="test_testServer%250AA%2520module%2520to%2520test%2520top-level%2520API%2520routes%2520from%2520the%2520servermodule_.html">test/testServer
+A module to test top-level API routes from the server</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_cap.html">lib/cap</a></li></ul><h3>Global</h3><ul><li><a href="global.html#all">all</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jun 29 2017 15:51:49 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

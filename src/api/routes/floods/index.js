@@ -65,14 +65,12 @@ export default ({config, db, logger}) => {
 			if (req.query.geoformat === 'cap' && req.query.format !== 'xml') {
 				res.status(400).json({statusCode: 400,
 										message: 'format must be \'xml\' when geoformat=\'cap\''});
-			}
-			else if (config.GEO_FORMATS.indexOf(req.query.geoformat) > -1
+			}	else if (config.GEO_FORMATS.indexOf(req.query.geoformat) > -1
 				&& req.query.format !== 'json') {
 					res.status(400).json({statusCode: 400,
 						message: 'format must be \'json\' when geoformat '
 											+'IN (\'geojson\',\'topojson\')'});
-			}
-			else {
+			} else {
 floods(config, db, logger).allGeo(req.query.city, req.query.minimum_state)
 				.then((data) =>
 					req.query.geoformat === 'cap' ?

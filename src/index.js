@@ -12,7 +12,7 @@ import initializeDb from './db';
 import routes from './api';
 
 // Import server
-import { init } from './server.js';
+import {init} from './server.js';
 
 // Import logging libraries
 import logger from 'winston'; // Application logging
@@ -26,7 +26,7 @@ try {
 		fs.accessSync(config.LOG_DIR, fs.W_OK);
 	}
 	logger.info(`Logging to ${config.LOG_DIR !== '' ? config.LOG_DIR : 'current working directory' }`);
-} catch(e) {
+} catch (e) {
 	// If we cannot write to the desired directory then log in the current directory
 	logger.info(`Cannot log to '${config.LOG_DIR}', logging to current working directory instead`);
 	config.LOG_DIR = '';
@@ -38,7 +38,7 @@ logger.add(logger.transports.File, {
 	json: config.LOG_JSON, // Log in json or plain text
 	maxsize: config.LOG_MAX_FILE_SIZE, // Max size of each file
 	maxFiles: config.LOG_MAX_FILES, // Max number of files
-	level: config.LOG_LEVEL // Level of log messages
+	level: config.LOG_LEVEL, // Level of log messages
 });
 
 // If we are not in development and console logging has not been requested then remove it

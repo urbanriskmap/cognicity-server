@@ -2,34 +2,34 @@ const request = require('supertest');
 const assert = require('chai').assert;
 require('it-each')();
 
-import { init } from '../../..';
+import {init} from '../../..';
 
 // Setup an array of tests to run
 const tests = [
   {
     url: '/reports',
     exp: {
-      status: 200
-    }
+      status: 200,
+    },
   },
   {
     url: '/reports?city=jbd',
     exp: {
-      status: 200
-    }
+      status: 200,
+    },
   },
   {
     url: '/reports?city=xxx',
     exp: {
-      status: 400
-    }
+      status: 400,
+    },
   },
   {
     url: '/reports/0',
     exp: {
-      status: 404
-    }
-  }
+      status: 404,
+    },
+  },
 ];
 
 // Run the tests

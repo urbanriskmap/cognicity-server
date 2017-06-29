@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import {Router} from 'express';
 
 // Import our data model
 import feeds from './model';
@@ -8,7 +8,7 @@ import Joi from 'joi';
 import validate from 'celebrate';
 
 
-export default ({ config, db, logger }) => {
+export default ({config, db, logger}) => {
 	let api = Router();
 
 	// Create a new qlue record in the database
@@ -25,9 +25,9 @@ export default ({ config, db, logger }) => {
 				disaster_type: Joi.string().valid(config.API_FEEDS_QLUE_DISASTER_TYPES).required(),
 				location: Joi.object().required().keys({
 					lat: Joi.number().min(-90).max(90).required(),
-					lng: Joi.number().min(-180).max(180).required()
-				})
-			})
+					lng: Joi.number().min(-180).max(180).required(),
+				}),
+			}),
 		}),
 		(req, res, next) => feeds(config, db, logger).addQlueReport(req.body)
 			.then((data) => res.json(data))
@@ -53,9 +53,9 @@ export default ({ config, db, logger }) => {
 				disaster_type: Joi.string().valid(config.API_FEEDS_DETIK_DISASTER_TYPES).required(),
 				location: Joi.object().required().keys({
 					latitude: Joi.number().min(-90).max(90).required(),
-					longitude: Joi.number().min(-180).max(180).required()
-				})
-			})
+					longitude: Joi.number().min(-180).max(180).required(),
+				}),
+			}),
 		}),
 		(req, res, next) => feeds(config, db, logger).addDetikReport(req.body)
 			.then((data) => res.json(data))

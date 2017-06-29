@@ -4,14 +4,13 @@ export default (config, db, logger) => ({
 
   // Create a new card entry with the given cardId
   create: (cardId, body) => new Promise((resolve, reject) => {
-
     // Setup query
     let query = `INSERT INTO ${config.TABLE_GRASP_CARDS}
       (card_id, username, network, language, received)
       VALUES ($1, $2, $3, $4, $5) RETURNING pkey`;
 
     // Setup values
-    let values = [ cardId, body.username, body.network, body.language, false ];
+    let values = [cardId, body.username, body.network, body.language, false];
 
     // Execute
     logger.debug(query, values);
@@ -20,13 +19,13 @@ export default (config, db, logger) => ({
       /* istanbul ignore next */
       .catch((err) => {
         /* istanbul ignore next */
-        reject(err)}
+        reject(err);
+}
       );
   }),
 
   // Return specific card by id
   byCardId: (cardId) => new Promise((resolve, reject) => {
-
     // Setup query
     let query = `SELECT c.card_id, c.username, c.network, c.language, c.received,
       CASE WHEN r.card_id IS NOT NULL THEN
@@ -40,7 +39,7 @@ export default (config, db, logger) => ({
       LIMIT 1`;
 
     // Setup values
-    let values = [ cardId ];
+    let values = [cardId];
 
     // Execute
     logger.debug(query, values);
@@ -49,23 +48,22 @@ export default (config, db, logger) => ({
       /* istanbul ignore next */
       .catch((err) => {
         /* istanbul ignore next */
-        reject(err)
-      })
+        reject(err);
+      });
   }),
 
   // Add an entry to the reports table and then update the card record accordingly
   submitReport: (card, body) => new Promise((resolve, reject) => {
-
     // Setup our queries
     let queries = [
       {
         query: `INSERT INTO ${config.TABLE_GRASP_REPORTS}
           (card_id, card_data, text, created_at, disaster_type, status, the_geom)
           VALUES ($1, $2, COALESCE($3,''), $4, $5, $6, ST_SetSRID(ST_Point($7,$8),4326))`,
-        values: [ card.card_id, { flood_depth: body.water_depth }, body.text,
-          body.created_at, 'flood', 'Confirmed', body.location.lng, body.location.lat  ]
+        values: [card.card_id, {flood_depth: body.water_depth}, body.text,
+          body.created_at, 'flood', 'Confirmed', body.location.lng, body.location.lat],
       },
-      /*** TODO - renable this query (and delete the one above) for updated data structure when PetaBencana.id client is ready
+      /** * TODO - renable this query (and delete the one above) for updated data structure when PetaBencana.id client is ready
       {
         query: `INSERT INTO ${config.TABLE_GRASP_REPORTS}
           (card_id, card_data, text, created_at, disaster_type, status, the_geom)
@@ -77,14 +75,14 @@ export default (config, db, logger) => ({
       {
         query: `UPDATE ${config.TABLE_GRASP_CARDS}
           SET received = TRUE WHERE card_id = $1`,
-        values: [ card.card_id ]
+        values: [card.card_id],
       },
       {
         query: `INSERT INTO ${config.TABLE_GRASP_LOG}
               (card_id, event_type)
               VALUES ($1, $2)`,
-        values: [ card.card_id, 'REPORT SUBMITTED' ]
-      }
+        values: [card.card_id, 'REPORT SUBMITTED'],
+      },
     ];
 
     // Log queries to debugger
@@ -98,27 +96,26 @@ export default (config, db, logger) => ({
       /* istanbul ignore next */
       .catch((err) => {
         /* istanbul ignore next */
-        reject(err)
+        reject(err);
       });
   }),
 
   // Update the reports table with new report details
   updateReport: (card, body) => new Promise((resolve, reject) => {
-
     // Setup our queries
     let queries = [
       {
         query: `UPDATE ${config.TABLE_GRASP_REPORTS} SET
           image_url = COALESCE($2, image_url)
           WHERE card_id = $1`,
-        values: [ card.card_id, body.image_url ]
+        values: [card.card_id, body.image_url],
       },
       {
         query: `INSERT INTO ${config.TABLE_GRASP_LOG}
               (card_id, event_type)
               VALUES ($1, $2)`,
-        values: [ card.card_id, 'REPORT UPDATES' ]
-      }
+        values: [card.card_id, 'REPORT UPDATES'],
+      },
     ];
 
     // Log queries to debugger
@@ -132,8 +129,8 @@ export default (config, db, logger) => ({
       /* istanbul ignore next */
       .catch((err) => {
         /* istanbul ignore next */
-        reject(err)
+        reject(err);
       });
-  })
+  }),
 
 });

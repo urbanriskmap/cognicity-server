@@ -1,51 +1,48 @@
 const test = require('unit.js');
 
-export default function (app){
+export default function(app) {
   // Flood gauges endpoint
   describe('Flood gauges endpoint', function() {
     // Can get flood gauge data
-    it('Return 200 for get /floodgauges', function(done){
+    it('Return 200 for get /floodgauges', function(done) {
         test.httpAgent(app)
           .get('/floodgauges')
           .expect(200)
           .expect('Content-Type', /json/)
-          .end(function(err, res){
+          .end(function(err, res) {
             if (err) {
               test.fail(err.message + ' ' + JSON.stringify(res));
-            }
-            else {
+            } else {
               done();
             }
          });
       });
 
       // Catch invalid city in floodgauge
-      it('Return 400 for get /floodgauges?city=xxx', function(done){
+      it('Return 400 for get /floodgauges?city=xxx', function(done) {
           test.httpAgent(app)
             .get('/floodgauges?city=xxx')
             .expect(400)
             .expect('Content-Type', /json/)
-            .end(function(err, res){
+            .end(function(err, res) {
               if (err) {
                 test.fail(err.message + ' ' + JSON.stringify(res));
-              }
-              else {
+              } else {
                 done();
               }
            });
         });
 
       // Catch invalid floodgauge id
-      it('Return 404 for get /floodgauges/:id', function(done){
+      it('Return 404 for get /floodgauges/:id', function(done) {
           test.httpAgent(app)
             .get('/floodgauges/0')
             .expect(404)
             .expect('Content-Type', /json/)
-            .end(function(err, res){
+            .end(function(err, res) {
               if (err) {
                 test.fail(err.message + ' ' + JSON.stringify(res));
-              }
-              else {
+              } else {
                 done();
               }
            });

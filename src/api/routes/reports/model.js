@@ -8,7 +8,6 @@ export default (config, db, logger) => ({
 	 * @param {string} city Optional, instance region code (e.g. 'jbd')
 	 */
 	all: (timeperiod, city) => new Promise((resolve, reject) => {
-
 		// Setup query
 		let query = `SELECT pkey, created_at, source,
 			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
@@ -17,9 +16,9 @@ export default (config, db, logger) => ({
 			AND ($2 IS NULL OR tags->>'instance_region_code'=$2)
 			ORDER BY created_at DESC LIMIT $3`;
 
-		var timeWindow = (Date.now() / 1000) - timeperiod;
+		let timeWindow = (Date.now() / 1000) - timeperiod;
 
-		let values = [ timeWindow, city, config.API_REPORTS_LIMIT ];
+		let values = [timeWindow, city, config.API_REPORTS_LIMIT];
 
 		// Execute
 		logger.debug(query, values);
@@ -28,13 +27,12 @@ export default (config, db, logger) => ({
 			/* istanbul ignore next */
 			.catch((err) => {
 				/* istanbul ignore next */
-				reject(err)
+				reject(err);
 			});
 	}),
 
 	// Return specific report by id
 	byId: (id) => new Promise((resolve, reject) => {
-
 		// Setup query
 		let query = `SELECT pkey, created_at, source,
 			status, url, image_url, disaster_type, report_data, tags, title, text, the_geom
@@ -42,7 +40,7 @@ export default (config, db, logger) => ({
 			WHERE pkey = $1`;
 
 		// Setup values
-		let values = [ id ];
+		let values = [id];
 
 		// Execute
 		logger.debug(query, values);
@@ -51,8 +49,8 @@ export default (config, db, logger) => ({
 			/* istanbul ignore next */
 			.catch((err) => {
 				/* istanbul ignore next */
-				reject(err)
+				reject(err);
 			});
-	})
+	}),
 
 });

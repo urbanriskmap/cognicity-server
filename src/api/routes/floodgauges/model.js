@@ -15,7 +15,7 @@ export default (config, db, logger) => ({
 
 		// Setup values
 		let timeWindow = (Date.now() / 1000) - config.API_FLOODGAUGE_REPORTS_TIME_WINDOW;
-		let values = [ timeWindow, city, config.API_FLOODGAUGE_REPORTS_LIMIT ];
+		let values = [timeWindow, city, config.API_FLOODGAUGE_REPORTS_LIMIT];
 
 		// Execute
 		logger.debug(query, values);
@@ -23,12 +23,10 @@ export default (config, db, logger) => ({
 			.then((data) => resolve(data))
 			/* istanbul ignore next */
 			.catch((err) => reject(err));
-
 	}),
 
 	// Return specific flood gauge report by id
 	byId: (id) => new Promise((resolve, reject) => {
-
 		// Setup query
 		let query = `SELECT gaugeid, gaugenameid, the_geom,
 			array_to_json(array_agg((measuredatetime, depth, warninglevel,
@@ -38,7 +36,7 @@ export default (config, db, logger) => ({
 			GROUP BY gaugeid, the_geom, gaugenameid`;
 
 		// Setup values
-		let values = [ id ];
+		let values = [id];
 
 		// Execute
 		logger.debug(query, values);
@@ -48,8 +46,8 @@ export default (config, db, logger) => ({
 			/* istanbul ignore next */
 			.catch((err) => {
 				/* istanbul ignore next */
-				reject(err)
+				reject(err);
 			});
-	})
+	}),
 
 });

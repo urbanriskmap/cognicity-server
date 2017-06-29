@@ -13,7 +13,6 @@ import morgan from 'morgan'; // Express logging
 
 // Function to initialize the api server
 const init = (config, initializeDb, routes, logger) => new Promise((resolve, reject) => {
-
 	// Create the server
 	let app = express();
 	app.server = http.createServer(app);
@@ -22,11 +21,11 @@ const init = (config, initializeDb, routes, logger) => new Promise((resolve, rej
 	const winstonStream = {
 		write: function(message) {
 			logger.info(message.slice(0, -1));
-		}
+		},
 	};
 
 	// Setup express logger
-	app.use(morgan('combined', { stream : winstonStream }));
+	app.use(morgan('combined', {stream: winstonStream}));
 
 	// Compress responses if required but only if caching is disabled
 	if (config.COMPRESS && !config.CACHE) {
@@ -35,7 +34,7 @@ const init = (config, initializeDb, routes, logger) => new Promise((resolve, rej
 
 	// Provide CORS support (not required if behind API gateway)
 	if (config.CORS) {
-		app.use(cors({ exposedHeaders: config.CORS_HEADERS }));
+		app.use(cors({exposedHeaders: config.CORS_HEADERS}));
 	}
 
 	// Provide response time header in response
@@ -44,7 +43,7 @@ const init = (config, initializeDb, routes, logger) => new Promise((resolve, rej
 	}
 
 	// Parse body messages into json
-	app.use(bodyParser.json({ limit : config.BODY_LIMIT }));
+	app.use(bodyParser.json({limit: config.BODY_LIMIT}));
 
 	// Try and connect to the db
 	initializeDb(config, logger)
@@ -53,11 +52,10 @@ const init = (config, initializeDb, routes, logger) => new Promise((resolve, rej
 			logger.debug('Successfully connected to DB');
 
 			// Mount the routes
-			app.use('/', routes({ config, db, logger }));
+			app.use('/', routes({config, db, logger}));
 
 			// App is ready to go, resolve the promise
 			resolve(app);
-
 		})
 		.catch((err) => {
 			/* istanbul ignore next */
@@ -67,9 +65,9 @@ const init = (config, initializeDb, routes, logger) => new Promise((resolve, rej
 			/* istanbul ignore next */
 			// We cannot continue without a DB, reject
 			reject(err);
-		})
-})
+		});
+});
 
 // Export the init function for use externally
 
-module.exports = { init };
+module.exports = {init};

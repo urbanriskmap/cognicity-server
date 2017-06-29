@@ -4,7 +4,6 @@ export default (config, db, logger) => ({
 
 	// Get all flood reports for a given city
 	all: (city, minimum_state) => new Promise((resolve, reject) => {
-
 		// Setup query
 		let query = `SELECT local_area as area_id, state, last_updated
 			FROM ${config.TABLE_REM_STATUS} status, ${config.TABLE_LOCAL_AREAS} area
@@ -13,23 +12,22 @@ export default (config, db, logger) => ({
 			AND ($1 IS NULL OR area.instance_region_code=$1)`;
 
 		// Setup values
-		let values = [ city, minimum_state ];
+		let values = [city, minimum_state];
 
 		// Execute
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => {
-				resolve(data)
+				resolve(data);
 			})
 			.catch((err) => {
 				/* istanbul ignore next */
-				reject(err)
+				reject(err);
 			});
 	}),
 
 	// Get all flood reports for a given city
 	allGeo: (city, minimum_state) => new Promise((resolve, reject) => {
-
 		// Setup query
 		let query = `SELECT la.the_geom, la.pkey as area_id, la.geom_id, la.area_name,
 			la.parent_name, la.city_name, rs.state, rs.last_updated
@@ -41,24 +39,23 @@ export default (config, db, logger) => ({
 			WHERE $1 IS NULL OR instance_region_code = $1`;
 
 		// Setup values
-		let values = [ city, minimum_state ];
+		let values = [city, minimum_state];
 
 		// Execute
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => {
-				resolve(data)
+				resolve(data);
 			})
 			/* istanbul ignore next */
 			.catch((err) => {
 				/* istanbul ignore next */
-				reject(err)
+				reject(err);
 			});
 	}),
 
 	// Update the REM state and append to the log
 	updateREMState: (localAreaId, state, username) => new Promise((resolve, reject) => {
-
 		// Setup a timestamp with current date/time in ISO format
 		let timestamp = (new Date()).toISOString();
 
@@ -70,14 +67,14 @@ export default (config, db, logger) => ({
 					VALUES ( $1, $2, $3 )
 					ON CONFLICT (local_area) DO
 					UPDATE SET state=$2, last_updated=$3`,
-				values: [ localAreaId, state, timestamp ]
+				values: [localAreaId, state, timestamp],
 			},
 			{
 				query: `INSERT INTO ${config.TABLE_REM_STATUS_LOG}
 					( local_area, state, changed, username )
 					VALUES ( $1, $2, $3, $4 )`,
-				values: [ localAreaId, state, timestamp, username ]
-			}
+				values: [localAreaId, state, timestamp, username],
+			},
 		];
 
 		// Log queries to debugger
@@ -88,18 +85,17 @@ export default (config, db, logger) => ({
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
 			.then((data) => {
-				resolve(data)
+				resolve(data);
 			})
 			/* istanbul ignore next */
 			.catch((err) => {
 				/* istanbul ignore next */
-				reject(err)
+				reject(err);
 			});
 	}),
 
 	// Remove the REM state record and append to the log
 	clearREMState: (localAreaId, username) => new Promise((resolve, reject) => {
-
 		// Setup a timestamp with current date/time in ISO format
 		let timestamp = (new Date()).toISOString();
 
@@ -108,14 +104,14 @@ export default (config, db, logger) => ({
 			{
 				query: `DELETE FROM ${config.TABLE_REM_STATUS}
 					WHERE local_area = $1`,
-				values: [ localAreaId ]
+				values: [localAreaId],
 			},
 			{
 				query: `INSERT INTO ${config.TABLE_REM_STATUS_LOG}
 					( local_area, state, changed, username )
 					VALUES ( $1, $2, $3, $4 )`,
-				values: [ localAreaId, null, timestamp, username ]
-			}
+				values: [localAreaId, null, timestamp, username],
+			},
 		];
 
 		// Log queries to debugger
@@ -126,13 +122,13 @@ export default (config, db, logger) => ({
 			return t.batch(queries.map((query) => t.none(query.query, query.values)));
 		}).timeout(config.PGTIMEOUT)
 			.then((data) => {
-				resolve(data)
+				resolve(data);
 			})
 			/* istanbul ignore next */
 			.catch((err) => {
 				/* istanbul ignore next */
 				reject(err);
-			})
-	})
+			});
+	}),
 
 });

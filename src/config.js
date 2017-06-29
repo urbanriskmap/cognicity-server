@@ -1,4 +1,4 @@
-require('dotenv').config({silent:true});
+require('dotenv').config({silent: true});
 
 export default {
   APP_NAME: process.env.APP_NAME || 'cognicity-server',

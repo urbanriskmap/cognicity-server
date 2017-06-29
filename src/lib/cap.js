@@ -2,8 +2,8 @@
 /**
  * CogniCity CAP data format utility
  * @module lib/cap
- * @param {object} logger Configured Winston logger instance
- */
+ * @param {Object} logger Configured Winston logger instance
+ **/
 
 // XML builder used to create XML output
 import builder from 'xmlbuilder';
@@ -14,7 +14,7 @@ module.exports = class Cap {
   /**
    * Setup the CAP object to user specified logger
    * @alias module:lib/cap
-   * @param {object} logger Configured Winston logger instance
+   * @param {Object} logger Configured Winston logger instance
    */
   constructor(logger) {
     this.logger = logger;
@@ -22,9 +22,9 @@ module.exports = class Cap {
   /**
    * Transform GeoJSON data to ATOM feed of CAP format XML data.
    * See {@link https://tools.ietf.org/html/rfc4287|ATOM syndication format}
-   * @param {object} features Peta Jakarta GeoJSON features object
-   * @return {string} XML CAP data describing all areas
-   */
+   * @param {Object} features Peta Jakarta GeoJSON features object
+   * @return {String} XML CAP data describing all areas
+   **/
   geoJsonToAtomCap(features) {
     let self = this;
     let feed = {
@@ -76,8 +76,8 @@ module.exports = class Cap {
    * See {@link `http://docs.oasis-open.org/emergency/cap/v1.2/`
                   + `CAP-v1.2-os.html#_Toc97699527|`
                   + `CAP specification 3.2.1 "alert" Element and Sub-elements`}
-   * @param {object} feature petabencana.id GeoJSON feature
-   * @return {object} Object representing ALERT element for xmlbuilder
+   * @param {Object} feature petabencana.id GeoJSON feature
+   * @return {Object} Object representing ALERT element for xmlbuilder
    */
   createAlert(feature) {
     let self = this;
@@ -114,8 +114,8 @@ module.exports = class Cap {
    * See {@link `http://docs.oasis-open.org/emergency/cap/v1.2/`
                   + `CAP-v1.2-os.html#_Toc97699542|`
                   + `CAP specification 3.2.2 "info" Element and Sub-elements`}
-   * @param {object} feature petabencana.id GeoJSON feature
-   * @return {object} Object representing INFO element suitable for xmlbuilder
+   * @param {Object} feature petabencana.id GeoJSON feature
+   * @return {Object} Object representing INFO element suitable for xmlbuilder
    */
   createInfo(feature) {
     let self = this;
@@ -177,8 +177,8 @@ module.exports = class Cap {
    * See {@link `http://docs.oasis-open.org/emergency/cap/v1.2/`
                 + `CAP-v1.2-os.html#_Toc97699550|`
                 + `CAP specification 3.2.4 "area" Element and Sub-elements`}
-   * @param {object} feature petabencana.id GeoJSON feature
-   * @return {object} Object representing AREA element for XML xmlbuilder
+   * @param {Object} feature petabencana.id GeoJSON feature
+   * @return {Object} Object representing AREA element for XML xmlbuilder
    */
   createArea(feature) {
     let self = this;

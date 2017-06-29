@@ -1,3 +1,8 @@
+/**
+ * @file CogniCity Server Utility file
+ * various functions to assist server
+ **/
+
 // Import dependencies
 import Promise from 'bluebird';
 import jwt from 'express-jwt';

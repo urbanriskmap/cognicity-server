@@ -1,3 +1,7 @@
+/**
+ * CogniCity Server Data API
+ * @module src/api/index
+ **/
 import {Router} from 'express';
 
 // Import the dependencies we need to handle the request
@@ -18,7 +22,13 @@ import floods from './routes/floods';
 import infrastructure from './routes/infrastructure';
 import reports from './routes/reports';
 
-
+/**
+* @alias module:src/api/index
+* @param {Object} config Server configuration
+* @param {Object} db PG Promise database instance
+* @param {Object} logger Configured Winston logger instance
+* @return {Object} api Express router object for API routes
+**/
 export default ({config, db, logger}) => {
 	let api = Router(); // eslint-disable-line new-cap
 

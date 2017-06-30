@@ -15,10 +15,9 @@ import * as test from 'unit.js';
  * Test reports archive endpoint
  * @function testReportsArchive
  * @param {Object} app - CogniCity server app object
- * @param {Number} reportid - ID of report to test against
  * @param {String} createdAt - Sample ISO 8601 timestamp of report to test
  */
-export default function(app, reportid, createdAt) {
+export default function(app, createdAt) {
   // Reports endpoint
   describe('Reports Archive Endpoint', function() {
     // Can get reports between given timestamps
@@ -49,20 +48,10 @@ export default function(app, reportid, createdAt) {
               test.fail(err.message + ' ' + JSON.stringify(res));
             } else {
               test.value(res.body.result.type).is('FeatureCollection');
-              test.value(res.body.result.features[0].properties.pkey)
-                .is(reportid);
-              test.value(res.body.result.features[0].properties.source)
-                .is('grasp');
-              test.value(res.body.result.features[0].properties.created_at)
-                .is(createdAt);
               test.value(res.body.result.features[0].properties.status)
                 .is('confirmed');
-              test.value(res.body.result.features[0].properties.image_url)
-                .is('dummy image url');
               test.value(res.body.result.features[0].properties.disaster_type)
                 .is('flood');
-              test.value(res.body.result.features[0].properties.report_data
-                .flood_depth).is(20);
               done();
             }
          });

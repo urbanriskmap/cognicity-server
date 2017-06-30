@@ -53,7 +53,8 @@ describe('Cognicity Server Testing Harness', function() {
 const PG_CONFIG_STRING = 'postgres://'+config.PGUSER+'@'+config.PGHOST+':'+config.PGPORT+'/'+config.PGDATABASE;
 
 // Global report value
-let reportid = 1;
+let reportid = '1';
+let createdAt = new Date().toISOString();
 
 // Auth JWT support
 const jwt = require('jsonwebtoken');
@@ -70,14 +71,14 @@ let token = jwt.sign({},
   // Initialise
   init(config, initializeDb, routes, logger).then((app) => {
     testServer(app);
-    testCards(app);
+    testCards(app, createdAt);
     testCities(app);
     testFeeds(app);
     testFloodgauges(app);
     testInfrastructure(app);
     testFloods(app, token);
-    testReports(app, reportid);
-    testReportsArchive(app);
+    testReports(app, reportid, createdAt);
+    testReportsArchive(app, reportid, createdAt);
     testCAP(logger);
     testDB();
 
@@ -185,6 +186,6 @@ let token = jwt.sign({},
      });
      return (done());
    });
-   });
+ });
   });
 });

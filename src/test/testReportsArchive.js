@@ -15,11 +15,16 @@ import * as test from 'unit.js';
  * Test reports archive endpoint
  * @function testReportsArchive
  * @param {Object} app - CogniCity server app object
+ * @param {Number} reportid - ID of report to test against
+ * @param {String} createdAt - Sample ISO 8601 timestamp of report to test
  */
-export default function(app) {
+export default function(app, reportid, createdAt) {
   // Reports endpoint
   describe('Reports Archive Endpoint', function() {
     // Can get reports between given timestamps
+
+    let end = new Date().toISOString().slice(0, -5)+'Z';
+
     it('Can get reports between given timestamps', function(done) {
         test.httpAgent(app)
           .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700')
@@ -36,7 +41,7 @@ export default function(app) {
 
     it('Can get reports between given timestamps as geojson', function(done) {
         test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&format=json&geoformat=geojson')
+          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end='+end+'&format=json&geoformat=geojson')
           .expect(200)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -44,6 +49,20 @@ export default function(app) {
               test.fail(err.message + ' ' + JSON.stringify(res));
             } else {
               test.value(res.body.result.type).is('FeatureCollection');
+              test.value(res.body.result.features[0].properties.pkey)
+                .is(reportid);
+              test.value(res.body.result.features[0].properties.source)
+                .is('grasp');
+              test.value(res.body.result.features[0].properties.created_at)
+                .is(createdAt);
+              test.value(res.body.result.features[0].properties.status)
+                .is('confirmed');
+              test.value(res.body.result.features[0].properties.image_url)
+                .is('dummy image url');
+              test.value(res.body.result.features[0].properties.disaster_type)
+                .is('flood');
+              test.value(res.body.result.features[0].properties.report_data
+                .flood_depth).is(20);
               done();
             }
          });

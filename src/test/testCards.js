@@ -10,8 +10,9 @@ import * as test from 'unit.js';
  * Test cards endpoint
  * @function testCards
  * @param {Object} app - CogniCity server app object
+ * @param {String} createdAt - Sample date as ISO 8601 string
  */
-export default function(app) {
+export default function(app, createdAt) {
   // Cards endpoint
   describe('Cards endpoint', function() {
     // Cards
@@ -96,7 +97,7 @@ export default function(app) {
                    'report_type': 'flood',
                  },
                  'text': 'integration testing',
-                 'created_at': '2017-06-07T07:00:00+0700',
+                 'created_at': createdAt,
                  'location': {
                    'lat': -6.4,
                    'lng': 106.6,

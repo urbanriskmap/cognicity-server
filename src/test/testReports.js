@@ -11,8 +11,9 @@ import * as test from 'unit.js';
  * @function testReports
  * @param {Object} app - CogniCity server app object
  * @param {Number} reportid - CogniCity report ID to test against
+ * @param {String} createdAt - Sample timestamp in ISO 8601 format
  */
-export default function(app, reportid) {
+export default function(app, reportid, createdAt) {
   // Reports endpoint
   describe('Reports endpoint', function() {
     // Can get reports
@@ -93,13 +94,27 @@ export default function(app, reportid) {
       // Can report by id
       it('Get reports/:id endpoint', function(done) {
           test.httpAgent(app)
-            .get('/reports/'+reportid)
+            .get('/reports/'+reportid+'?format=json&geoformat=geojson')
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
               if (err) {
                 test.fail(err.message + ' ' + JSON.stringify(res));
               } else {
+                test.value(res.body.result.features[0].properties.pkey)
+                  .is(reportid);
+                test.value(res.body.result.features[0].properties.source)
+                  .is('grasp');
+                test.value(res.body.result.features[0].properties.created_at)
+                  .is(createdAt);
+                test.value(res.body.result.features[0].properties.status)
+                  .is('confirmed');
+                test.value(res.body.result.features[0].properties.image_url)
+                  .is('dummy image url');
+                test.value(res.body.result.features[0].properties.disaster_type)
+                  .is('flood');
+                test.value(res.body.result.features[0].properties.report_data
+                  .flood_depth).is(20);
                 done();
               }
            });

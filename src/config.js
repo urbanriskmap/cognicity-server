@@ -20,7 +20,7 @@ export default {
   AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID || 'auth0_client_id',
   AUTH0_ISSUER: process.env.AUTH0_ISSUER || 'https://petabencana.au.auth0.com',
   AUTH0_SECRET: process.env.AUTH0_SECRET || 'secret',
-  AWS_REGION: process.env.AWS_REGION || 'ap-south-1',
+  AWS_REGION: process.env.AWS_REGION || 'ap-southeast-1',
   AWS_S3_ACCESS_KEY_ID: process.env.AWS_S3_ACCESS_KEY_ID || '',
   AWS_S3_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY || '',
   AWS_S3_SIGNATURE_VERSION: process.env.AWS_SIGNATURE_VERSION || 'v4',

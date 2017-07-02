@@ -1,7 +1,18 @@
+/**
+* CogniCity Server /floodgauges data model
+* @module src/api/floodgauges/model
+**/
 import Promise from 'bluebird';
 
+/**
+* Methods to get floodgauges layers from database
+* @alias module:src/api/floodgauges/model
+* @param {Object} config Server configuration
+* @param {Object} db PG Promise database instance
+* @param {Object} logger Configured Winston logger instance
+* @return {Object} Query methods
+*/
 export default (config, db, logger) => ({
-
 	// Return all flood gauge reports within the defined max period
 	// Optional: city (Petabencana.id Instance Region 3 letter code)
 	all: (city) => new Promise((resolve, reject) => {
@@ -14,20 +25,20 @@ export default (config, db, logger) => ({
 			GROUP BY gaugeid, the_geom, gaugenameid LIMIT $3`;
 
 		// Setup values
-		let timeWindow = (Date.now() / 1000) - config.API_FLOODGAUGE_REPORTS_TIME_WINDOW;
-		let values = [ timeWindow, city, config.API_FLOODGAUGE_REPORTS_LIMIT ];
+		let timeWindow = (Date.now() / 1000) -
+			config.API_FLOODGAUGE_REPORTS_TIME_WINDOW;
+		let values = [timeWindow, city, config.API_FLOODGAUGE_REPORTS_LIMIT];
 
 		// Execute
 		logger.debug(query, values);
 		db.any(query, values).timeout(config.PGTIMEOUT)
 			.then((data) => resolve(data))
+			/* istanbul ignore next */
 			.catch((err) => reject(err));
-
 	}),
 
 	// Return specific flood gauge report by id
 	byId: (id) => new Promise((resolve, reject) => {
-
 		// Setup query
 		let query = `SELECT gaugeid, gaugenameid, the_geom,
 			array_to_json(array_agg((measuredatetime, depth, warninglevel,
@@ -37,13 +48,18 @@ export default (config, db, logger) => ({
 			GROUP BY gaugeid, the_geom, gaugenameid`;
 
 		// Setup values
-		let values = [ id ];
+		let values = [id];
 
 		// Execute
 		logger.debug(query, values);
 		db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
+			/* istanbul ignore next */
 			.then((data) => resolve(data))
-			.catch((err) => reject(err));
-	})
+			/* istanbul ignore next */
+			.catch((err) => {
+				/* istanbul ignore next */
+				reject(err);
+			});
+	}),
 
 });

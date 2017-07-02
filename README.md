@@ -10,8 +10,6 @@ DOI for current stable release [v3.0.0](https://github.com/urbanriskmap/cognicit
 
 [![DOI](https://zenodo.org/badge/73803254.svg)](https://zenodo.org/badge/latestdoi/73803254)
 
-
-
 ### Summary
 
 This is the NodeJS server which runs the CogniCity Data API used by Urban Risk Map instances, such as [PetaBencana.id](https://petabencana.id) site.  
@@ -130,6 +128,8 @@ The release procedure is as follows:
 
 ### API Notes
 Full API documentation at https://docs.petabencana.id. This documentation is stored in the [petabencana-docs](https://github.com/urbanriskmap/petabencana-docs) repository.
+
+[swagger-api.json](swagger-api.json) describes the API in [swagger](https://swagger.io/) format (with AWS API Gateway extensions).
 
 - The dbgeo library expects timestamps from database to be in UTC (i.e. not a local timezone)
 

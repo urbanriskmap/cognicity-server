@@ -3,6 +3,10 @@
   "version": "3.0.1",
   "description": "Data Server for CogniCity",
   "main": "dist",
+  "engines": {
+    "node": "4.1.1",
+    "npm": "3.9.5"
+  },
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
     "build": "babel src -s -D -d dist --presets es2015,stage-0",

@@ -118,6 +118,13 @@ in the  jsdoc/ folder. To build documentation do:
 npm run jsdoc
 ```
 
+### Package management
+Before deployment:
+* Use NVM to switch to node and NPM versions specified in package.json for production
+* Run npm install
+* Run npm shrinkwrap --dev
+* Commit changes to npm-shrinkwrap.json
+
 ### Release
 The release procedure is as follows:
 * Update the CHANGELOG.md file with the newly released version, date, and a high-level overview of changes. Commit the change.

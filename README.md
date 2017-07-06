@@ -58,7 +58,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `GEO_FORMAT_DEFAULT`: Which format to return geographic results in by default (default: `topojson`)
 * `GEO_FORMATS`: Geographic formats supported by the system (as comma separated list) (default: `topojson,geojson,cap`)
 * `GEO_PRECISION`: Precision to use when rounding geographic coordinates (default: `10`)
-* `IMAGE_BUCKET`: AWS S3 bucket for image uploads (default: `testing-riskmap-image-uploads`)
+* `IMAGES_BUCKET`: AWS S3 bucket for image uploads (default: `testing-riskmap-image-uploads`)
 * `IMAGES_HOST`: Endpoint for image hosting (default: `images.petabencana.id`),
 * `INFRASTRUCTURE_TYPES`: Infrastructure types supported (as comma separated list) (default: `floodgates,pumps,waterways`)
 * `LANGUAGES`: Supported languages

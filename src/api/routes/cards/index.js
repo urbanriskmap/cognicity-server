@@ -181,7 +181,7 @@ export default ({config, db, logger}) => {
   }),
   (req, res, next) => {
     let s3params = {
-      Bucket: config.IMAGE_BUCKET,
+      Bucket: config.IMAGES_BUCKET,
       Key: 'originals/' + req.params.cardId + '.jpg',
       ContentType: req.query.file_type,
     };
@@ -195,7 +195,7 @@ export default ({config, db, logger}) => {
         let returnData = {
           signedRequest: data,
           url: 'https://s3.'+config.AWS_REGION+'.amazonaws.com/'
-                + config.IMAGE_BUCKET+'/'+ s3params.Key,
+                + config.IMAGES_BUCKET+'/'+ s3params.Key,
         };
         // write the url into the db under image_url for this card
 

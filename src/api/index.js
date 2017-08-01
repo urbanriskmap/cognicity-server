@@ -14,6 +14,7 @@ import validate from 'celebrate';
 import {version} from '../../package.json';
 
 // Import our routes
+import alerts from './routes/alerts';
 import cards from './routes/cards';
 import cities from './routes/cities';
 import feeds from './routes/feeds';
@@ -40,6 +41,7 @@ export default ({config, db, logger}) => {
 
 	// Mount the various endpoints
 	// api.use('/areas', cards({ config, db, logger }));// TODO: local_areas
+	api.use('/alerts', alerts({config, db, logger}));
 	api.use('/cards', cards({config, db, logger}));
 	api.use('/cities', cities({config, db, logger}));
 	api.use('/feeds', feeds({config, db, logger}));

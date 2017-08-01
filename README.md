@@ -81,6 +81,8 @@ Server configuration parameters are stored in a configuration file which is pars
 * `REPORT_TYPES`: Classifiers for report types (default: `drain,desilting,canalrepair,treeclearing,flood`)
 * `RESPONSE_TIME`: Should the server return an `X-Response-Time` header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: `false`)
 * `SECURE_AUTH0`: Whether Auth0 JWT token security should be applied to secure routes (default: `false`)
+* `TABLE_ALERTS_LOCATIONS`: Listing of locations for user alerts
+* `TABLE_ALERTS_USERS`: Listing of users subscribed to alerts
 * `TABLE_FLOODGAUGE_REPORTS`: Postgres table name for flood-gauge reports
 * `TABLE_FEEDS_QLUE`: Postgres table name for Qlue feed
 * `TABLE_FEEDS_DETIK`: Postgres table name for Detik feed

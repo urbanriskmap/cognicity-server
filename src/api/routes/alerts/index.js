@@ -25,7 +25,7 @@ import validate from 'celebrate';
 export default ({config, db, logger}) => {
 	let api = Router(); // eslint-disable-line new-cap
 
-	// Get a list of all reports
+	// Get alert objects by user
 	api.get('/', cacheResponse('1 minute'),
 		validate({
 			query: {
@@ -46,6 +46,32 @@ export default ({config, db, logger}) => {
 				next(err);
 			})
 	);
+
+  // Create an alert objects for a user
+  api.post('/',
+    validate({
+      body: Joi.object().keys({
+          username: Joi.string().required(),
+          network: Joi.any().valid(config.SOCIAL_NETWORKS).required(),
+          language: Joi.string().valid(config.LANGUAGES).required(),
+          location: Joi.object().required().keys({
+            lat: Joi.number().min(-90).max(90).required(),
+            lng: Joi.number().min(-180).max(180).required(),
+          }),
+        }),
+    }),
+    (req, res, next) => alerts(config, db, logger)
+                          .create(req.body)
+      .then((data) => data ? res.status(200)
+      .json({created: true}) :
+      next(new Error('Failed to register alert')))
+      .catch((err) => {
+        /* istanbul ignore next */
+        logger.error(err);
+        /* istanbul ignore next */
+        next(err);
+      })
+  );
 
 	return api;
 };

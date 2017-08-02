@@ -4,6 +4,49 @@
  **/
  import Promise from 'bluebird';
 
+ const _upsertAlertUser = (config, db, logger, body) => new Promise((resolve, reject) => {
+   // First check if user exists
+   let query = `SELECT pkey FROM ${config.TABLE_ALERT_USERS}
+   WHERE username = $1 AND network = $2`;
+
+   // Params
+   let values = [ body.username, body.network, body.language ];
+
+   // Log
+   logger.debug(query, values);
+
+   // Execute
+   db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
+     .then((data) => {
+       if ( data && data.pkey !== null ){
+         resolve({userkey: data.pkey})
+       }
+       else {
+         let query = `INSERT INTO ${config.TABLE_ALERT_USERS}
+           (username, network, language, subscribed)
+           VALUES ($1, $2, $3, TRUE) RETURNING pkey;`
+
+         // Get params
+         let values = [ body.username, body.network, body.language ];
+
+         // log
+         logger.debug(query, values)
+
+         // execute
+         db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
+           .then((data) => {
+             resolve({userkey: data.pkey})
+           })
+           .catch((err) => {
+             reject(err);
+           })
+         }
+       })
+       .catch((err) => {
+         reject(err);
+       })
+     })
+
 /**
  * Methods to get current flood reports from database
  * @alias module:src/api/reports/model
@@ -43,41 +86,36 @@ export default (config, db, logger) => ({
 
   // Create an alert object
   create: (body) => new Promise ((resolve, reject) => {
-    // Setup query
-    let query = `INSERT INTO ${config.TABLE_ALERT_USERS}
-      (username, network, language, subscribed)
-      VALUES ($1, $2, $3, TRUE) RETURNING pkey;`
 
-    // Get params
-    let values = [ body.username, body.network, body.language ];
+      _upsertAlertUser(config, db, logger, body)
+        .then((data) => {
 
-    // log
-    logger.debug(query, values)
+          let userkey = data.userkey
 
-    // execute
-    db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
-      .then((data) => {
-        // Now register alert location against user
-        let query = `INSERT INTO ${config.TABLE_ALERT_LOCATIONS}
-        (userkey, the_geom) VALUES ($1, ST_SetSRID(ST_Point($2, $3),4326)) RETURNING pkey`;
+          // Now register alert location against user
+          let query = `INSERT INTO ${config.TABLE_ALERT_LOCATIONS}
+          (userkey, the_geom) VALUES ($1, ST_SetSRID(ST_Point($2, $3),4326)) RETURNING pkey`;
 
-        // params
-        let values = [ data.pkey, body.location.lng, body.location.lat ];
+          // params
+          let values = [ userkey, body.location.lng, body.location.lat ];
 
-        // log
-        logger.debug(query, values);
+          // log
+          logger.debug(query, values);
 
-        // execute
-        db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
-        .then((data) => resolve(data))
-        /* istanbul ignore next */
-        .catch((err) => {
+          // execute
+          db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
+          .then((data) => {
+            let location_key = data.pkey
+            resolve({userkey, location_key});
+          })
           /* istanbul ignore next */
+          .catch((err) => {
+            /* istanbul ignore next */
+            reject(err);
+          });
+        })
+        .catch((err) => {
           reject(err);
         });
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  }),
+    }),
 });

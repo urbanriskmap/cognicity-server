@@ -63,7 +63,7 @@ export default ({config, db, logger}) => {
     (req, res, next) => alerts(config, db, logger)
                           .create(req.body)
       .then((data) => data ? res.status(200)
-      .json({created: true}) :
+      .json({created: true, userkey:data.userkey, location_key:data.location_key}) :
       next(new Error('Failed to register alert')))
       .catch((err) => {
         /* istanbul ignore next */

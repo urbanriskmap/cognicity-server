@@ -1,8 +1,8 @@
 /**
- * CogniCity Server /alerts endpoint
- * @module src/api/alerts/index
- **/
- import {Router} from 'express';
+* CogniCity Server /alerts endpoint
+* @module src/api/alerts/index
+**/
+import {Router} from 'express';
 
 // Import our data model
 import alerts from './model';

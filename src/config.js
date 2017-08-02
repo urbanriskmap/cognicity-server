@@ -64,6 +64,7 @@ export default {
   SECURE_AUTH0: process.env.SECURE_AUTH0 === 'true' || false,
   SOCIAL_NETWORKS: (process.env.SOCIAL_NETWORKS || 'twitter,telegram,facebook').split(','),
   TABLE_ALERT_LOCATIONS: process.env.TABLE_ALERT_LOCATIONS || 'alerts.locations',
+  TABLE_ALERT_LOGS: process.env.TABLE_ALERT_LOGS || 'alerts.log',
   TABLE_ALERT_USERS: process.env.TABLE_ALERTS_USERS || 'alerts.users',
   TABLE_FLOODGAUGE_REPORTS: process.env.TABLE_FLOODGAUGE_REPORTS || 'floodgauge.reports',
   TABLE_FEEDS_QLUE: process.env.TABLE_FEEDS_QLUE || 'qlue.reports',

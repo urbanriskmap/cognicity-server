@@ -1,6 +1,6 @@
 /**
 * CogniCity Server /alerts endpoint
-* @module src/api/alerts/index
+* @module src/api/alerts/index.js
 **/
 import {Router} from 'express';
 
@@ -15,8 +15,8 @@ import Joi from 'joi';
 import validate from 'celebrate';
 
 /**
- * Methods to get current alert objects from database
- * @alias module:src/api/reports/index
+ * Methods to for alert objects
+ * @alias module:src/api/reports/index.js
  * @param {Object} config Server configuration
  * @param {Object} db PG Promise database instance
  * @param {Object} logger Configured Winston logger instance
@@ -47,13 +47,14 @@ export default ({config, db, logger}) => {
 			})
 	);
 
-  // Create an alert objects for a user
+  // Create an alert object for a user
   api.post('/',
     validate({
       body: Joi.object().keys({
           username: Joi.string().required(),
           network: Joi.any().valid(config.SOCIAL_NETWORKS).required(),
           language: Joi.string().valid(config.LANGUAGES).required(),
+					subscribed: Joi.string().valid(['true','false']).required(),
           location: Joi.object().required().keys({
             lat: Joi.number().min(-90).max(90).required(),
             lng: Joi.number().min(-180).max(180).required(),
@@ -72,6 +73,29 @@ export default ({config, db, logger}) => {
         next(err);
       })
   );
+
+	// PUT for LOG/UPDATE  AND UNSUBSCRIBE
+
+	api.put('/',
+		validate({
+			body: Joi.object().keys({
+				userkey: Joi.number().min(0).required(),
+				location_key: Joi.number().min(0).required(),
+				subscribed: Joi.string().valid(['true', 'false']).required(),
+				log_event: Joi.any().required(),
+			}),
+		}),
+		(req, res, next) => alerts(config, db, logger).update(req.body)
+		.then((data) => data ? res.status(200)
+		.json({updated: true, userkey:data.userkey, location_key:data.location_key, subscribed:data.subscribed}) :
+		next(new Error('Failed to register alert')))
+		.catch((err) => {
+			/* istanbul ignore next */
+			logger.error(err);
+			/* istanbul ignore next */
+			next(err);
+		})
+	);
 
 	return api;
 };

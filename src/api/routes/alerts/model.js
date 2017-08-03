@@ -60,8 +60,8 @@ export default (config, db, logger) => ({
 	// Return specific report by id
 	byUser: (username, network) => new Promise((resolve, reject) => {
 		// Setup query
-    let query = `SELECT u.username, u.network, u.subscribed, u.language, locations.* FROM
-      ${config.TABLE_ALERT_USERS} u, (SELECT a.pkey as location_key, a.userkey, a.the_geom,
+    let query = `SELECT u.username, u.network, u.language, locations.* FROM
+      ${config.TABLE_ALERT_USERS} u, (SELECT a.pkey as location_key, a.userkey, a.subscribed, a.the_geom,
         array_to_json(array_agg(b.*)) as alert_log FROM
           ${config.TABLE_ALERT_LOCATIONS} a
           LEFT JOIN ${config.TABLE_ALERT_LOGS} b ON a.pkey = b.location_key
@@ -87,26 +87,29 @@ export default (config, db, logger) => ({
   // Create an alert object
   create: (body) => new Promise ((resolve, reject) => {
 
+      // upsert user
       _upsertAlertUser(config, db, logger, body)
         .then((data) => {
 
+          // store user key
           let userkey = data.userkey
 
           // Now register alert location against user
           let query = `INSERT INTO ${config.TABLE_ALERT_LOCATIONS}
-          (userkey, the_geom) VALUES ($1, ST_SetSRID(ST_Point($2, $3),4326)) RETURNING pkey`;
+          (userkey, subscribed, the_geom, alert_log) VALUES ($1, $2, ST_SetSRID(ST_Point($3, $4),4326),$5::jsonb) RETURNING pkey`;
 
           // params
-          let values = [ userkey, body.location.lng, body.location.lat ];
+          let now = new Date().toISOString(); // Set a time in the log
+          let values = [ userkey, body.subscribed, body.location.lng, body.location.lat, JSON.stringify([{event:"created", timestamp:now}])];
 
-          // log
+          // server log query
           logger.debug(query, values);
 
           // execute
           db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
-          .then((data) => {
-            let location_key = data.pkey
-            resolve({userkey, location_key});
+            .then((data) => {
+              let location_key = data.pkey;
+              resolve({userkey, location_key});
           })
           /* istanbul ignore next */
           .catch((err) => {
@@ -114,8 +117,33 @@ export default (config, db, logger) => ({
             reject(err);
           });
         })
+        /* istanbul ignore next */
         .catch((err) => {
+          /* istanbul ignore next */
           reject(err);
         });
+    }),
+
+    // Update an alert object
+
+    update: (body) => new Promise ((resolve, reject) => {
+
+      // query
+      let query = `UPDATE  ${config.TABLE_ALERT_LOCATIONS} SET (subscribed, alert_log) = (SELECT $3::bool, alert_log || $4::jsonb FROM ${config.TABLE_ALERT_LOCATIONS} WHERE userkey = $1 AND pkey = $2) WHERE userkey = $1 AND pkey = $2 RETURNING pkey as location_key, userkey, subscribed`;
+
+      // params
+      let values = [ body.userkey, body.location_key, body.subscribed, JSON.stringify(body.log_event)];
+
+      // log
+      logger.debug(query, values);
+
+      // execute
+      db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        })
     }),
 });

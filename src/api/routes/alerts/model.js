@@ -60,15 +60,8 @@ export default (config, db, logger) => ({
 	// Return specific report by id
 	byUser: (username, network) => new Promise((resolve, reject) => {
 		// Setup query
-    let query = `SELECT u.username, u.network, u.language, locations.* FROM
-      ${config.TABLE_ALERT_USERS} u, (SELECT a.pkey as location_key, a.userkey, a.subscribed, a.the_geom,
-        array_to_json(array_agg(b.*)) as alert_log FROM
-          ${config.TABLE_ALERT_LOCATIONS} a
-          LEFT JOIN ${config.TABLE_ALERT_LOGS} b ON a.pkey = b.location_key
-          GROUP BY a.pkey) as locations
-        WHERE u.pkey = locations.userkey
-        AND u.username = $1
-        AND u.network = $2`;
+
+    let query = `SELECT l.pkey as location_key, l.userkey, l.subscribed, u.username, u.network, u.language, l.alert_log, l.the_geom FROM ${config.TABLE_ALERT_USERS} u, ${config.TABLE_ALERT_LOCATIONS} l WHERE u.pkey = l.userkey AND u.username = $1 AND u.network = $2`;
 
 		// Setup values
 		let values = [username, network];

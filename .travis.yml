@@ -1,17 +1,27 @@
+dist: precise
 language: node_js
 node_js:
    - "6.10.0"
-sudo: false
+sudo: true
+
+addons:
+  postgresql: "9.5"
+#  apt:
+#    packages:
+#      - postgresql-9.5-postgis-2.3
 
 branches:
   only:
     - master
     - dev
-
-notifications:
+    - server-object-refactor
+    - report-archive
 
 before_install:
-  - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
+  - if [[ `npm -v` != 3* ]]; then ~/.nvm/versions/node/v4.1.1/bin/npm install -g npm@3.10.10; fi
+  - export DATABASE=cognicity_server_testing ; git clone -b master https://github.com/urbanriskmap/cognicity-schema.git urbanriskmap/cognicity-schema && cd urbanriskmap/cognicity-schema && bash build/run.sh && cd -
 
 install:
   - npm install
+
+after_success: npm run coverage

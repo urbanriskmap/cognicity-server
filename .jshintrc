@@ -1,0 +1,6 @@
+{
+  "ignoreDelimiters": [
+    { "start": "start-non-standard", "end": "end-non-standard" }
+  ],
+  "esversion":6
+}

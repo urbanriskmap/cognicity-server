@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+
+
+
+
+
+
+
+    <h3>cognicity-server 3.0.1</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section>
+        <article><h2>cognicity-server</h2><p>API Server for CogniCity</p>
+<p><a href="https://travis-ci.org/urbanriskmap/cognicity-server"><img src="https://travis-ci.org/urbanriskmap/cognicity-server.svg?branch=master" alt="Build Status"></a></p>
+<p><a href="https://coveralls.io/github/urbanriskmap/cognicity-server?branch=server-object-refactor"><img src="https://coveralls.io/repos/github/urbanriskmap/cognicity-server/badge.svg?branch=server-object-refactor" alt="Coverage Status"></a></p>
+<p>DOI for current stable release <a href="https://github.com/urbanriskmap/cognicity-server/releases/tag/v3.0.0">v3.0.0</a></p>
+<p><a href="https://zenodo.org/badge/latestdoi/73803254"><img src="https://zenodo.org/badge/73803254.svg" alt="DOI"></a></p>
+<h3>Summary</h3><p>This is the NodeJS server which runs the CogniCity Data API used by Urban Risk Map instances, such as <a href="https://petabencana.id">PetaBencana.id</a> site.  </p>
+<h3>Run</h3><p>ES6 Support is provided by Babel.</p>
+<ol>
+<li><p>Install requirements from the provided <code>package.json</code> by doing <code>npm install</code>.</p>
+</li>
+<li><p>Copy the <code>sample.env</code> file to a local <code>.env</code> and fill-in the required parameters. This local file will be ignored by Git and so should be secret safe. Further details on configuration are described below.</p>
+</li>
+<li><p>To run a local development instance of the server do <code>npm run dev</code></p>
+</li>
+</ol>
+<h3>Configuration</h3><p>Server configuration parameters are stored in a configuration file which is parsed by index.js on startup. Local configuration parameters are imported from the <code>.env</code> into <code>src/config.js</code>.  See <code>config.js</code> for full details example configuration. Any variable not defined in <code>.env</code> will pickup the default value below (also see <code>config.js</code>)—note that local environment variables will override both <code>.env</code> and <code>config.js</code>.  The following environment variables are currently supported by the configurtion:</p>
+<ul>
+<li><code>APP_NAME</code>: Name of the application (default: <code>cognicity-server</code>)</li>
+<li><code>API_FEEDS_QLUE_CITIES</code>: Names of cities used by the Qlue data feed</li>
+<li><code>API_FEEDS_QLUE_DISASTER_TYPES</code>: Names of disaster types used by the Qlue data feed</li>
+<li><code>API_FEEDS_DETIK_DISASTER_TYPES</code>: Names of disaster types used by the Detik data feed</li>
+<li><code>API_REPORTS_TIME_WINDOW</code>: Time window for report data queries (default 1 hour)</li>
+<li><code>API_REPORTS_TIME_WINDOW_MAX</code>: Maximum limit for time window (default 1 week)</li>
+<li><code>API_REPORTS_LIMIT</code>: Total maximum number of reports to return in a single request</li>
+<li><code>API_FLOODGAUGE_REPORTS_TIME_WINDOW</code>: Time window for flood data (normally 12 hours)</li>
+<li><code>API_FLOODGAUGE_REPORTS_TIME_WINDOW</code>: Total maximum number of flood gauge records to return in a single request</li>
+<li><code>AUTH0_AUDIENCE</code>: Data API to be authenticated</li>
+<li><code>AUTH0_CLIENT_ID</code>: Auth0 client ID (NOTE: this is mandatory and no default value)</li>
+<li><code>AUTH0_ISSUER</code>: Web address of Auth0 instance</li>
+<li><code>AWS_REGION</code>: Region for AWS Infrastructure</li>
+<li><code>AWS_S3_ACCESS_KEY_ID</code>: Access key ID for AWS S3 bucket</li>
+<li><code>AWS_S3_SECRET_ACCESS_KEY</code>: Access key secret for AWS S3 bucket</li>
+<li><code>AWS_S3_SIGNATURE_VERSION</code>: Version of AWS S3 signature to use</li>
+<li><code>AUTH0_SECRET</code>: Auth0 secret (NOTE: this is mandatory and no default value)</li>
+<li><code>BODY_LIMIT</code>: Maximum body size POST/PUT/PATCH (default: <code>100kb</code>)</li>
+<li><code>CACHE</code>: Should caching be enabled? (default: <code>false</code>)</li>
+<li><code>CACHE_DURATION_CARDS</code>: How long should cards be cached for? (default: '1 minute')</li>
+<li><code>CACHE_DURATION_FLOODS</code>: How long should floods be cached for? (default: '1 hour')</li>
+<li><code>CACHE_DURATION_FLOODS_STATES</code>: How long should flood states be cached for? (default: '1 hour')</li>
+<li><code>CACHE_DURATION_INFRASTRUCTURE</code>: How long should infrastructure be cached for? (default: '1 hour')</li>
+<li><code>COMPRESS</code>: Should the server gzip compress results? Only works if CACHE is disabled. (default: <code>false</code>)</li>
+<li><code>CORS</code>: Should Cross Object Resource Sharing (CORS) be enabled (default: <code>false</code>)</li>
+<li><code>CORS_HEADERS</code>: CORS headers to use (default: <code>[Link]</code>)</li>
+<li><code>DISASTER_TYPES</code>: Disaster type keywords for report classification (default: <code>flood,prep</code>)</li>
+<li><code>FORMAT_DEFAULT</code>: Which format to return results in by default (default: <code>json</code>)</li>
+<li><code>FORMATS</code>: Formats supported by the system (as comma separated list) (default: <code>json,xml</code>)</li>
+<li><code>GEO_FORMAT_DEFAULT</code>: Which format to return geographic results in by default (default: <code>topojson</code>)</li>
+<li><code>GEO_FORMATS</code>: Geographic formats supported by the system (as comma separated list) (default: <code>topojson,geojson,cap</code>)</li>
+<li><code>GEO_PRECISION</code>: Precision to use when rounding geographic coordinates (default: <code>10</code>)</li>
+<li><code>IMAGES_BUCKET</code>: AWS S3 bucket for image uploads (default: <code>testing-riskmap-image-uploads</code>)</li>
+<li><code>IMAGES_HOST</code>: Endpoint for image hosting (default: <code>images.petabencana.id</code>),</li>
+<li><code>INFRASTRUCTURE_TYPES</code>: Infrastructure types supported (as comma separated list) (default: <code>floodgates,pumps,waterways</code>)</li>
+<li><code>LANGUAGES</code>: Supported languages</li>
+<li><code>LOG_CONSOLE</code>: In development mode we log to the console by default, in other environments this must be enabled if required by setting this parameter to <code>true</code> (default: <code>false</code>)</li>
+<li><code>LOG_DIR</code>: Which directory should logs be written to.  If blank, not supplied or the directory is not writable by the application this will default to the current directory</li>
+<li><code>LOG_JSON</code>: Should json format be used for logging (default: <code>false</code>)</li>
+<li><code>LOG_LEVEL</code>: What level to log at. Levels are: <code>silly</code>, <code>debug</code>, <code>verbose</code>, <code>info</code>, <code>warn</code>, <code>error</code>. <code>debug</code> level is recommended for development.  (default: <code>error</code>)</li>
+<li><code>LOG_MAX_FILE_SIZE</code>: Maximum size of log file in bytes before rotating (default: <code>1024 * 1024 * 100</code> i.e. <code>100mb</code>)</li>
+<li><code>LOG_MAX_FILES</code>: Maximum number of log files before rotation (default: <code>10</code>)</li>
+<li><code>NODE_ENV</code>: Which environment are we in.  Environments are: development, test, staging, production (default: <code>development</code>)</li>
+<li><code>PGHOST</code>: Postgres DB hostname (default: <code>127.0.0.1</code>)</li>
+<li><code>PGDATABASE</code>: Postgres DB database name (default: <code>cognicity</code>)</li>
+<li><code>PGPASSWORD</code>: Postgres DB password (default: <code>p@ssw0rd</code>)</li>
+<li><code>PGPORT</code>: Postgres DB port (default: <code>5432</code>)</li>
+<li><code>PGSSL</code>: SSL enabled on Postgres DB connection? (default: <code>false</code>)</li>
+<li><code>PGTIMEOUT</code>: Max duration on DB calls before timeout (in milliseconds) (default: <code>5000</code> i.e. 5 seconds)</li>
+<li><code>PGUSER</code>: Postgres DB username (default: <code>postgres</code>)</li>
+<li><code>PORT</code>: Which port should the application run on (default: <code>8001</code>)</li>
+<li><code>REGION_CODES</code>: Which region codes are supported (as comma separated list) (default: <code>jbd,bdg,sby</code>)</li>
+<li><code>REPORT_TYPES</code>: Classifiers for report types (default: <code>drain,desilting,canalrepair,treeclearing,flood</code>)</li>
+<li><code>RESPONSE_TIME</code>: Should the server return an <code>X-Response-Time</code> header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: <code>false</code>)</li>
+<li><code>SECURE_AUTH0</code>: Whether Auth0 JWT token security should be applied to secure routes (default: <code>false</code>)</li>
+<li><code>TABLE_FLOODGAUGE_REPORTS</code>: Postgres table name for flood-gauge reports</li>
+<li><code>TABLE_FEEDS_QLUE</code>: Postgres table name for Qlue feed</li>
+<li><code>TABLE_FEEDS_DETIK</code>: Postgres table name for Detik feed</li>
+<li><code>TABLE_GRASP_CARDS</code>: Postgres table name for Grasp Cards</li>
+<li><code>TABLE_GRASP_LOG</code>: Postgres table name for Grasp activity</li>
+<li><code>TABLE_GRASP_REPORTS</code>: Postgres table name for Grasp reports</li>
+<li><code>TABLE_INSTANCE_REGIONS</code>: Postgres table for operating regions</li>
+<li><code>TABLE_LOCAL_AREAS</code>: Postgres table for local areas data for each operating region</li>
+<li><code>TABLE_REM_STATUS</code>: Postgres table for current flood states from REM</li>
+<li><code>TABLE_REM_STATUS_LOG</code>: Postgres table for REM log</li>
+<li><code>TABLE_REPORTS</code>: Postgres table for reports</li>
+</ul>
+<p>A few points to note on config:</p>
+<ul>
+<li>AWS Beanstalk: If you're deploying to <a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html">AWS Elastic Beanstalk</a> you may need to configure environment variables for each of the above under Configuration -&gt; Software configuration.</li>
+</ul>
+<h3>Building</h3><p>Run <code>npm run -s build</code> to build.</p>
+<h3>Testing</h3><p>Testing is run by <a href="https://travis-ci.org/urbanriskmap/cognicity-server">Travis</a>. ESLint runs to check syntax. Integration tests, formed by chaining unit tests, are used to check the API.  Coverage is provided by Istanbul and <a href="https://coveralls.io/github/urbanriskmap/cognicity-server">Coveralls</a>. See src/test/ for scripts. Beware that integration tests may pollute tables (e.g. user tables in feeds), it is not recommended to run tests against prod databases with live data. The default database (used for testing) is cognicity. Travis-ci creates a new schema instance for testing using https://github.com/urbanriskmap/cognicity-schema, see .travis.yml for more details.</p>
+<p>To run tests locally a new database &quot;cognicity_server_testing&quot; is required on localhost.</p>
+<p>Code follows the <a href="https://google.github.io/styleguide/jsguide.html">Google JavaScript style</a>.ESLint is run with tests to enfoce style.</p>
+<h3>Issue Tracking</h3><p>Issues are tracked using <a href="https://github.com/urbanriskmap/cognicity-server/issues">GitHub</a></p>
+<h3>Release</h3><p>The release procedure is as follows:</p>
+<ul>
+<li>Update the CHANGELOG.md file with the newly released version, date, and a high-level overview of changes. Commit the change.</li>
+<li>Create a tag in git from the current head of master. The tag version should be the same as the version specified in the package.json file - this is the release version.</li>
+<li>Update the version in the package.json file and commit the change.</li>
+<li>Further development is now on the updated version number until the release process begins again.</li>
+</ul>
+<h3>API Notes</h3><p>Full API documentation at https://docs.petabencana.id. This documentation is stored in the <a href="https://github.com/urbanriskmap/petabencana-docs">petabencana-docs</a> repository.</p>
+<ul>
+<li>The dbgeo library expects timestamps from database to be in UTC (i.e. not a local timezone)</li>
+</ul>
+<h3>License</h3><p>See LICENSE.md</p></article>
+    </section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<header>
+
+        <h2>src/index.js</h2>
+
+
+</header>
+
+<article>
+    <div class="container-overview">
+
+
+            <div class="description">Run CogniCity Data Server</div>
+
+
+
+
+
+<dl class="details">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Urban Risk Lab, 2017</li>
+        </ul>
+    </dd>
+
+
+
+
+
+
+
+
+
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line1">line 1</a>
+    </li></ul></dd>
+
+
+
+
+
+
+
+</dl>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="db%250ADatabase%2520initializermodule_.html">db
+Database initializer</a></li><li><a href="server%250ACore%2520server%2520modulemodule_.html">server
+Core server module</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jun 29 2017 15:29:31 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

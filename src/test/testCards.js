@@ -154,7 +154,7 @@ export default function(app, createdAt) {
                test.httpAgent(app)
                  .patch('/cards/'+cardId)
                  .send({
-                     'image_url': 'dummy image url',
+                     'image_url': 'image',
                  })
                  .expect(200)
                  .expect('Content-Type', /json/)

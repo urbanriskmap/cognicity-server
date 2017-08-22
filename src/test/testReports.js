@@ -110,7 +110,7 @@ export default function(app, reportid, createdAt) {
                 test.value(res.body.result.features[0].properties.status)
                   .is('confirmed');
                 test.value(res.body.result.features[0].properties.image_url)
-                  .is('https://images.petabencana.id/dummy_image_url');
+                  .is('https://images.petabencana.id/image');
                 test.value(res.body.result.features[0].properties.disaster_type)
                   .is('flood');
                 test.value(res.body.result.features[0].properties.report_data

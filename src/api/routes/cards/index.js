@@ -207,8 +207,10 @@ res.status(404).json({statusCode: 404, cardId: req.params.cardId,
 } else {
               // Try and submit the report and update the card
               cards(config, db, logger).updateReport(card,
-                {image_url: 'https://'+config.IMAGES_HOST+'/'
-                            +req.params.cardId+'.jpg'})
+                { //image_url: 'https://'+config.IMAGES_HOST+'/'
+                  //+req.params.cardId+'.jpg'}
+                  //TODO decide on where url is created, here or DB
+                image_url: req.params.cardId + '.jpg'})
               .then((data) => {
                 clearCache();
                 logger.debug( 's3 signed request: ' + returnData.signedRequest);

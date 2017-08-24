@@ -118,6 +118,8 @@ in the  jsdoc/ folder. To build documentation do:
 npm run jsdoc
 ```
 
+Docs are hosted at https://urbanriskmap.github.io/cognicity-server/jsdoc/
+
 ### Package management
 Before deployment:
 * Use NVM to switch to node and NPM versions specified in package.json for production

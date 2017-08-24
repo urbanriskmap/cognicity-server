@@ -196,14 +196,15 @@ export default ({config, db, logger}) => {
           };
           // Call AWS S3 library
           s3.getSignedUrl('putObject', s3params, (err, data) => {
+            let returnData;
             if (err) {
               /* istanbul ignore next */
               logger.error('could not get signed url from S3');
               /* istanbul ignore next */
               logger.error(err);
-              let returnData = {statusCode: 500, error: err};
+              returnData = {statusCode: 500, error: err};
             } else {
-              let returnData = {
+              returnData = {
                 signedRequest: data,
                 url: 'https://s3.'+config.AWS_REGION+'.amazonaws.com/'
                       + config.IMAGES_BUCKET+'/'+ s3params.Key,
@@ -215,25 +216,6 @@ export default ({config, db, logger}) => {
               res.end();
             }
           });
-
-          // Try and submit the report and update the card
-        /*  cards(config, db, logger).updateReport(card,
-            { // image_url: 'https://'+config.IMAGES_HOST+'/'
-              // +req.params.cardId+'.jpg'}
-              // TODO decide on where url is created, here or DB
-            image_url: req.params.cardId + '.jpg'})
-          .then((data) => {
-            clearCache();
-            logger.debug( 's3 signed request: ' + returnData.signedRequest);
-            res.write(JSON.stringify(returnData));
-            res.end();
-          })
-          .catch((err) => {
-            /* istanbul ignore next */
-            //logger.error(err);
-            /* istanbul ignore next */
-            //next(err);
-        //});
         }
       });
   });
@@ -252,22 +234,28 @@ export default ({config, db, logger}) => {
         .then((card) => {
           // If the card does not exist then return an error message
           if (!card) {
-res.status(404).json({statusCode: 404, cardId: req.params.cardId,
+            res.status(404).json({statusCode: 404, cardId: req.params.cardId,
             message: `No card exists with id '${req.params.cardId}'`});
           } else { // We have a card
-            // Try and submit the report and update the card
-            cards(config, db, logger).updateReport(card, req.body)
-              .then((data) => {
-                clearCache();
-                res.status(200).json({statusCode: 200,
-                  cardId: req.params.cardId, updated: true});
-              })
-              .catch((err) => {
-                /* istanbul ignore next */
-                logger.error(err);
-                /* istanbul ignore next */
-                next(err);
-              });
+            // Verify that we can add an image to card report
+            if ( card.received === false || card.report.image_url !== null ) {
+              res.status(403).json({statusCode: 403,
+                error: 'Card report not received or image exists already'});
+            } else {
+              // Try and submit the report and update the card
+              cards(config, db, logger).updateReport(card, req.body)
+                .then((data) => {
+                  clearCache();
+                  res.status(200).json({statusCode: 200,
+                    cardId: req.params.cardId, updated: true});
+                })
+                .catch((err) => {
+                  /* istanbul ignore next */
+                  logger.error(err);
+                  /* istanbul ignore next */
+                  next(err);
+                });
+            }
           }
         });
       } catch (err) {
@@ -278,6 +266,5 @@ res.status(404).json({statusCode: 404, cardId: req.params.cardId,
       }
     }
   );
-
   return api;
 };

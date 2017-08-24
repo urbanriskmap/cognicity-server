@@ -86,6 +86,24 @@ export default function(app, createdAt) {
             });
          });
 
+     // Update a card
+     it('Try update card image before report submitted', function(done) {
+         test.httpAgent(app)
+           .patch('/cards/'+cardId)
+           .send({
+               'image_url': 'image',
+           })
+           .expect(403)
+           .expect('Content-Type', /json/)
+           .end(function(err, res) {
+             if (err) {
+               test.fail(err.message + ' ' + JSON.stringify(res));
+             } else {
+               done();
+             }
+          });
+       });
+
        // Request a card, submit and get resulting report
        it('Put card data', function(done) {
            test.httpAgent(app)
@@ -128,7 +146,7 @@ export default function(app, createdAt) {
               });
            }).timeout(150000);
 
-         // Request a card, submit and get resulting report
+         // Request a card and get resulting report
          it('Get card data', function(done) {
              test.httpAgent(app)
                .get('/cards/'+cardId)
@@ -166,5 +184,23 @@ export default function(app, createdAt) {
                    }
                 });
              });
+
+             // Update a card
+             it('Try update card image after image submitted', function(done) {
+                 test.httpAgent(app)
+                   .patch('/cards/'+cardId)
+                   .send({
+                       'image_url': 'image',
+                   })
+                   .expect(403)
+                   .expect('Content-Type', /json/)
+                   .end(function(err, res) {
+                     if (err) {
+                       test.fail(err.message + ' ' + JSON.stringify(res));
+                     } else {
+                       done();
+                     }
+                  });
+               });
    });
 }

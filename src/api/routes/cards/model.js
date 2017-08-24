@@ -119,7 +119,7 @@ export default (config, db, logger) => ({
         query: `INSERT INTO ${config.TABLE_GRASP_LOG}
               (card_id, event_type)
               VALUES ($1, $2)`,
-        values: [card.card_id, 'REPORT UPDATES'],
+        values: [card.card_id, 'REPORT UPDATE (PATCH)'],
       },
     ];
 

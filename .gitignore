@@ -12,3 +12,4 @@
 
 *.log
 package-lock.json
+jsdoc/

@@ -180,51 +180,62 @@ export default ({config, db, logger}) => {
     params: {cardId: Joi.string().min(7).max(14).required()},
   }),
   (req, res, next) => {
-    let s3params = {
-      Bucket: config.IMAGES_BUCKET,
-      Key: 'originals/' + req.params.cardId + '.jpg',
-      ContentType: req.query.file_type,
-    };
-    s3.getSignedUrl('putObject', s3params, (err, data) => {
-      if (err) {
-        /* istanbul ignore next */
-        logger.error('could not get signed url from S3');
-        /* istanbul ignore next */
-        logger.error(err);
-      } else {
-        let returnData = {
-          signedRequest: data,
-          url: 'https://s3.'+config.AWS_REGION+'.amazonaws.com/'
-                + config.IMAGES_BUCKET+'/'+ s3params.Key,
-        };
-        // write the url into the db under image_url for this card
-
-        cards(config, db, logger).byCardId(req.params.cardId)
-          .then((card) => {
-            if (!card) {
-res.status(404).json({statusCode: 404, cardId: req.params.cardId,
-              message: `No card exists with id '${req.params.cardId}'`});
-} else {
-              // Try and submit the report and update the card
-              cards(config, db, logger).updateReport(card,
-                {image_url: 'https://'+config.IMAGES_HOST+'/'
-                            +req.params.cardId+'.jpg'})
-              .then((data) => {
-                clearCache();
-                logger.debug( 's3 signed request: ' + returnData.signedRequest);
-                res.write(JSON.stringify(returnData));
-                res.end();
-              })
-              .catch((err) => {
-                /* istanbul ignore next */
-                logger.error(err);
-                /* istanbul ignore next */
-                next(err);
-              });
+    // first, check card exists
+    cards(config, db, logger).byCardId(req.params.cardId)
+      .then((card) => {
+        if (!card) {
+          // Card was not found, return error
+          res.status(404).json({statusCode: 404, cardId: req.params.cardId,
+          message: `No card exists with id '${req.params.cardId}'`});
+        } else {
+          // Provide client with signed url for this card
+          let s3params = {
+            Bucket: config.IMAGES_BUCKET,
+            Key: 'originals/' + req.params.cardId + '.jpg',
+            ContentType: req.query.file_type,
+          };
+          // Call AWS S3 library
+          s3.getSignedUrl('putObject', s3params, (err, data) => {
+            if (err) {
+              /* istanbul ignore next */
+              logger.error('could not get signed url from S3');
+              /* istanbul ignore next */
+              logger.error(err);
+              let returnData = {statusCode: 500, error: err};
+            } else {
+              let returnData = {
+                signedRequest: data,
+                url: 'https://s3.'+config.AWS_REGION+'.amazonaws.com/'
+                      + config.IMAGES_BUCKET+'/'+ s3params.Key,
+              };
+              // Return signed URL
+              clearCache();
+              logger.debug( 's3 signed request: ' + returnData.signedRequest);
+              res.write(JSON.stringify(returnData));
+              res.end();
             }
           });
-      }
-    });
+
+          // Try and submit the report and update the card
+        /*  cards(config, db, logger).updateReport(card,
+            { // image_url: 'https://'+config.IMAGES_HOST+'/'
+              // +req.params.cardId+'.jpg'}
+              // TODO decide on where url is created, here or DB
+            image_url: req.params.cardId + '.jpg'})
+          .then((data) => {
+            clearCache();
+            logger.debug( 's3 signed request: ' + returnData.signedRequest);
+            res.write(JSON.stringify(returnData));
+            res.end();
+          })
+          .catch((err) => {
+            /* istanbul ignore next */
+            //logger.error(err);
+            /* istanbul ignore next */
+            //next(err);
+        //});
+        }
+      });
   });
 
   // Update a card report with new details including the image URL

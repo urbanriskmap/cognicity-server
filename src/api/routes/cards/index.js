@@ -177,6 +177,9 @@ export default ({config, db, logger}) => {
 
   // Gives an s3 signed url for the frontend to upload an image to
   api.get('/:cardId/images', validate({
+    headers: Joi.object({
+      'content-type': Joi.string().valid(config.IMAGE_MIME_TYPES).required(),
+    }).options({allowUnknown: true}),
     params: {cardId: Joi.string().min(7).max(14).required()},
   }),
   (req, res, next) => {
@@ -191,7 +194,8 @@ export default ({config, db, logger}) => {
           // Provide client with signed url for this card
           let s3params = {
             Bucket: config.IMAGES_BUCKET,
-            Key: 'originals/' + req.params.cardId + '.jpg',
+            Key: 'originals/' + req.params.cardId + '.'
+              + req.headers['content-type'].split('/')[1],
             ContentType: req.query.file_type,
           };
           // Call AWS S3 library

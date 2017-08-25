@@ -136,7 +136,37 @@ export default function(app, createdAt) {
          it('Get card image link', (done) => {
              test.httpAgent(app)
                .get('/cards/'+cardId+'/images')
+               .set('content-type', 'image/jpeg')
                .expect(200)
+               .end(function(err, res) {
+                 if (err) {
+                   test.fail(err.message + ' ' + JSON.stringify(res));
+                 } else {
+                   done();
+                 }
+              });
+           }).timeout(150000);
+
+         // Get signed URL for card image
+         it('Catch request card image link without content type', (done) => {
+             test.httpAgent(app)
+               .get('/cards/'+cardId+'/images')
+               .expect(400)
+               .end(function(err, res) {
+                 if (err) {
+                   test.fail(err.message + ' ' + JSON.stringify(res));
+                 } else {
+                   done();
+                 }
+              });
+           }).timeout(150000);
+
+         // Get signed URL for card image
+         it('Catch request card image link with non image type', (done) => {
+             test.httpAgent(app)
+               .get('/cards/'+cardId+'/images')
+               .set('content-type', 'audio/mpeg')
+               .expect(400)
                .end(function(err, res) {
                  if (err) {
                    test.fail(err.message + ' ' + JSON.stringify(res));

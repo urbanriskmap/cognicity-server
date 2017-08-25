@@ -15,3 +15,8 @@ API Server for CogniCity
 * Added integration tests on Travis, including against cognicity-schema
 * Extended data format of cards data object to collect different types of data
 * Merged changes from Chennai deployment, for better deployment in new cities
+
+### v3.0.2
+* Updated to use Node v8.1.4 with npm 5.0.3
+* Pushed image url assignment to client
+* Updated cards/ patch endpoint to stop potential overwriting of image url

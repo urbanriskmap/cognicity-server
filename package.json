@@ -4,7 +4,7 @@
   "description": "Data Server for CogniCity",
   "main": "dist",
   "engines": {
-    "node": ">=6.9.1"
+    "node": ">=8.1.4"
   },
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",

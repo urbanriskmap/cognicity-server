@@ -18,5 +18,5 @@ API Server for CogniCity
 
 ### v3.0.2
 * Updated to use Node v8.1.4 with npm 5.0.3
-* Pushed image url assignment to client
+* Pushed image url assignment to server
 * Updated cards/ patch endpoint to stop potential overwriting of image url

@@ -185,6 +185,29 @@ export default function(app, createdAt) {
                 });
              });
 
+             // Request a card and get resulting report with new image
+             it('Get card data with new image', function(done) {
+                 test.httpAgent(app)
+                   .get('/cards/'+cardId)
+                   .expect(200)
+                   .expect('Content-Type', /json/)
+                   .end(function(err, res) {
+                     if (err) {
+                       test.fail(err.message + ' ' + JSON.stringify(res));
+                     } else {
+                       test.value(res.body.result.card_id).is(cardId);
+                       test.value(res.body.result.username).is('testuser');
+                       test.value(res.body.result.network).is('test network');
+                       test.value(res.body.result.language).is('en');
+                       test.value(res.body.result.report.text)
+                        .is('integration testing');
+                       test.value(res.body.result.report.image_url)
+                        .is('https://images.petabencana.id/image.jpg');
+                       done();
+                     }
+                  });
+               });
+
              // Update a card
              it('Try update card image after image submitted', function(done) {
                  test.httpAgent(app)

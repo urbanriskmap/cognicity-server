@@ -243,6 +243,7 @@ export default ({config, db, logger}) => {
                 error: 'Card report not received or image exists already'});
             } else {
               // Try and submit the report and update the card
+              req.body.image_url = 'https://' + config.IMAGES_HOST + '/' + req.body.image_url + '.jpg';
               cards(config, db, logger).updateReport(card, req.body)
                 .then((data) => {
                   clearCache();

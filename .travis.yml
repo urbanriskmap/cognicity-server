@@ -6,9 +6,9 @@ sudo: true
 
 addons:
   postgresql: "9.5"
-#  apt:
-#    packages:
-#      - postgresql-9.5-postgis-2.3
+  apt:
+    packages:
+      - postgresql-9.5-postgis-2.3
 
 branches:
   only:

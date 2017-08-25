@@ -16,3 +16,5 @@ API Server for CogniCity
 * Extended data format of cards data object to collect different types of data
 * Merged changes from Chennai deployment, for better deployment in new cities
 * Image upload changed to use AWS S3 signed links
+
+### v3.0.2

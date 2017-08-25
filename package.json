@@ -18,6 +18,8 @@
     "jsdoc": "./node_modules/jsdoc/jsdoc.js -r -R README.md -d ./jsdoc/ src/"
   },
   "nyc": {
+    "sourceMap": false,
+    "instrument": false,
     "exclude": [
       "**/test/**",
       "build",

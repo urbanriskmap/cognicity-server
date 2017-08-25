@@ -54,10 +54,10 @@ const formatGeo = (body, outputFormat) => new Promise((resolve, reject) => {
   if (Object.prototype.toString.call( body ) !== '[object Array]') {
     body = [body]; // Force to array
   }
-	dbgeo.parse(body, {outputFormat}, (err, formatted) => {
-		if (err) reject(err);
-		resolve(formatted);
-	});
+  dbgeo.parse(body, {outputFormat}, (err, formatted) => {
+    if (err) reject(err);
+    resolve(formatted);
+  });
 });
 
 // Handle a geo response, send back a correctly formatted json object with

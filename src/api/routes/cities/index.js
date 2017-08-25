@@ -23,27 +23,27 @@ import validate from 'celebrate';
  * @return {Object} api Express router object for reports route
  */
 export default ({config, db, logger}) => {
-	let api = Router(); // eslint-disable-line new-cap
+  let api = Router(); // eslint-disable-line new-cap
 
-	// Get a list of infrastructure by type for a given city
-	api.get('/', cacheResponse('1 day'),
-		validate({
-			query: {
-				format: Joi.any().valid(config.FORMATS)
-					.default(config.FORMAT_DEFAULT),
-				geoformat: Joi.any().valid(config.GEO_FORMATS)
-					.default(config.GEO_FORMAT_DEFAULT),
-			},
-		}),
-		(req, res, next) => cities(config, db, logger).all()
-			.then((data) => handleGeoResponse(data, req, res, next))
-			.catch((err) => {
-				/* istanbul ignore next */
-				logger.error(err);
-				/* istanbul ignore next */
-				next(err);
-			})
-	);
+  // Get a list of infrastructure by type for a given city
+  api.get('/', cacheResponse('1 day'),
+    validate({
+      query: {
+        format: Joi.any().valid(config.FORMATS)
+          .default(config.FORMAT_DEFAULT),
+        geoformat: Joi.any().valid(config.GEO_FORMATS)
+          .default(config.GEO_FORMAT_DEFAULT),
+      },
+    }),
+    (req, res, next) => cities(config, db, logger).all()
+      .then((data) => handleGeoResponse(data, req, res, next))
+      .catch((err) => {
+        /* istanbul ignore next */
+        logger.error(err);
+        /* istanbul ignore next */
+        next(err);
+      })
+  );
 
-	return api;
+  return api;
 };

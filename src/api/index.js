@@ -31,33 +31,33 @@ import reports from './routes/reports';
 * @return {Object} api Express router object for API routes
 **/
 export default ({config, db, logger}) => {
-	let api = Router(); // eslint-disable-line new-cap
+  let api = Router(); // eslint-disable-line new-cap
 
-	// Return the API version
-	api.get('/', (req, res) => {
-		res.status(200).json({version});
-	});
+  // Return the API version
+  api.get('/', (req, res) => {
+    res.status(200).json({version});
+  });
 
-	// Mount the various endpoints
-	// api.use('/areas', cards({ config, db, logger }));// TODO: local_areas
-	api.use('/cards', cards({config, db, logger}));
-	api.use('/cities', cities({config, db, logger}));
-	api.use('/feeds', feeds({config, db, logger}));
-	api.use('/floodgauges', floodgauges({config, db, logger}));
-	api.use('/floods', floods({config, db, logger}));
-	api.use('/infrastructure', infrastructure({config, db, logger}));
-	api.use('/reports', reports({config, db, logger}));
+  // Mount the various endpoints
+  // api.use('/areas', cards({ config, db, logger }));// TODO: local_areas
+  api.use('/cards', cards({config, db, logger}));
+  api.use('/cities', cities({config, db, logger}));
+  api.use('/feeds', feeds({config, db, logger}));
+  api.use('/floodgauges', floodgauges({config, db, logger}));
+  api.use('/floods', floods({config, db, logger}));
+  api.use('/infrastructure', infrastructure({config, db, logger}));
+  api.use('/reports', reports({config, db, logger}));
 
-	// Handle validation errors (wording can be overridden using err.isJoi)
-	api.use(validate.errors());
+  // Handle validation errors (wording can be overridden using err.isJoi)
+  api.use(validate.errors());
 
-	// Handle not found errors
-	api.use((req, res) => {
-		res.status(404).json({message: 'URL not found', url: req.url});
-	});
+  // Handle not found errors
+  api.use((req, res) => {
+    res.status(404).json({message: 'URL not found', url: req.url});
+  });
 
-	// Handle errors gracefully returning nicely formatted json
-	api.use(errorHandler());
+  // Handle errors gracefully returning nicely formatted json
+  api.use(errorHandler());
 
-	return api;
+  return api;
 };

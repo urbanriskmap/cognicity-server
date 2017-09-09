@@ -1,14 +1,11 @@
-## cognicity-server
-API Server for CogniCity
-
-[![Build Status](https://travis-ci.org/urbanriskmap/cognicity-server.svg?branch=master)](https://travis-ci.org/urbanriskmap/cognicity-server)
-
-[![Coverage Status](https://coveralls.io/repos/github/urbanriskmap/cognicity-server/badge.svg?branch=server-object-refactor)](https://coveralls.io/github/urbanriskmap/cognicity-server?branch=server-object-refactor)
+[![Build Status](https://travis-ci.org/urbanriskmap/cognicity-server.svg?branch=master)](https://travis-ci.org/urbanriskmap/cognicity-server) [![Coverage Status](https://coveralls.io/repos/github/urbanriskmap/cognicity-server/badge.svg?branch=server-object-refactor)](https://coveralls.io/github/urbanriskmap/cognicity-server?branch=server-object-refactor)
 
 DOI for current stable release [v3.0.0](https://github.com/urbanriskmap/cognicity-server/releases/tag/v3.0.0)
 
 
 [![DOI](https://zenodo.org/badge/73803254.svg)](https://zenodo.org/badge/latestdoi/73803254)
+## cognicity-server
+API Server for CogniCity
 
 ### Summary
 

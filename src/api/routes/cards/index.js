@@ -60,10 +60,9 @@ export default ({config, db, logger}) => {
       }),
     }),
     (req, res, next) => {
-      let cardId = shortid.generate();
-      cards(config, db, logger).create(cardId, req.body)
+      cards(config, db, logger).create(req.body)
         .then((data) => data ? res.status(200)
-          .json({cardId: cardId, created: true}) :
+          .json({cardId: data.card_id, created: true}) :
           next(new Error('Failed to create card')))
         .catch((err) => {
           /* istanbul ignore next */
@@ -95,7 +94,7 @@ export default ({config, db, logger}) => {
   // Return a card
   api.get('/:cardId', cacheResponse(config.CACHE_DURATION_CARDS),
     validate({
-      params: {cardId: Joi.string().min(7).max(14).required()},
+      params: {cardId: Joi.string().min(36).max(36).required()},
     }),
     (req, res, next) => {
       req.apicacheGroup = CACHE_GROUP_CARDS;
@@ -112,7 +111,7 @@ export default ({config, db, logger}) => {
 
   // Update a card record with a report
   api.put('/:cardId', validate({
-    params: {cardId: Joi.string().min(7).max(14).required()},
+    params: {cardId: Joi.string().min(36).max(36).required()},
     body: Joi.object().keys({
       disaster_type: Joi.string().valid(config.DISASTER_TYPES).required(),
       card_data: Joi.object()
@@ -180,7 +179,7 @@ export default ({config, db, logger}) => {
     headers: Joi.object({
       'content-type': Joi.string().valid(config.IMAGE_MIME_TYPES).required(),
     }).options({allowUnknown: true}),
-    params: {cardId: Joi.string().min(7).max(14).required()},
+    params: {cardId: Joi.string().min(36).max(36).required()},
   }),
   (req, res, next) => {
     // first, check card exists
@@ -226,7 +225,7 @@ export default ({config, db, logger}) => {
 
   // Update a card report with new details including the image URL
   api.patch('/:cardId', validate({
-    params: {cardId: Joi.string().min(7).max(14).required()},
+    params: {cardId: Joi.string().min(36).max(36).required()},
     body: Joi.object().keys({
       image_url: Joi.string().required(),
     }),

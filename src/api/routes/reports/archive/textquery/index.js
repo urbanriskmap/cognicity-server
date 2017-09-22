@@ -1,16 +1,14 @@
 /**
- * CogniCity Server /reports/archive endpoint
- * @module src/api/reports/archive/index
+ * CogniCity Server /reports endpoint
+ * @module src/api/reports/index
  **/
-import {Router} from 'express';
+ import {Router} from 'express';
 
 // Import our data model
-import archive from './model';
-
-import textquery from './textquery';
+import textquery from './model';
 
 // Import any required utility functions
-import {cacheResponse, handleGeoResponse} from '../../../../lib/util';
+import {cacheResponse, handleGeoResponse} from '../../../../../lib/util';
 
 // Import validation dependencies
 import BaseJoi from 'joi';
@@ -18,9 +16,10 @@ import Extension from 'joi-date-extensions';
 const Joi = BaseJoi.extend(Extension);
 
 import validate from 'celebrate';
+
 /**
- * Methods to get historic flood reports from database
- * @alias module:src/api/reports/archive/index
+ * Methods to get current flood reports from database
+ * @alias module:src/api/reports/index
  * @param {Object} config Server configuration
  * @param {Object} db PG Promise database instance
  * @param {Object} logger Configured Winston logger instance
@@ -38,13 +37,14 @@ export default ({config, db, logger}) => {
         start: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
 				end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ')
 					.min(Joi.ref('start')).required(),
+        preparedSQL: Joi.string().allow(''),
 				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
 				geoformat: Joi.any().valid(config.GEO_FORMATS)
 					.default(config.GEO_FORMAT_DEFAULT),
 			},
 		}),
-		(req, res, next) => archive(config, db, logger)
-			.all(req.query.start, req.query.end, req.query.city)
+		(req, res, next) => textquery(config, db, logger)
+			.rangeQuery(req.query.start, req.query.end, req.query.preparedSQL, req.query.city)
 			.then((data) => handleGeoResponse(data, req, res, next))
 			.catch((err) => {
 				/* istanbul ignore next */
@@ -53,8 +53,6 @@ export default ({config, db, logger}) => {
 				next(err);
 			})
 	);
-
-  api.use('/textquery', textquery({config, db, logger}));
 
 	return api;
 };

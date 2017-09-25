@@ -19,7 +19,8 @@ branches:
 
 before_install:
   - if [[ `npm -v` != 3* ]]; then ~/.nvm/versions/node/v4.1.1/bin/npm install -g npm@3.10.10; fi
-  - export DATABASE=cognicity_server_testing ; git clone -b master https://github.com/urbanriskmap/cognicity-schema.git urbanriskmap/cognicity-schema && cd urbanriskmap/cognicity-schema && bash build/run.sh && cd -
+  - if [[ $TRAVIS_BRANCH != 'master' ]]; then BRANCH='dev'; else BRANCH='master'; fi;
+  - export PGDATABASE=cognicity_server_testing ; git clone -b $BRANCH https://github.com/urbanriskmap/cognicity-schema.git urbanriskmap/cognicity-schema && cd urbanriskmap/cognicity-schema && bash build/run.sh && cd -
 
 install:
   - npm install

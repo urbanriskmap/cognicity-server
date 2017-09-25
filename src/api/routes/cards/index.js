@@ -15,7 +15,7 @@ import Joi from 'joi';
 import validate from 'celebrate';
 
 // Import ID generator
-import shortid from 'shortid';
+// import shortid from 'shortid'; --> swapped out for UUID
 
 // Import image upload capabilities
 import AWS from 'aws-sdk';

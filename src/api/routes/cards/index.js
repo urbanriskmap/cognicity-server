@@ -56,7 +56,7 @@ export default ({config, db, logger}) => {
       body: Joi.object().keys({
         username: Joi.string().required(),
         network: Joi.string().required(),
-        language: Joi.string().valid(config.LANGUAGES).required(),
+        language: Joi.string().required(),
       }),
     }),
     (req, res, next) => {

@@ -20,3 +20,5 @@ API Server for CogniCity
 * Updated to use Node v8.1.4 with npm 5.0.3
 * Pushed image url assignment to server
 * Updated cards/ patch endpoint to stop potential overwriting of image url
+* Card IDs generated as UUID by Postgres
+* Added schema version to / endpoint

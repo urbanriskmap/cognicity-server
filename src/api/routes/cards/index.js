@@ -53,7 +53,7 @@ export default ({config, db, logger}) => {
       body: Joi.object().keys({
         username: Joi.string().required(),
         network: Joi.string().required(),
-        language: Joi.string().valid(config.LANGUAGES).required(),
+        language: Joi.string().required(),
       }),
     }),
     (req, res, next) => {
@@ -179,6 +179,7 @@ export default ({config, db, logger}) => {
     params: {cardId: Joi.string().min(36).max(36).required()},
   }),
   (req, res, next) => {
+<<<<<<< HEAD
     // first, check card exists
     cards(config, db, logger).byCardId(req.params.cardId)
       .then((card) => {

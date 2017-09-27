@@ -22,3 +22,4 @@ API Server for CogniCity
 * Updated cards/ patch endpoint to stop potential overwriting of image url
 * Card IDs generated as UUID by Postgres
 * Added schema version to / endpoint
+* Image upload changed to use AWS S3 signed links

@@ -4,8 +4,8 @@ node_js:
    - "8.1.4"
 sudo: true
 
- notifications:
-    slack: miturbanrisklab:4y7wfdHde8dtfb00wTfNZfTA
+notifications:
+  slack: miturbanrisklab:4y7wfdHde8dtfb00wTfNZfTA
 
 addons:
   postgresql: "9.5"

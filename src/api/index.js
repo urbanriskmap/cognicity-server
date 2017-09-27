@@ -35,7 +35,14 @@ export default ({config, db, logger}) => {
 
   // Return the API version
   api.get('/', (req, res) => {
-    res.status(200).json({version});
+    let query = `SELECT * FROM cognicity.version()`;
+    db.oneOrNone(query)
+      .then((data) => {
+        res.status(200).json({version, schema: data.version});
+      })
+      .catch((err) => {
+        res.status(500).json(err);
+      });
   });
 
   // Mount the various endpoints

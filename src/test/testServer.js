@@ -22,6 +22,7 @@ export default function(app) {
           if (err) {
             test.fail(err.message + ' ' + JSON.stringify(res));
           } else {
+            test.value(res.body.version).is(process.env.npm_package_version);
             done();
           }
         });

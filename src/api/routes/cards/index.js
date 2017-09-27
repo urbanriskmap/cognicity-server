@@ -179,7 +179,6 @@ export default ({config, db, logger}) => {
     params: {cardId: Joi.string().min(36).max(36).required()},
   }),
   (req, res, next) => {
-<<<<<<< HEAD
     // first, check card exists
     cards(config, db, logger).byCardId(req.params.cardId)
       .then((card) => {

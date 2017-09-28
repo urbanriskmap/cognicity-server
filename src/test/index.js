@@ -8,7 +8,6 @@
 
 // Import config
 import config from '../config';
-config.PGDATABASE = 'cognicity_server_testing';
 
 // Import DB initializer
 import initializeDb from '../db';

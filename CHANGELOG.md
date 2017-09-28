@@ -15,6 +15,11 @@ API Server for CogniCity
 * Added integration tests on Travis, including against cognicity-schema
 * Extended data format of cards data object to collect different types of data
 * Merged changes from Chennai deployment, for better deployment in new cities
-* Image upload changed to use AWS S3 signed links
 
 ### v3.0.2
+* Updated to use Node v8.1.4 with npm 5.0.3
+* Pushed image url assignment to server
+* Updated cards/ patch endpoint to stop potential overwriting of image url
+* Card IDs generated as UUID by Postgres
+* Added schema version to / endpoint
+* Image upload changed to use AWS S3 signed links

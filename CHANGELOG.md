@@ -23,3 +23,5 @@ API Server for CogniCity
 * Card IDs generated as UUID by Postgres
 * Added schema version to / endpoint
 * Image upload changed to use AWS S3 signed links
+
+### v3.0.3

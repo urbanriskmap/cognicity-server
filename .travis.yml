@@ -14,6 +14,7 @@ branches:
   only:
     - master
     - dev
+    - jsdocsToS3
     - server-object-refactor
     - report-archive
 
@@ -25,3 +26,14 @@ install:
   - npm install
 
 after_success: npm run coverage
+
+deploy: #build the docs for dev branch only?
+  provider: s3
+  bucket: dev-cognicity-server-docs
+  access_key_id: $AWS_S3_ACCESS_KEY_ID
+  secret_access_key: $AWS_S3_SECRET_ACCESS_KEY
+  region: "us-east-1"
+  skip_cleanup: true
+  on:
+    branch: dev
+

@@ -24,7 +24,7 @@ branches:
 before_install:
   - npm i -g npm@5.0.3
   - if [[ $TRAVIS_BRANCH != 'master' ]]; then BRANCH='dev'; else BRANCH='master'; fi;
-    #  - export PGDATABASE=cognicity_server_testing ; git clone -b $BRANCH https://github.com/urbanriskmap/cognicity-schema.git urbanriskmap/cognicity-schema && cd urbanriskmap/cognicity-schema && bash build/run.sh && cd -
+  - export PGDATABASE=cognicity_server_testing ; git clone -b $BRANCH https://github.com/urbanriskmap/cognicity-schema.git urbanriskmap/cognicity-schema && cd urbanriskmap/cognicity-schema && bash build/run.sh && cd -
 
 install:
   - npm install

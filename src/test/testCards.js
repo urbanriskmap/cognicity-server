@@ -86,6 +86,24 @@ export default function(app, createdAt) {
             });
          });
 
+     // Update a card
+     it('Try update card image before report submitted', function(done) {
+         test.httpAgent(app)
+           .patch('/cards/'+cardId)
+           .send({
+               'image_url': 'image',
+           })
+           .expect(403)
+           .expect('Content-Type', /json/)
+           .end(function(err, res) {
+             if (err) {
+               test.fail(err.message + ' ' + JSON.stringify(res));
+             } else {
+               done();
+             }
+          });
+       });
+
        // Request a card, submit and get resulting report
        it('Put card data', function(done) {
            test.httpAgent(app)
@@ -118,6 +136,7 @@ export default function(app, createdAt) {
          it('Get card image link', (done) => {
              test.httpAgent(app)
                .get('/cards/'+cardId+'/images')
+               .set('content-type', 'image/jpeg')
                .expect(200)
                .end(function(err, res) {
                  if (err) {
@@ -128,7 +147,36 @@ export default function(app, createdAt) {
               });
            }).timeout(150000);
 
-         // Request a card, submit and get resulting report
+         // Get signed URL for card image
+         it('Catch request card image link without content type', (done) => {
+             test.httpAgent(app)
+               .get('/cards/'+cardId+'/images')
+               .expect(400)
+               .end(function(err, res) {
+                 if (err) {
+                   test.fail(err.message + ' ' + JSON.stringify(res));
+                 } else {
+                   done();
+                 }
+              });
+           }).timeout(150000);
+
+         // Get signed URL for card image
+         it('Catch request card image link with non image type', (done) => {
+             test.httpAgent(app)
+               .get('/cards/'+cardId+'/images')
+               .set('content-type', 'audio/mpeg')
+               .expect(400)
+               .end(function(err, res) {
+                 if (err) {
+                   test.fail(err.message + ' ' + JSON.stringify(res));
+                 } else {
+                   done();
+                 }
+              });
+           }).timeout(150000);
+
+         // Request a card and get resulting report
          it('Get card data', function(done) {
              test.httpAgent(app)
                .get('/cards/'+cardId)
@@ -154,7 +202,7 @@ export default function(app, createdAt) {
                test.httpAgent(app)
                  .patch('/cards/'+cardId)
                  .send({
-                     'image_url': 'dummy image url',
+                     'image_url': 'image',
                  })
                  .expect(200)
                  .expect('Content-Type', /json/)
@@ -166,5 +214,46 @@ export default function(app, createdAt) {
                    }
                 });
              });
+
+             // Request a card and get resulting report with new image
+             it('Get card data with new image', function(done) {
+                 test.httpAgent(app)
+                   .get('/cards/'+cardId)
+                   .expect(200)
+                   .expect('Content-Type', /json/)
+                   .end(function(err, res) {
+                     if (err) {
+                       test.fail(err.message + ' ' + JSON.stringify(res));
+                     } else {
+                       test.value(res.body.result.card_id).is(cardId);
+                       test.value(res.body.result.username).is('testuser');
+                       test.value(res.body.result.network).is('test network');
+                       test.value(res.body.result.language).is('en');
+                       test.value(res.body.result.report.text)
+                        .is('integration testing');
+                       test.value(res.body.result.report.image_url)
+                        .is('https://images.petabencana.id/image.jpg');
+                       done();
+                     }
+                  });
+               });
+
+             // Update a card
+             it('Try update card image after image submitted', function(done) {
+                 test.httpAgent(app)
+                   .patch('/cards/'+cardId)
+                   .send({
+                       'image_url': 'image',
+                   })
+                   .expect(403)
+                   .expect('Content-Type', /json/)
+                   .end(function(err, res) {
+                     if (err) {
+                       test.fail(err.message + ' ' + JSON.stringify(res));
+                     } else {
+                       done();
+                     }
+                  });
+               });
    });
 }

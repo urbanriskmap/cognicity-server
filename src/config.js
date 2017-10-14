@@ -41,6 +41,7 @@ export default {
   GEO_PRECISION: process.env.GEO_PRECISION || 10,
   IMAGES_BUCKET: process.env.IMAGES_BUCKET || 'petabencana-image-uploads',
   IMAGES_HOST: process.env.IMAGES_HOST || 'images.petabencana.id',
+  IMAGE_MIME_TYPES: (process.env.IMAGE_MIME_TYPES || 'image/png,image/jpeg,image/gif').split(','),
   INFRASTRUCTURE_TYPES: (process.env.INFRASTRUCTURE_TYPES || 'floodgates,pumps,waterways').split(','),
   LANGUAGES: (process.env.LANGUAGES || 'en,id').split(','),
   LOG_CONSOLE: process.env.LOG_CONSOLE === 'true' || false,

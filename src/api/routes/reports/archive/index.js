@@ -25,32 +25,32 @@ import validate from 'celebrate';
  * @return {Object} api Express router object for reports route
  */
 export default ({config, db, logger}) => {
-	let api = Router(); // eslint-disable-line new-cap
+  let api = Router(); // eslint-disable-line new-cap
 
-	// Get a list of all reports
-	api.get('/', cacheResponse('1 minute'),
+  // Get a list of all reports
+  api.get('/', cacheResponse('1 minute'),
 
-		validate({
-			query: {
-				city: Joi.any().valid(config.REGION_CODES),
+    validate({
+      query: {
+        city: Joi.any().valid(config.REGION_CODES),
         start: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
-				end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ')
-					.min(Joi.ref('start')).required(),
-				format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
-				geoformat: Joi.any().valid(config.GEO_FORMATS)
-					.default(config.GEO_FORMAT_DEFAULT),
-			},
-		}),
-		(req, res, next) => archive(config, db, logger)
-			.all(req.query.start, req.query.end, req.query.city)
-			.then((data) => handleGeoResponse(data, req, res, next))
-			.catch((err) => {
-				/* istanbul ignore next */
-				logger.error(err);
-				/* istanbul ignore next */
-				next(err);
-			})
-	);
+        end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ')
+          .min(Joi.ref('start')).required(),
+        format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
+        geoformat: Joi.any().valid(config.GEO_FORMATS)
+          .default(config.GEO_FORMAT_DEFAULT),
+      },
+    }),
+    (req, res, next) => archive(config, db, logger)
+      .all(req.query.start, req.query.end, req.query.city)
+      .then((data) => handleGeoResponse(data, req, res, next))
+      .catch((err) => {
+        /* istanbul ignore next */
+        logger.error(err);
+        /* istanbul ignore next */
+        next(err);
+      })
+  );
 
-	return api;
+  return api;
 };

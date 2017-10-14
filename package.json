@@ -1,11 +1,10 @@
 {
   "name": "cognicity-server",
-  "version": "3.0.1",
+  "version": "3.0.3",
   "description": "Data Server for CogniCity",
   "main": "dist",
   "engines": {
-    "node": "6.10.0",
-    "npm": "3.10.10"
+    "node": ">=8.1.4"
   },
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
@@ -19,9 +18,12 @@
     "jsdoc": "./node_modules/jsdoc/jsdoc.js -r -R README.md -d ./jsdoc/ src/"
   },
   "nyc": {
+    "sourceMap": false,
+    "instrument": false,
     "exclude": [
       "**/test/**",
-      "build"
+      "build",
+      "node_modules"
     ]
   },
   "eslintConfig": {
@@ -72,6 +74,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
+    "babel-plugin-istanbul": "^4.1.4",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
@@ -82,13 +85,10 @@
     "esutils": "^2.0.2",
     "jsdoc": "^3.4.3",
     "jsonwebtoken": "^7.4.1",
-    "mocha": "^3.3.0",
+    "mocha": "^3.5.0",
     "nodemon": "^1.11.0",
-    "nyc": "^11.0.2",
+    "nyc": "^11.1.0",
     "supertest": "^3.0.0",
     "unit.js": "^2.0.0"
-  },
-  "engines": {
-    "node": ">=6.9.1"
   }
 }

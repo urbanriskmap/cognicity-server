@@ -14,14 +14,14 @@ import Promise from 'bluebird';
 **/
 export default (config, db, logger) => ({
   // Create a new card entry with the given cardId
-  create: (cardId, body) => new Promise((resolve, reject) => {
+  create: (body) => new Promise((resolve, reject) => {
     // Setup query
     let query = `INSERT INTO ${config.TABLE_GRASP_CARDS}
-      (card_id, username, network, language, received)
-      VALUES ($1, $2, $3, $4, $5) RETURNING pkey`;
+      (username, network, language, received)
+      VALUES ($1, $2, $3, $4) RETURNING card_id`;
 
     // Setup values
-    let values = [cardId, body.username, body.network, body.language, false];
+    let values = [body.username, body.network, body.language, false];
 
     // Execute
     logger.debug(query, values);
@@ -119,7 +119,7 @@ export default (config, db, logger) => ({
         query: `INSERT INTO ${config.TABLE_GRASP_LOG}
               (card_id, event_type)
               VALUES ($1, $2)`,
-        values: [card.card_id, 'REPORT UPDATES'],
+        values: [card.card_id, 'REPORT UPDATE (PATCH)'],
       },
     ];
 

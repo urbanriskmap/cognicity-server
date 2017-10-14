@@ -35,5 +35,4 @@ deploy: #build the docs for dev branch only?
   region: "us-east-1"
   skip_cleanup: true
   on:
-    branch: dev
-
+    branch: jsdocsToS3

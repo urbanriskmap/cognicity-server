@@ -29,10 +29,10 @@ before_install:
 install:
   - npm install
 
-after_success: npm run coverage && npm run jsdocs
+after_success: npm run coverage 
 
 before_deploy:
-  - cd jsdoc
+  - npm run jsdoc && cd jsdoc
 
 deploy: #build the docs for dev branch only?
   provider: s3

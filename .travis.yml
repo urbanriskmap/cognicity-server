@@ -31,6 +31,9 @@ install:
 
 after_success: npm run coverage && npm run jsdocs
 
+before_deploy:
+  - cd jsdoc
+
 deploy: #build the docs for dev branch only?
   provider: s3
   bucket: "dev-cognicity-server-docs"

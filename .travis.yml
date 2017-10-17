@@ -17,7 +17,6 @@ branches:
   only:
     - master
     - dev
-    - jsdocsToS3
     - server-object-refactor
     - report-archive
 
@@ -34,7 +33,7 @@ after_success: npm run coverage
 before_deploy:
   - npm run jsdoc && cd jsdoc
 
-deploy: #build the docs for dev branch only?
+deploy: #build the docs for dev branch only
   provider: s3
   bucket: "dev-cognicity-server-docs"
   region: "us-east-1"
@@ -42,4 +41,4 @@ deploy: #build the docs for dev branch only?
   secret_access_key: $AWS_S3_SECRET_ACCESS_KEY
   skip_cleanup: true
   on:
-    branch: jsdocsToS3
+    branch: dev

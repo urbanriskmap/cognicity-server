@@ -25,6 +25,7 @@ const cacheResponse = (duration) => cache(duration, config.CACHE);
 const jwtCheck = jwt({
   secret: new Buffer(config.AUTH0_SECRET),
   audience: config.AUTH0_CLIENT_ID,
+  issuer: config.AUTH0_ISSUER
 });
 // TODO: Move to single auth0 mechanism once they support SPA auth using API
 /* const jwtCheck = jwt({

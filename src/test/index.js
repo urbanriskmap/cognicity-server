@@ -59,8 +59,7 @@ let createdAt = new Date().toISOString();
 const jwt = require('jsonwebtoken');
 let token = jwt.sign({},
   new Buffer(config.AUTH0_SECRET),
-  {audience: config.AUTH0_CLIENT_ID,
-  issuer: config.AUTH0_ISSUER});
+  {audience: config.AUTH0_CLIENT_ID});
 
  it('Server starts', function(done) {
    // Test optional server params

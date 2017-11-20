@@ -11,11 +11,12 @@ import Cap from '../lib/cap';    // Cap formatter helper
 /**
  * Test CAP data format utility
  * @function testCAP
+ * @param {Object} config - Server configuration
  * @param {Object} logger - CogniCity Server logger object
  */
-export default function(logger) {
+export default function(config, logger) {
   describe('CAP Utility', function() {
-    const cap = new Cap(logger); // Setup our cap formatter
+    const cap = new Cap(config, logger); // Setup our cap formatter
 
     // dummy data (polygon)
     let feature = {'type': 'Feature',

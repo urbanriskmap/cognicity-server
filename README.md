@@ -46,6 +46,8 @@ Server configuration parameters are stored in a configuration file which is pars
 * `CACHE_DURATION_FLOODS`: How long should floods be cached for? (default: '1 hour')
 * `CACHE_DURATION_FLOODS_STATES`: How long should flood states be cached for? (default: '1 hour')
 * `CACHE_DURATION_INFRASTRUCTURE`: How long should infrastructure be cached for? (default: '1 hour')
+* `CAP_DEFAULT_EXPIRE_SECONDS`: Default expire value for CAP output in seconds
+* `CAP_TIMEZONE`: Timezone for CAP output
 * `COMPRESS`: Should the server gzip compress results? Only works if CACHE is disabled. (default: `false`)
 * `CORS`: Should Cross Object Resource Sharing (CORS) be enabled (default: `false`)
 * `CORS_HEADERS`: CORS headers to use (default: `[Link]`)

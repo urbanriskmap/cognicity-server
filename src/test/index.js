@@ -78,7 +78,7 @@ let token = jwt.sign({},
     testFloods(app, token);
     testReports(app, reportid, createdAt);
     testReportsArchive(app, createdAt);
-    testCAP(logger);
+    testCAP(config, logger);
     testDB();
 
     // Removes dummy data

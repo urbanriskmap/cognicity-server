@@ -25,3 +25,4 @@ API Server for CogniCity
 * Image upload changed to use AWS S3 signed links
 
 ### v3.0.3
+* Added a default expire time to CAP output

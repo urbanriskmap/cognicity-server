@@ -58,7 +58,7 @@ const clearCache = () => {
  */
 export default ({config, db, logger}) => {
   let api = Router(); // eslint-disable-line new-cap
-  const cap = new Cap(logger); // Setup our cap formatter
+  const cap = new Cap(config, logger); // Setup our cap formatter
 
   // Get a list of all floods
   api.get('/', cacheResponse(config.CACHE_DURATION_FLOODS),

@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /**
  * testReportsArchive module
- * @module test/testReportsArchive
+ * @module test/testFloodsArchive
  * A module to test the /reports/archive endpoint
  */
 
@@ -13,59 +13,23 @@ import * as test from 'unit.js';
 
 /**
  * Test reports archive endpoint
- * @function testReportsArchive
+ * @function testFloodsArchive
  * @param {Object} app - CogniCity server app object
+ * @param {String} createdAt - Sample ISO 8601 timestamp of report to test
  */
 export default function(app) {
   // Reports endpoint
   describe('Reports Archive Endpoint', function() {
     // Can get reports between given timestamps
-
-    let end = new Date().toISOString().slice(0, -5)+'Z';
-
-    it('Can get reports between given timestamps', function(done) {
+    it('Can get floods between given timestamps', function(done) {
         test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700')
+          .get('/floods/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700')
           .expect(200)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
             if (err) {
               test.fail(err.message + ' ' + JSON.stringify(res));
             } else {
-              done();
-            }
-         });
-      });
-
-    it('Can get reports between given timestamps as geojson', function(done) {
-        test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end='+end+'&format=json&geoformat=geojson')
-          .expect(200)
-          .expect('Content-Type', /json/)
-          .end(function(err, res) {
-            if (err) {
-              test.fail(err.message + ' ' + JSON.stringify(res));
-            } else {
-              test.value(res.body.result.type).is('FeatureCollection');
-              test.value(res.body.result.features[0].properties.status)
-                .is('confirmed');
-              test.value(res.body.result.features[0].properties.disaster_type)
-                .is('flood');
-              done();
-            }
-         });
-      });
-
-    it('Can get reports between timestamps as topojson', function(done) {
-        test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&format=json&geoformat=topojson')
-          .expect(200)
-          .expect('Content-Type', /json/)
-          .end(function(err, res) {
-            if (err) {
-              test.fail(err.message + ' ' + JSON.stringify(res));
-            } else {
-              test.value(res.body.result.type).is('Topology');
               done();
             }
          });

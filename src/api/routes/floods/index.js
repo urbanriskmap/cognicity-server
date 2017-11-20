@@ -7,6 +7,9 @@ import {Router} from 'express';
 // Import our data model
 import floods from './model';
 
+// Import archive
+import archive from './archive';
+
 // Import any required utility functions
 import {cacheResponse, formatGeo, jwtCheck} from '../../../lib/util';
 
@@ -184,6 +187,9 @@ floods(config, db, logger).allGeo(req.query.city, req.query.minimum_state)
         next(err);
       })
   );
+
+  // to get max flood states between two dates
+  api.use('/archive', archive({config, db, logger}));
 
   return api;
 };

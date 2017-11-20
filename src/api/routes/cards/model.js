@@ -26,12 +26,24 @@ export default (config, db, logger) => ({
     // Execute
     logger.debug(query, values);
     db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
-      .then((data) => resolve(data))
+      .then((data) => {
+        // Card created, update database log
+        let query = `INSERT INTO ${config.TABLE_GRASP_LOG}
+                    (card_id, event_type) VALUES ($1, $2)`;
+        let values = [data.card_id, 'CARD CREATED'];
+        db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
+          .then(() => {
+            resolve(data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      })
       /* istanbul ignore next */
       .catch((err) => {
         /* istanbul ignore next */
         reject(err);
-}
+        }
       );
   }),
 

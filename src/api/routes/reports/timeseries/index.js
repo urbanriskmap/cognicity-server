@@ -1,6 +1,6 @@
 /**
- * CogniCity Server /floods timeseries endpoint
- * @module src/api/floods/timeseries/index
+ * CogniCity Server /reports timeseries endpoint
+ * @module src/api/reports/timeseries/index
  **/
 import {Router} from 'express';
 
@@ -17,8 +17,8 @@ const Joi = BaseJoi.extend(Extension);
 import validate from 'celebrate';
 
 /**
- * Endpoint specification for floods timeseries data
- * @alias module:src/api/floods/timeseries/index
+ * Endpoint specification for reports timeseries data
+ * @alias module:src/api/reports/timeseries/index
  * @param {Object} config Server configuration
  * @param {Object} db PG Promise database instance
  * @param {Object} logger Configured Winston logger instance

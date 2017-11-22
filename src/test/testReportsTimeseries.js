@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 /**
  * testReportsArchive module
- * @module test/testFloodsArchive
- * A module to test the /floods/archive endpoint
+ * @module test/testReportsTimeseries
+ * A module to test the /reports/timeseries endpoint
  */
 
 import * as test from 'unit.js';
@@ -12,17 +12,17 @@ import * as test from 'unit.js';
 // - Entered through cards.js (or add a new call to cards here)
 
 /**
- * Test floods archive endpoint
- * @function testFloodsArchive
+ * Test floods timeseries endpoint
+ * @function testReportsTimeseries
  * @param {Object} app - CogniCity server app object
  */
 export default function(app) {
   // Reports endpoint
   describe('Reports Archive Endpoint', function() {
-    // Can get reports between given timestamps
-    it('Can get floods between given timestamps', function(done) {
+    // Can get floods between given timestamps
+    it('Can get floods timeseries given timestamps', function(done) {
         test.httpAgent(app)
-          .get('/floods/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700')
+          .get('/reports/timeseries?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700')
           .expect(200)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -37,7 +37,7 @@ export default function(app) {
     // Can catch no start parameter
     it('Required start parameter by default', function(done) {
         test.httpAgent(app)
-          .get('/floods/archive?end=2017-02-22T07:00:00%2B0700')
+          .get('/reports/timeseries?end=2017-02-22T07:00:00%2B0700')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -52,7 +52,7 @@ export default function(app) {
     // Can catch no end parameter
     it('Required end parameter by default', function(done) {
         test.httpAgent(app)
-          .get('/floods/archive?start=2017-02-22T07:00:00%2B0700')
+          .get('/reports/timeseries?start=2017-02-22T07:00:00%2B0700')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -67,7 +67,7 @@ export default function(app) {
       // Catch end time before start time
       it('Required end time to be after start time', function(done) {
           test.httpAgent(app)
-            .get('/reports/archive?start=2017-02-21T07:00:00%2B0700&end=2017-02-20T07:00:00')
+            .get('/reports/timeseries?start=2017-02-21T07:00:00%2B0700&end=2017-02-20T07:00:00')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
@@ -82,7 +82,7 @@ export default function(app) {
         // Can catch no UTC offset in start parameter
         it('Required start parameter to have a UTC offset', function(done) {
             test.httpAgent(app)
-              .get('/reports/archive?start=2017-02-21T07:00:00')
+              .get('/reports/timeseries?start=2017-02-21T07:00:00')
               .expect(400)
               .expect('Content-Type', /json/)
               .end(function(err, res) {
@@ -97,7 +97,7 @@ export default function(app) {
         // Can catch no UTC offset in start parameter
         it('Catches badly formed time stamp', function(done) {
             test.httpAgent(app)
-              .get('/reports/archive?start=2017-02-21')
+              .get('/reports/timeseries?start=2017-02-21')
               .expect(400)
               .expect('Content-Type', /json/)
               .end(function(err, res) {

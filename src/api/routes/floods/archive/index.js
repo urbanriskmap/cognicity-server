@@ -26,7 +26,7 @@ import validate from 'celebrate';
  */
 export default ({config, db, logger}) => {
   let api = Router(); // eslint-disable-line new-cap
-
+  // TODO add support for multiple cities
   // Just get the states without the geographic boundaries
   api.get('/', cacheResponse('1 minute'),
     validate({

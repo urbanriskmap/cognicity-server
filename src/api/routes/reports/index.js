@@ -7,7 +7,9 @@
 // Import our data model
 import reports from './model';
 
+// Import child routes
 import archive from './archive';
+import timeseries from './timeseries';
 
 // Import any required utility functions
 import {cacheResponse, handleGeoResponse} from '../../../lib/util';
@@ -51,8 +53,9 @@ export default ({config, db, logger}) => {
       })
   );
 
-  // to get all reports between two dates
+  // child routes before /:id
   api.use('/archive', archive({config, db, logger}));
+  api.use('/timeseries', timeseries({config, db, logger}));
 
   // Get a single report
   api.get('/:id', cacheResponse('1 minute'),
@@ -74,7 +77,6 @@ export default ({config, db, logger}) => {
         next(err);
       })
   );
-
 
   return api;
 };

@@ -20,8 +20,9 @@ export default function(app) {
   // Reports endpoint
   describe('Reports Archive Endpoint', function() {
     // Can get reports between given timestamps
-
-    let end = new Date().toISOString().slice(0, -5)+'Z';
+    let end = new Date('2017-06-07T00:00:00+0700');
+    end.setHours(end.getHours() + 72);
+    end = end.toISOString().slice(0, -5)+'Z';
 
     it('Can get reports between given timestamps', function(done) {
         test.httpAgent(app)
@@ -135,6 +136,20 @@ export default function(app) {
         it('Catches badly formed time stamp', function(done) {
             test.httpAgent(app)
               .get('/reports/archive?start=2017-02-21')
+              .expect(400)
+              .expect('Content-Type', /json/)
+              .end(function(err, res) {
+                if (err) {
+                  test.fail(err.message + ' ' + JSON.stringify(res));
+                } else {
+                  done();
+                }
+             });
+          });
+          // Catches start - end time window greater than one week
+        it('Catch large time windows', function(done) {
+            test.httpAgent(app)
+              .get('/floods/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-15T23:00:00%2B0700')
               .expect(400)
               .expect('Content-Type', /json/)
               .end(function(err, res) {

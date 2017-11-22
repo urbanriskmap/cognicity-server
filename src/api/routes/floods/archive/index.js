@@ -37,6 +37,22 @@ export default ({config, db, logger}) => {
       },
     }),
     (req, res, next) => {
+      // validate the time window, if fails send 400 error
+      let maxWindow = new Date(req.query.start).getTime() +
+      (config.API_REPORTS_TIME_WINDOW_MAX * 1000);
+      let end = new Date(req.query.end);
+      if (end > maxWindow) {
+        res.status(400).json({'statusCode': 400, 'error': 'Bad Request',
+          'message': 'child \'end\' fails because [end is more than '
+          + config.API_REPORTS_TIME_WINDOW_MAX
+          + ' seconds greater than \'start\']',
+        'validation': {
+          'source': 'query',
+          'keys': [
+            'end',
+        ]}});
+        return;
+      }
       archive(config, db, logger).maxstate(req.query.start, req.query.end)
         .then((data) => res.status(200).json({statusCode: 200, result: data}))
         .catch((err) => {

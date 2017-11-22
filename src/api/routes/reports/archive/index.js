@@ -41,7 +41,24 @@ export default ({config, db, logger}) => {
           .default(config.GEO_FORMAT_DEFAULT),
       },
     }),
-    (req, res, next) => archive(config, db, logger)
+    (req, res, next) => {
+      // validate the time window, if fails send 400 error
+      let maxWindow = new Date(req.query.start).getTime() +
+      (config.API_REPORTS_TIME_WINDOW_MAX * 1000);
+      let end = new Date(req.query.end);
+      if (end > maxWindow) {
+        res.status(400).json({'statusCode': 400, 'error': 'Bad Request',
+          'message': 'child \'end\' fails because [end is more than '
+          + config.API_REPORTS_TIME_WINDOW_MAX
+          + ' seconds greater than \'start\']',
+        'validation': {
+          'source': 'query',
+          'keys': [
+            'end',
+        ]}});
+        return;
+      }
+      archive(config, db, logger)
       .all(req.query.start, req.query.end, req.query.city)
       .then((data) => handleGeoResponse(data, req, res, next))
       .catch((err) => {
@@ -49,7 +66,8 @@ export default ({config, db, logger}) => {
         logger.error(err);
         /* istanbul ignore next */
         next(err);
-      })
+      });
+    }
   );
 
   return api;

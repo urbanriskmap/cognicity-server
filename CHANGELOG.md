@@ -30,3 +30,4 @@ API Server for CogniCity
 * Added database log entry for card creation
 * Added /floods/timeseries endpoint
 * Added /reports/timeseries endpoint
+* Added time window check on archive and time series endpoints

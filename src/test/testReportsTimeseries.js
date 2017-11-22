@@ -108,5 +108,19 @@ export default function(app) {
                 }
              });
           });
+        // Catches start - end time window greater than one week
+        it('Catch large time windows', function(done) {
+            test.httpAgent(app)
+              .get('/floods/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-15T23:00:00%2B0700')
+              .expect(400)
+              .expect('Content-Type', /json/)
+              .end(function(err, res) {
+                if (err) {
+                  test.fail(err.message + ' ' + JSON.stringify(res));
+                } else {
+                  done();
+                }
+             });
+          });
    });
 }

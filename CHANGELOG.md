@@ -28,3 +28,4 @@ API Server for CogniCity
 * Added a default expire time to CAP output
 * Add /floods/archive endpoint
 * Added database log entry for card creation
+* Added /floods/timeseries endpoint

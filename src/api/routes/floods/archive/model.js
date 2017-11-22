@@ -1,6 +1,6 @@
 /**
- * CogniCity Server /floods data model
- * @module src/api/floods/model
+ * CogniCity Server /floods/archive data model
+ * @module src/api/floods/archive model
  **/
  import Promise from 'bluebird';
 
@@ -14,7 +14,7 @@
   */
 export default (config, db, logger) => ({
 
-  // Get all flood reports for a given city
+  // Get max state of all flood reports over time
   maxstate: (start, end) => new Promise((resolve, reject) => {
     // Setup query
     let query = `SELECT local_area as area_id, changed as last_updated,

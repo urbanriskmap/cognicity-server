@@ -1,5 +1,5 @@
 /**
- * CogniCity Server /floods archive endpoint
+ * CogniCity Server /floods/archive archive endpoint
  * @module src/api/floods/archive/index
  **/
 import {Router} from 'express';
@@ -17,7 +17,7 @@ const Joi = BaseJoi.extend(Extension);
 import validate from 'celebrate';
 
 /**
- * Endpoint specification for floods data
+ * Endpoint specification for floods archive
  * @alias module:src/api/floods/archive/index
  * @param {Object} config Server configuration
  * @param {Object} db PG Promise database instance

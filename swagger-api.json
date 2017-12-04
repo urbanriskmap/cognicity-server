@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-12-04T20:19:23Z",
+    "version": "2017-12-04T20:41:17Z",
     "title": "cognicity"
   },
   "host": "data-dev.petabencana.id",
@@ -1013,6 +1013,12 @@
         "parameters": [
           {
             "name": "start",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "city",
             "in": "query",
             "required": false,
             "type": "string"

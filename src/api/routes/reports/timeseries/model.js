@@ -15,16 +15,18 @@
 export default (config, db, logger) => ({
 
   // Get all flood reports for a given city
-  count: (start, end) => new Promise((resolve, reject) => {
+  count: (start, end, city) => new Promise((resolve, reject) => {
     // Setup query
     let query = `SELECT ts, count(r.pkey)
     FROM generate_series($1::timestamp with time zone,
     $2::timestamp with time zone, '1 hour') ts
     LEFT JOIN cognicity.all_reports r
-    ON date_trunc('hour', r.created_at) = ts GROUP BY ts ORDER BY ts`;
+    ON date_trunc('hour', r.created_at) = ts
+    AND ($3 IS NULL OR tags->>'instance_region_code'=$3)
+    GROUP BY ts ORDER BY ts`;
 
     // Setup values
-    let values = [start, end];
+    let values = [start, end, city];
 
     // Execute
     logger.debug(query, values);

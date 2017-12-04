@@ -34,6 +34,7 @@ export default ({config, db, logger}) => {
         start: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
         end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ')
           .min(Joi.ref('start')).required(),
+        city: Joi.any().valid(config.REGION_CODES),
       },
     }),
     (req, res, next) => {

@@ -38,6 +38,34 @@ export default function(app) {
          });
       });
 
+    it('Can get reports in given city', function(done) {
+        test.httpAgent(app)
+          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&city=jbd')
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            } else {
+              done();
+            }
+         });
+      });
+
+    it('Catches bad city name', function(done) {
+        test.httpAgent(app)
+          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&city=123')
+          .expect(400)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            } else {
+              done();
+            }
+         });
+      });
+
     it('Can get reports between given timestamps as geojson', function(done) {
         test.httpAgent(app)
           .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end='+end+'&format=json&geoformat=geojson')

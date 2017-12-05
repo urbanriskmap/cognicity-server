@@ -31,3 +31,4 @@ API Server for CogniCity
 * Added /floods/timeseries endpoint
 * Added /reports/timeseries endpoint
 * Added time window check on archive and time series endpoints
+* Updated API definitions in swagger file

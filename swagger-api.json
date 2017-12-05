@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-06-29T01:04:57Z",
+    "version": "2017-12-04T20:41:17Z",
     "title": "cognicity"
   },
   "host": "data-dev.petabencana.id",
@@ -102,10 +102,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -148,10 +148,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -245,10 +245,10 @@
               }
             }
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/cards/{cardId}",
           "requestParameters": {
             "integration.request.path.cardId": "method.request.path.cardId"
           },
+          "uri": "https://${stageVariables.env}.petabencana.id/cards/{cardId}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
           "type": "http"
@@ -261,6 +261,12 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "content-type",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "cardId",
             "in": "path",
@@ -290,10 +296,11 @@
               }
             }
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/cards/{cardId}/images",
           "requestParameters": {
-            "integration.request.path.cardId": "method.request.path.cardId"
+            "integration.request.path.cardId": "method.request.path.cardId",
+            "integration.request.header.content-type": "method.request.header.content-type"
           },
+          "uri": "https://${stageVariables.env}.petabencana.id/cards/{cardId}/images",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "type": "http"
@@ -305,6 +312,14 @@
         ],
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "content-type",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
@@ -336,10 +351,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -425,10 +440,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -471,10 +486,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -554,10 +569,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -609,12 +624,12 @@
               }
             }
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/floodgauges",
           "requestParameters": {
             "integration.request.querystring.city": "method.request.querystring.city",
             "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
             "integration.request.querystring.format": "method.request.querystring.format"
           },
+          "uri": "https://${stageVariables.env}.petabencana.id/floodgauges",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "so358j",
@@ -663,10 +678,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -709,10 +724,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -741,10 +756,10 @@
               "statusCode": "200"
             }
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/floodgauges/{id}",
           "requestParameters": {
             "integration.request.path.id": "method.request.path.id"
           },
+          "uri": "https://${stageVariables.env}.petabencana.id/floodgauges/{id}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
           "cacheNamespace": "p829iq",
@@ -814,13 +829,13 @@
               }
             }
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/floods/",
           "requestParameters": {
             "integration.request.querystring.city": "method.request.querystring.city",
             "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
             "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state",
             "integration.request.querystring.format": "method.request.querystring.format"
           },
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "nvy9s5",
@@ -854,10 +869,10 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -898,10 +913,87 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "type": "mock"
+        }
+      }
+    },
+    "/floods/archive": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.querystring.start": "method.request.querystring.start",
+            "integration.request.querystring.end": "method.request.querystring.end"
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id/reports/archive",
           "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "cacheNamespace": "bvx1ea",
+          "cacheKeyParameters": [
+            "method.request.querystring.start",
+            "method.request.querystring.end"
+          ],
+          "type": "http"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
           "type": "mock"
         }
       }
@@ -953,12 +1045,12 @@
               }
             }
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/floods/states",
           "requestParameters": {
             "integration.request.querystring.city": "method.request.querystring.city",
             "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state",
             "integration.request.querystring.format": "method.request.querystring.format"
           },
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/states",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "cxp4qo",
@@ -1007,10 +1099,87 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "type": "mock"
+        }
+      }
+    },
+    "/floods/timeseries": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.querystring.start": "method.request.querystring.start",
+            "integration.request.querystring.end": "method.request.querystring.end"
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id/reports/timeseries",
           "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "cacheNamespace": "5r93vu",
+          "cacheKeyParameters": [
+            "method.request.querystring.end",
+            "method.request.querystring.start"
+          ],
+          "type": "http"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
           "type": "mock"
         }
       }
@@ -1053,10 +1222,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1085,10 +1254,10 @@
               "statusCode": "200"
             }
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/floods/{id}",
           "requestParameters": {
             "integration.request.path.id": "method.request.path.id"
           },
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/{id}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
           "cacheNamespace": "8q9uet",
@@ -1138,10 +1307,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1184,10 +1353,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1228,10 +1397,10 @@
               "statusCode": "200"
             }
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/infrastructure/{type}",
           "requestParameters": {
             "integration.request.path.type": "method.request.path.type"
           },
+          "uri": "https://${stageVariables.env}.petabencana.id/infrastructure/{type}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
           "cacheNamespace": "qtdnlp",
@@ -1298,13 +1467,13 @@
               }
             }
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/reports",
           "requestParameters": {
             "integration.request.querystring.city": "method.request.querystring.city",
             "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
             "integration.request.querystring.timeperiod": "method.request.querystring.timeperiod",
             "integration.request.querystring.format": "method.request.querystring.format"
           },
+          "uri": "https://${stageVariables.env}.petabencana.id/reports",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "8vxlp8",
@@ -1354,10 +1523,201 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "type": "mock"
+        }
+      }
+    },
+    "/reports/archive": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "geoformat",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.querystring.city": "method.request.querystring.city",
+            "integration.request.querystring.start": "method.request.querystring.start",
+            "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
+            "integration.request.querystring.format": "method.request.querystring.format",
+            "integration.request.querystring.end": "method.request.querystring.end"
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id/reports/archive",
           "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "cacheNamespace": "cvt4dg",
+          "cacheKeyParameters": [
+            "method.request.querystring.end",
+            "method.request.querystring.city",
+            "method.request.querystring.format",
+            "method.request.querystring.geoformat",
+            "method.request.querystring.start"
+          ],
+          "type": "http"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "type": "mock"
+        }
+      }
+    },
+    "/reports/timeseries": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "requestParameters": {
+            "integration.request.querystring.city": "method.request.querystring.city",
+            "integration.request.querystring.start": "method.request.querystring.start",
+            "integration.request.querystring.end": "method.request.querystring.end"
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id/reports/timeseries",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "cacheNamespace": "jnnaak",
+          "cacheKeyParameters": [
+            "method.request.querystring.end",
+            "method.request.querystring.start",
+            "method.request.querystring.city"
+          ],
+          "type": "http"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
           "type": "mock"
         }
       }
@@ -1400,10 +1760,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1432,10 +1792,10 @@
               "statusCode": "200"
             }
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/reports/{id}",
           "requestParameters": {
             "integration.request.path.id": "method.request.path.id"
           },
+          "uri": "https://${stageVariables.env}.petabencana.id/reports/{id}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
           "cacheNamespace": "5tep32",
@@ -1485,10 +1845,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1564,10 +1924,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1643,10 +2003,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1714,10 +2074,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1756,11 +2116,11 @@
             }
           },
           "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:twilio/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
           "requestTemplates": {
             "application/x-www-form-urlencoded": "{\n        \"reqbody\":\"$input.path('$')\"\n}"
           },
-          "passthroughBehavior": "when_no_templates",
-          "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
         }
@@ -1802,10 +2162,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }

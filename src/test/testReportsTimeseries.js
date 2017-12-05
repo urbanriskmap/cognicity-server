@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 /**
  * testReportsArchive module
- * @module test/testReportsArchive
- * A module to test the /reports/archive endpoint
+ * @module test/testReportsTimeseries
+ * A module to test the /reports/timeseries endpoint
  */
 
 import * as test from 'unit.js';
@@ -12,21 +12,17 @@ import * as test from 'unit.js';
 // - Entered through cards.js (or add a new call to cards here)
 
 /**
- * Test reports archive endpoint
- * @function testReportsArchive
+ * Test floods timeseries endpoint
+ * @function testReportsTimeseries
  * @param {Object} app - CogniCity server app object
  */
 export default function(app) {
   // Reports endpoint
   describe('Reports Archive Endpoint', function() {
     // Can get reports between given timestamps
-    let end = new Date('2017-06-07T00:00:00+0700');
-    end.setHours(end.getHours() + 72);
-    end = end.toISOString().slice(0, -5)+'Z';
-
-    it('Can get reports between given timestamps', function(done) {
+    it('Can get floods timeseries given timestamps', function(done) {
         test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700')
+          .get('/reports/timeseries?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700')
           .expect(200)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -38,9 +34,10 @@ export default function(app) {
          });
       });
 
-    it('Can get reports in given city', function(done) {
+    // Can get reports between given timestamps with city
+    it('Can get floods timeseries given timestamps', function(done) {
         test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&city=jbd')
+          .get('/reports/timeseries?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&city=jbd')
           .expect(200)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -52,9 +49,10 @@ export default function(app) {
          });
       });
 
+    // Catches bad city name
     it('Catches bad city name', function(done) {
         test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&city=123')
+          .get('/reports/timeseries?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&city=123')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -66,44 +64,10 @@ export default function(app) {
          });
       });
 
-    it('Can get reports between given timestamps as geojson', function(done) {
-        test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end='+end+'&format=json&geoformat=geojson')
-          .expect(200)
-          .expect('Content-Type', /json/)
-          .end(function(err, res) {
-            if (err) {
-              test.fail(err.message + ' ' + JSON.stringify(res));
-            } else {
-              test.value(res.body.result.type).is('FeatureCollection');
-              test.value(res.body.result.features[0].properties.status)
-                .is('confirmed');
-              test.value(res.body.result.features[0].properties.disaster_type)
-                .is('flood');
-              done();
-            }
-         });
-      });
-
-    it('Can get reports between timestamps as topojson', function(done) {
-        test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&format=json&geoformat=topojson')
-          .expect(200)
-          .expect('Content-Type', /json/)
-          .end(function(err, res) {
-            if (err) {
-              test.fail(err.message + ' ' + JSON.stringify(res));
-            } else {
-              test.value(res.body.result.type).is('Topology');
-              done();
-            }
-         });
-      });
-
     // Can catch no start parameter
     it('Required start parameter by default', function(done) {
         test.httpAgent(app)
-          .get('/reports/archive?end=2017-02-22T07:00:00%2B0700')
+          .get('/reports/timeseries?end=2017-02-22T07:00:00%2B0700')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -118,7 +82,7 @@ export default function(app) {
     // Can catch no end parameter
     it('Required end parameter by default', function(done) {
         test.httpAgent(app)
-          .get('/reports/archive?start=2017-02-22T07:00:00%2B0700')
+          .get('/reports/timeseries?start=2017-02-22T07:00:00%2B0700')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -133,7 +97,7 @@ export default function(app) {
       // Catch end time before start time
       it('Required end time to be after start time', function(done) {
           test.httpAgent(app)
-            .get('/reports/archive?start=2017-02-21T07:00:00%2B0700&end=2017-02-20T07:00:00')
+            .get('/reports/timeseries?start=2017-02-21T07:00:00%2B0700&end=2017-02-20T07:00:00')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
@@ -148,7 +112,7 @@ export default function(app) {
         // Can catch no UTC offset in start parameter
         it('Required start parameter to have a UTC offset', function(done) {
             test.httpAgent(app)
-              .get('/reports/archive?start=2017-02-21T07:00:00')
+              .get('/reports/timeseries?start=2017-02-21T07:00:00')
               .expect(400)
               .expect('Content-Type', /json/)
               .end(function(err, res) {
@@ -163,7 +127,7 @@ export default function(app) {
         // Can catch no UTC offset in start parameter
         it('Catches badly formed time stamp', function(done) {
             test.httpAgent(app)
-              .get('/reports/archive?start=2017-02-21')
+              .get('/reports/timeseries?start=2017-02-21')
               .expect(400)
               .expect('Content-Type', /json/)
               .end(function(err, res) {
@@ -174,7 +138,7 @@ export default function(app) {
                 }
              });
           });
-          // Catches start - end time window greater than one week
+        // Catches start - end time window greater than one week
         it('Catch large time windows', function(done) {
             test.httpAgent(app)
               .get('/floods/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-15T23:00:00%2B0700')

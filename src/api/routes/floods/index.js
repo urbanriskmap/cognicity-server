@@ -7,6 +7,10 @@ import {Router} from 'express';
 // Import our data model
 import floods from './model';
 
+// Import child routes
+import archive from './archive';
+import timeseries from './timeseries';
+
 // Import any required utility functions
 import {cacheResponse, formatGeo, jwtCheck} from '../../../lib/util';
 
@@ -58,7 +62,7 @@ const clearCache = () => {
  */
 export default ({config, db, logger}) => {
   let api = Router(); // eslint-disable-line new-cap
-  const cap = new Cap(logger); // Setup our cap formatter
+  const cap = new Cap(config, logger); // Setup our cap formatter
 
   // Get a list of all floods
   api.get('/', cacheResponse(config.CACHE_DURATION_FLOODS),
@@ -184,6 +188,10 @@ floods(config, db, logger).allGeo(req.query.city, req.query.minimum_state)
         next(err);
       })
   );
+
+  // to get max flood states between two dates
+  api.use('/archive', archive({config, db, logger}));
+  api.use('/timeseries', timeseries({config, db, logger}));
 
   return api;
 };

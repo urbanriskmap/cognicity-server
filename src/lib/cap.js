@@ -14,9 +14,11 @@ module.exports = class Cap {
   /**
    * Setup the CAP object to user specified logger
    * @alias module:lib/cap
+   * @param {Object} config Server configuration
    * @param {Object} logger Configured Winston logger instance
    */
-  constructor(logger) {
+  constructor(config, logger) {
+    this.config = config;
     this.logger = logger;
   }
   /**
@@ -94,8 +96,11 @@ module.exports = class Cap {
     alert.identifier = encodeURI(identifier);
 
     alert.sender = 'BPBD.JAKARTA.GOV.ID';
-    alert.sent = moment.tz(feature.properties.last_updated, 'Asia/Jakarta'
-                  ).format('YYYY-MM-DDTHH:mm:ssZ');
+    alert.sent = moment.tz(feature.properties.last_updated,
+                  self.config.CAP_TIMEZONE).format('YYYY-MM-DDTHH:mm:ssZ');
+    alert.expires = moment.tz(new Date().getTime()
+                + self.config.CAP_DEFAULT_EXPIRE_SECONDS * 1000,
+                  self.config.CAP_TIMEZONE).format('YYYY-MM-DDTHH:mm:ssZ');
     alert.status = 'Actual';
     alert.msgType = 'Alert';
     alert.scope = 'Public';

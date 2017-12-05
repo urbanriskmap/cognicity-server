@@ -23,3 +23,12 @@ API Server for CogniCity
 * Card IDs generated as UUID by Postgres
 * Added schema version to / endpoint
 * Image upload changed to use AWS S3 signed links
+
+### v3.0.3
+* Added a default expire time to CAP output
+* Add /floods/archive endpoint
+* Added database log entry for card creation
+* Added /floods/timeseries endpoint
+* Added /reports/timeseries endpoint
+* Added time window check on archive and time series endpoints
+* Updated API definitions in swagger file

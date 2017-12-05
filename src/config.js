@@ -30,6 +30,8 @@ export default {
   CACHE_DURATION_FLOODS: process.env.CACHE_DURATION_FLOODS || '1 hour',
   CACHE_DURATION_FLOODS_STATES: process.env.CACHE_DURATION_FLOODS_STATES || '1 hour',
   CACHE_DURATION_INFRASTRUCTURE: process.env.CACHE_DURATION_INFRASTRUCTURE || '1 hour',
+  CAP_DEFAULT_EXPIRE_SECONDS: process.env.CAP_DEFAULT_EXPIRE_SECONDS || 21600,
+  CAP_TIMEZONE: process.env.CAP_TIMEZONE || 'Asia/Jakarta',
   COMPRESS: process.env.COMPRESS === 'true' || false,
   CORS: process.env.CORS === 'true' || false,
   CORS_HEADERS: process.env.CORS_HEADERS || ['Link'],

@@ -34,3 +34,4 @@ API Server for CogniCity
 * Updated API definitions in swagger file
 
 ### v3.0.4
+* Added Semarang instance for Indonesian deployment

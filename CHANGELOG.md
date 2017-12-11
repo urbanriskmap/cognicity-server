@@ -35,3 +35,4 @@ API Server for CogniCity
 
 ### v3.0.4
 * Added Semarang instance for Indonesian deployment
+* Fixed out of date link in README to list of releases

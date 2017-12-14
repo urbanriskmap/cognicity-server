@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-12-14T16:42:25Z",
+    "version": "2017-12-14T21:52:00Z",
     "title": "cognicity"
   },
   "host": "data-dev.petabencana.id",
@@ -102,10 +102,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -148,10 +148,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -351,10 +351,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -440,10 +440,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -486,10 +486,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -569,10 +569,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -678,10 +678,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -724,10 +724,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -869,10 +869,10 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -913,10 +913,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -966,7 +966,7 @@
             "integration.request.querystring.start": "method.request.querystring.start",
             "integration.request.querystring.end": "method.request.querystring.end"
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/reports/archive",
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/archive",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "bvx1ea",
@@ -998,10 +998,10 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1107,10 +1107,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1160,7 +1160,7 @@
             "integration.request.querystring.start": "method.request.querystring.start",
             "integration.request.querystring.end": "method.request.querystring.end"
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/reports/timeseries",
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/timeseries",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "5r93vu",
@@ -1192,10 +1192,10 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1238,10 +1238,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1323,10 +1323,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1369,10 +1369,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1539,10 +1539,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1648,10 +1648,10 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1741,10 +1741,10 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1787,10 +1787,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1872,10 +1872,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1951,10 +1951,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2030,10 +2030,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2101,10 +2101,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2142,12 +2142,12 @@
               }
             }
           },
-          "requestTemplates": {
-            "application/x-www-form-urlencoded": "{\n        \"reqbody\":\"$input.path('$')\"\n}"
-          },
           "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:twilio/invocations",
           "passthroughBehavior": "when_no_templates",
           "httpMethod": "POST",
+          "requestTemplates": {
+            "application/x-www-form-urlencoded": "{\n        \"reqbody\":\"$input.path('$')\"\n}"
+          },
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
         }
@@ -2189,10 +2189,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }

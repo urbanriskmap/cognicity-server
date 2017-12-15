@@ -1,10 +1,10 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-12-04T20:41:17Z",
+    "version": "2017-12-15T20:27:30Z",
     "title": "cognicity"
   },
-  "host": "data-dev.petabencana.id",
+  "host": "data.petabencana.id",
   "schemes": [
     "https"
   ],
@@ -945,20 +945,28 @@
             "description": "200 response",
             "schema": {
               "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
             }
           }
         },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
           "requestParameters": {
             "integration.request.querystring.start": "method.request.querystring.start",
             "integration.request.querystring.end": "method.request.querystring.end"
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/reports/archive",
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/archive",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "bvx1ea",
@@ -1131,20 +1139,28 @@
             "description": "200 response",
             "schema": {
               "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
             }
           }
         },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
           "requestParameters": {
             "integration.request.querystring.start": "method.request.querystring.start",
             "integration.request.querystring.end": "method.request.querystring.end"
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/reports/timeseries",
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/timeseries",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "5r93vu",
@@ -1573,13 +1589,21 @@
             "description": "200 response",
             "schema": {
               "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
             }
           }
         },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
           "requestParameters": {
@@ -1673,7 +1697,10 @@
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
           "requestParameters": {

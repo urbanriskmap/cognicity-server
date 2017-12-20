@@ -73,11 +73,26 @@ export default (config, db, logger) => ({
     // Execute
     logger.debug(query, values);
     db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
-      .then((data) => resolve(data))
-      /* istanbul ignore next */
-      .catch((err) => {
+      .then((data) => {
+        // Report points changes, update database log
+        let query = `INSERT INTO ${config.TABLE_REPORTS_POINTS_LOG}
+                      (report_id, value) VALUES ($1, $2)`;
+        let values = [id, body.points];
+        // Execute
+        db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
+          .then(() => {
+            resolve(data);
+          })
+          /* istanbul ignore next */
+          .catch((err) => {
+            /* istanbul ignore next */
+            reject(err);
+          });
+        })
         /* istanbul ignore next */
-        reject(err);
-      });
-  }),
+        .catch((err) => {
+          /* istanbul ignore next */
+          reject(err);
+        });
+    }),
 });

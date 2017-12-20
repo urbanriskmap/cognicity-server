@@ -76,4 +76,5 @@ export default {
   TABLE_REM_STATUS: process.env.TABLE_REM_STATUS || 'cognicity.rem_status',
   TABLE_REM_STATUS_LOG: process.env.TABLE_REM_STATUS_LOG || 'cognicity.rem_status_log',
   TABLE_REPORTS: process.env.TABLE_REPORTS || 'cognicity.all_reports',
+  TABLE_REPORTS_POINTS_LOG: process.env.TABLE_REPORTS_LOG || 'cognicity.reports_points_log',
 };

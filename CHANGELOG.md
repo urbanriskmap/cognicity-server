@@ -40,3 +40,5 @@ API Server for CogniCity
 ### v3.0.5
 * Fixed bug in API (swagger-api.json) for flood archive and timeseries endpoints
 * Added PATCH /reports/:id endpoint for "points"
+* Updated documentation of Swagger files
+* Updated Babel package

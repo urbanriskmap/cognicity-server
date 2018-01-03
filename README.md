@@ -137,7 +137,7 @@ The release procedure is as follows:
 ### API Notes
 Full API documentation at https://docs.petabencana.id. This documentation is stored in the [petabencana-docs](https://github.com/urbanriskmap/petabencana-docs) repository.
 
-[swagger-api.json](swagger-api.json) describes the API in [swagger](https://swagger.io/) format (with AWS API Gateway extensions).
+The swagger files under [/apigw](apigw/) describe the API in [swagger](https://swagger.io/) format (with AWS API Gateway extensions) for each of our deployments. For a new or updated deployment, the references to the (Elastic Beanstalk) hostnames and Lambda Amazon Resource Names will need to be updated first before import, and then permissions to trigger Lambdas granted to the API.
 
 - The dbgeo library expects timestamps from database to be in UTC (i.e. not a local timezone)
 

@@ -1,10 +1,10 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2017-12-14T21:52:00Z",
+    "version": "2018-01-08T21:39:08Z",
     "title": "cognicity"
   },
-  "host": "data.petabencana.id",
+  "host": "data-dev.petabencana.id",
   "schemes": [
     "https"
   ],
@@ -102,10 +102,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -148,10 +148,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -351,10 +351,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -440,10 +440,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -486,10 +486,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -569,10 +569,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -678,10 +678,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -724,10 +724,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -869,10 +869,10 @@
               "statusCode": "200"
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -913,10 +913,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -998,10 +998,10 @@
               "statusCode": "200"
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1107,10 +1107,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1192,10 +1192,10 @@
               "statusCode": "200"
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1238,10 +1238,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1323,10 +1323,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1369,10 +1369,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1539,10 +1539,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1648,10 +1648,10 @@
               "statusCode": "200"
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1741,15 +1741,74 @@
               "statusCode": "200"
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
     },
     "/reports/{id+}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "geoformat",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.id": "method.request.path.id"
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id/reports/{id}",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "ANY",
+          "cacheNamespace": "5tep32",
+          "cacheKeyParameters": [
+            "method.request.path.id"
+          ],
+          "type": "http_proxy"
+        }
+      },
       "options": {
         "consumes": [
           "application/json"
@@ -1781,30 +1840,24 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS,PATCH'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
-      "x-amazon-apigateway-any-method": {
+      "patch": {
         "produces": [
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "format",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
           {
             "name": "id",
             "in": "path",
@@ -1812,11 +1865,29 @@
             "type": "string"
           }
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "404 response"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
             }
           },
           "requestParameters": {
@@ -1827,8 +1898,7 @@
           "httpMethod": "ANY",
           "cacheNamespace": "5tep32",
           "cacheKeyParameters": [
-            "method.request.path.id",
-            "method.request.querystring.format"
+            "method.request.path.id"
           ],
           "type": "http_proxy"
         }
@@ -1872,10 +1942,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1951,10 +2021,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2030,10 +2100,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2101,10 +2171,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2142,12 +2212,12 @@
               }
             }
           },
-          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:twilio/invocations",
-          "passthroughBehavior": "when_no_templates",
-          "httpMethod": "POST",
           "requestTemplates": {
             "application/x-www-form-urlencoded": "{\n        \"reqbody\":\"$input.path('$')\"\n}"
           },
+          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:twilio/invocations",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
         }
@@ -2189,10 +2259,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2209,6 +2279,22 @@
     "Empty": {
       "type": "object",
       "title": "Empty Schema"
+    }
+  },
+  "x-amazon-apigateway-gateway-responses": {
+    "DEFAULT_5XX": {
+      "responseParameters": {
+        "gatewayresponse.header.Access-Control-Allow-Methods": "'GET,OPTIONS,PATCH'",
+        "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      }
+    },
+    "DEFAULT_4XX": {
+      "responseParameters": {
+        "gatewayresponse.header.Access-Control-Allow-Methods": "'GET,OPTIONS,PATCH'",
+        "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      }
     }
   },
   "x-amazon-apigateway-binary-media-types": [

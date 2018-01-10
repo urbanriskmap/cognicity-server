@@ -1200,7 +1200,7 @@
         }
       }
     },
-    "/floods/{id+}": {
+    "/floods/{localAreaId}": {
       "options": {
         "consumes": [
           "application/json"
@@ -1271,9 +1271,9 @@
             }
           },
           "requestParameters": {
-            "integration.request.path.id": "method.request.path.id"
+            "integration.request.path.id": "method.request.path.localAreaId"
           },
-          "uri": "https://${stageVariables.env}.petabencana.id/floods/{id}",
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/{localAreaId}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
           "cacheNamespace": "8q9uet",

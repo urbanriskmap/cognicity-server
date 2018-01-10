@@ -1749,7 +1749,7 @@
         }
       }
     },
-    "/reports/{id+}": {
+    "/reports/{id}": {
       "get": {
         "produces": [
           "application/json"

@@ -42,3 +42,4 @@ API Server for CogniCity
 * Added PATCH /reports/:id endpoint for "points"
 * Updated documentation of Swagger files
 * Updated Babel package
+* Remove username field from GET /cards/:id

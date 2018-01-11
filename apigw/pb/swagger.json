@@ -771,8 +771,7 @@
     "/floods": {
       "get": {
         "produces": [
-          "application/json",
-          "text/xml"
+          "application/json"
         ],
         "parameters": [
           {
@@ -829,8 +828,8 @@
           "requestParameters": {
             "integration.request.querystring.city": "method.request.querystring.city",
             "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
-            "integration.request.querystring.format": "method.request.querystring.format",
-            "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state"
+            "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state",
+            "integration.request.querystring.format": "method.request.querystring.format"
           },
           "uri": "https://${stageVariables.env}.petabencana.id/floods/",
           "passthroughBehavior": "when_no_match",
@@ -1052,8 +1051,8 @@
           },
           "requestParameters": {
             "integration.request.querystring.city": "method.request.querystring.city",
-            "integration.request.querystring.format": "method.request.querystring.format",
-            "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state"
+            "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state",
+            "integration.request.querystring.format": "method.request.querystring.format"
           },
           "uri": "https://${stageVariables.env}.petabencana.id/floods/states",
           "passthroughBehavior": "when_no_match",
@@ -1208,18 +1207,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "username",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
@@ -1235,7 +1222,6 @@
             }
           }
         },
-        "x-amazon-apigateway-request-validator": "Validate query string parameters and headers",
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
@@ -1246,9 +1232,7 @@
             }
           },
           "requestParameters": {
-            "integration.request.path.localAreaId": "method.request.path.localAreaId",
-            "integration.request.header.Authorization": "method.request.header.Authorization",
-            "integration.request.querystring.username": "method.request.querystring.username"
+            "integration.request.path.localAreaId": "method.request.path.localAreaId"
           },
           "uri": "https://${stageVariables.env}.petabencana.id/floods/{localAreaId}",
           "passthroughBehavior": "when_no_match",
@@ -1266,18 +1250,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "username",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
@@ -1293,7 +1265,6 @@
             }
           }
         },
-        "x-amazon-apigateway-request-validator": "Validate query string parameters and headers",
         "x-amazon-apigateway-integration": {
           "responses": {
             "default": {
@@ -1304,9 +1275,7 @@
             }
           },
           "requestParameters": {
-            "integration.request.path.localAreaId": "method.request.path.localAreaId",
-            "integration.request.header.Authorization": "method.request.header.Authorization",
-            "integration.request.querystring.username": "method.request.querystring.username"
+            "integration.request.path.localAreaId": "method.request.path.localAreaId"
           },
           "uri": "https://${stageVariables.env}.petabencana.id/floods/{localAreaId}",
           "passthroughBehavior": "when_no_match",
@@ -1681,8 +1650,8 @@
             "integration.request.querystring.city": "method.request.querystring.city",
             "integration.request.querystring.start": "method.request.querystring.start",
             "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
-            "integration.request.querystring.end": "method.request.querystring.end",
-            "integration.request.querystring.format": "method.request.querystring.format"
+            "integration.request.querystring.format": "method.request.querystring.format",
+            "integration.request.querystring.end": "method.request.querystring.end"
           },
           "uri": "https://${stageVariables.env}.petabencana.id/reports/archive",
           "passthroughBehavior": "when_no_match",
@@ -2356,22 +2325,16 @@
     "DEFAULT_4XX": {
       "responseParameters": {
         "gatewayresponse.header.Access-Control-Allow-Methods": "'DELETE,OPTIONS,PUT'",
-        "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
-        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "gatewayresponse.header.Access-Control-Allow-Origin": "'*'"
       }
     },
     "DEFAULT_5XX": {
       "responseParameters": {
         "gatewayresponse.header.Access-Control-Allow-Methods": "'DELETE,OPTIONS,PUT'",
-        "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
-        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "gatewayresponse.header.Access-Control-Allow-Origin": "'*'"
       }
-    }
-  },
-  "x-amazon-apigateway-request-validators": {
-    "Validate query string parameters and headers": {
-      "validateRequestParameters": true,
-      "validateRequestBody": false
     }
   },
   "x-amazon-apigateway-binary-media-types": [

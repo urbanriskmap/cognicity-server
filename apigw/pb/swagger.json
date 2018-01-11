@@ -102,10 +102,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -148,10 +148,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -351,10 +351,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -440,10 +440,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -486,10 +486,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -569,10 +569,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -678,10 +678,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -724,17 +724,14 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
       "x-amazon-apigateway-any-method": {
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "format",
@@ -832,8 +829,8 @@
           "requestParameters": {
             "integration.request.querystring.city": "method.request.querystring.city",
             "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
-            "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state",
-            "integration.request.querystring.format": "method.request.querystring.format"
+            "integration.request.querystring.format": "method.request.querystring.format",
+            "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state"
           },
           "uri": "https://${stageVariables.env}.petabencana.id/floods/",
           "passthroughBehavior": "when_no_match",
@@ -869,10 +866,10 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -913,10 +910,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -998,10 +995,10 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1055,8 +1052,8 @@
           },
           "requestParameters": {
             "integration.request.querystring.city": "method.request.querystring.city",
-            "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state",
-            "integration.request.querystring.format": "method.request.querystring.format"
+            "integration.request.querystring.format": "method.request.querystring.format",
+            "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state"
           },
           "uri": "https://${stageVariables.env}.petabencana.id/floods/states",
           "passthroughBehavior": "when_no_match",
@@ -1107,10 +1104,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1192,15 +1189,131 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
     },
     "/floods/{localAreaId}": {
+      "put": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "localAreaId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-request-validator": "Validate query string parameters and headers",
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.localAreaId": "method.request.path.localAreaId",
+            "integration.request.header.Authorization": "method.request.header.Authorization",
+            "integration.request.querystring.username": "method.request.querystring.username"
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/{localAreaId}",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "PUT",
+          "type": "http_proxy"
+        }
+      },
+      "delete": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "localAreaId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-request-validator": "Validate query string parameters and headers",
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestParameters": {
+            "integration.request.path.localAreaId": "method.request.path.localAreaId",
+            "integration.request.header.Authorization": "method.request.header.Authorization",
+            "integration.request.querystring.username": "method.request.querystring.username"
+          },
+          "uri": "https://${stageVariables.env}.petabencana.id/floods/{localAreaId}",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "DELETE",
+          "type": "http_proxy"
+        }
+      },
       "options": {
         "consumes": [
           "application/json"
@@ -1232,56 +1345,17 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,OPTIONS,PUT'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
-        }
-      },
-      "x-amazon-apigateway-any-method": {
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "format",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {},
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200"
-            }
-          },
-          "requestParameters": {
-            "integration.request.path.id": "method.request.path.localAreaId"
-          },
-          "uri": "https://${stageVariables.env}.petabencana.id/floods/{localAreaId}",
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "ANY",
-          "cacheNamespace": "8q9uet",
-          "cacheKeyParameters": [
-            "method.request.path.id",
-            "method.request.querystring.format"
-          ],
-          "type": "http_proxy"
         }
       }
     },
@@ -1323,10 +1397,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1369,17 +1443,14 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
       "x-amazon-apigateway-any-method": {
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "type",
@@ -1539,10 +1610,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1610,8 +1681,8 @@
             "integration.request.querystring.city": "method.request.querystring.city",
             "integration.request.querystring.start": "method.request.querystring.start",
             "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
-            "integration.request.querystring.format": "method.request.querystring.format",
-            "integration.request.querystring.end": "method.request.querystring.end"
+            "integration.request.querystring.end": "method.request.querystring.end",
+            "integration.request.querystring.format": "method.request.querystring.format"
           },
           "uri": "https://${stageVariables.env}.petabencana.id/reports/archive",
           "passthroughBehavior": "when_no_match",
@@ -1648,10 +1719,10 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1741,10 +1812,10 @@
               "statusCode": "200"
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1846,10 +1917,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1942,10 +2013,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2021,10 +2092,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2100,10 +2171,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2171,10 +2242,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2212,12 +2283,12 @@
               }
             }
           },
-          "requestTemplates": {
-            "application/x-www-form-urlencoded": "{\n        \"reqbody\":\"$input.path('$')\"\n}"
-          },
           "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:twilio/invocations",
           "passthroughBehavior": "when_no_templates",
           "httpMethod": "POST",
+          "requestTemplates": {
+            "application/x-www-form-urlencoded": "{\n        \"reqbody\":\"$input.path('$')\"\n}"
+          },
           "contentHandling": "CONVERT_TO_TEXT",
           "type": "aws"
         }
@@ -2259,10 +2330,10 @@
               }
             }
           },
+          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -2282,19 +2353,25 @@
     }
   },
   "x-amazon-apigateway-gateway-responses": {
-    "DEFAULT_5XX": {
+    "DEFAULT_4XX": {
       "responseParameters": {
-        "gatewayresponse.header.Access-Control-Allow-Methods": "'GET,OPTIONS,PATCH'",
+        "gatewayresponse.header.Access-Control-Allow-Methods": "'DELETE,OPTIONS,PUT'",
         "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
         "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
       }
     },
-    "DEFAULT_4XX": {
+    "DEFAULT_5XX": {
       "responseParameters": {
-        "gatewayresponse.header.Access-Control-Allow-Methods": "'GET,OPTIONS,PATCH'",
+        "gatewayresponse.header.Access-Control-Allow-Methods": "'DELETE,OPTIONS,PUT'",
         "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
         "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
       }
+    }
+  },
+  "x-amazon-apigateway-request-validators": {
+    "Validate query string parameters and headers": {
+      "validateRequestParameters": true,
+      "validateRequestBody": false
     }
   },
   "x-amazon-apigateway-binary-media-types": [

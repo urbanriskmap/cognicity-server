@@ -43,3 +43,4 @@ API Server for CogniCity
 * Updated documentation of Swagger files
 * Updated Babel package
 * Remove username field from GET /cards/:id
+* Fix bug with time series endpoints

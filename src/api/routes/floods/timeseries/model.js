@@ -19,8 +19,8 @@ export default (config, db, logger) => ({
     // Setup query
     let query = `SELECT ts, count(local_area) FROM
     (SELECT (cognicity.rem_get_flood(ts)).local_area, ts
-      FROM  generate_series($1::timestamp with time zone,
-            $2::timestamp with time zone,'1 hour')
+      FROM  generate_series(date_trunc('hour', $1::timestamp with time zone),
+            date_trunc('hour', $2::timestamp with time zone),'1 hour')
       as series(ts)) output
     GROUP BY ts ORDER BY ts`;
 

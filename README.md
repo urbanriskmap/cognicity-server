@@ -130,6 +130,7 @@ Before deployment:
 The release procedure is as follows:
 * Update the CHANGELOG.md file with the newly released version, date, and a high-level overview of changes. Commit the change.
 * Build code documentation and commit changes.
+* Download the latest version of the Swagger API file for include in the release
 * Create a tag in git from the current head of master. The tag version should be the same as the version specified in the package.json file - this is the release version.
 * Update the version in the package.json file and commit the change.
 * Further development is now on the updated version number until the release process begins again.

@@ -187,7 +187,6 @@ export default function(app, createdAt) {
                    test.fail(err.message + ' ' + JSON.stringify(res));
                  } else {
                    test.value(res.body.result.card_id).is(cardId);
-                   test.value(res.body.result.username).is('testuser');
                    test.value(res.body.result.network).is('test network');
                    test.value(res.body.result.language).is('en');
                    test.value(res.body.result.report.text)
@@ -226,7 +225,6 @@ export default function(app, createdAt) {
                        test.fail(err.message + ' ' + JSON.stringify(res));
                      } else {
                        test.value(res.body.result.card_id).is(cardId);
-                       test.value(res.body.result.username).is('testuser');
                        test.value(res.body.result.network).is('test network');
                        test.value(res.body.result.language).is('en');
                        test.value(res.body.result.report.text)

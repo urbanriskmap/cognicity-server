@@ -42,7 +42,7 @@ export default (config, db, logger) => ({
   allGeo: (city, minimumState) => new Promise((resolve, reject) => {
     // Setup query
     let query = `SELECT la.the_geom, la.pkey as area_id, la.geom_id,
-      la.area_name, la.parent_name, la.city_name, rs.state, rs.last_updated
+      la.area_name, la.parent_name, la.city_name, la.district_id::varchar, rs.state, rs.last_updated
       FROM ${config.TABLE_LOCAL_AREAS} la
       ${minimumState ? 'JOIN' : 'LEFT JOIN'}
       (SELECT local_area, state, last_updated FROM ${config.TABLE_REM_STATUS}

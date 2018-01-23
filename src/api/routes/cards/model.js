@@ -50,7 +50,7 @@ export default (config, db, logger) => ({
   // Return specific card by id
   byCardId: (cardId) => new Promise((resolve, reject) => {
     // Setup query
-    let query = `SELECT c.card_id, c.username, c.network, c.language,
+    let query = `SELECT c.card_id, c.network, c.language,
       c.received, CASE WHEN r.card_id IS NOT NULL THEN
         json_build_object('created_at', r.created_at, 'disaster_type',
         r.disaster_type, 'text', r.text, 'card_data', r.card_data, 'image_url',

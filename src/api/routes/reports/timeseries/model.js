@@ -18,8 +18,8 @@ export default (config, db, logger) => ({
   count: (start, end, city) => new Promise((resolve, reject) => {
     // Setup query
     let query = `SELECT ts, count(r.pkey)
-    FROM generate_series($1::timestamp with time zone,
-    $2::timestamp with time zone, '1 hour') ts
+    FROM generate_series(date_trunc('hour', $1::timestamp with time zone),
+    date_trunc('hour', $2::timestamp with time zone), '1 hour') ts
     LEFT JOIN cognicity.all_reports r
     ON date_trunc('hour', r.created_at) = ts
     AND ($3 IS NULL OR tags->>'instance_region_code'=$3)

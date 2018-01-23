@@ -119,5 +119,53 @@ export default function(app, reportid, createdAt) {
               }
            });
         });
+
+      // Can update report points
+      it('Update report points (PATCH /reports/:id)', function(done) {
+          test.httpAgent(app)
+            .patch('/reports/' + reportid)
+            .send({'points': -1})
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              } else {
+                done();
+              }
+           });
+        });
+
+      // Catch points value greather than -1
+      it('Catch points greater than -1 (PATCH /reports/:id)', function(done) {
+          test.httpAgent(app)
+            .patch('/reports/1')
+            .send({'points': -2})
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              } else {
+                done();
+              }
+           });
+        });
+
+      // Catch points value greather than 1
+      it('Catch points greater than 1 (PATCH /reports/:id)', function(done) {
+          test.httpAgent(app)
+            .patch('/reports/1')
+            .send({'points': 2})
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+              if (err) {
+                test.fail(err.message + ' ' + JSON.stringify(res));
+              } else {
+                done();
+              }
+           });
+        });
    });
 }

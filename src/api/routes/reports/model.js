@@ -58,4 +58,41 @@ export default (config, db, logger) => ({
         reject(err);
       });
   }),
+
+  // Update a report's points value
+  addPoint: (id, body) => new Promise((resolve, reject) => {
+    // Setup query
+    let query = `UPDATE ${config.TABLE_REPORTS} SET report_data =
+    (SELECT COALESCE(report_data::jsonb, '{}') || ('{"points":' ||
+      (COALESCE((report_data->>'points')::int, 0) + $2) || '}')::jsonb points
+      FROM ${config.TABLE_REPORTS} WHERE pkey = $1) WHERE pkey = $1
+      RETURNING report_data->>'points' as points`;
+
+    let values = [id, body.points];
+
+    // Execute
+    logger.debug(query, values);
+    db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
+      .then((data) => {
+        // Report points changes, update database log
+        let query = `INSERT INTO ${config.TABLE_REPORTS_POINTS_LOG}
+                      (report_id, value) VALUES ($1, $2)`;
+        let values = [id, body.points];
+        // Execute
+        db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
+          .then(() => {
+            resolve(data);
+          })
+          /* istanbul ignore next */
+          .catch((err) => {
+            /* istanbul ignore next */
+            reject(err);
+          });
+        })
+        /* istanbul ignore next */
+        .catch((err) => {
+          /* istanbul ignore next */
+          reject(err);
+        });
+    }),
 });

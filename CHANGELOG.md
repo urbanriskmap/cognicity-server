@@ -46,4 +46,4 @@ API Server for CogniCity
 * Fix bug with time series endpoints
 
 ### v3.0.6
-* Fix but with expiry time in CAP format of floods/ endpoint
+* Fix bug with expiry time in CAP format of floods/ endpoint

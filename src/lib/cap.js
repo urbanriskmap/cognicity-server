@@ -98,9 +98,6 @@ module.exports = class Cap {
     alert.sender = 'BPBD.JAKARTA.GOV.ID';
     alert.sent = moment.tz(feature.properties.last_updated,
                   self.config.CAP_TIMEZONE).format('YYYY-MM-DDTHH:mm:ssZ');
-    alert.expires = moment.tz(new Date().getTime()
-                + self.config.CAP_DEFAULT_EXPIRE_SECONDS * 1000,
-                  self.config.CAP_TIMEZONE).format('YYYY-MM-DDTHH:mm:ssZ');
     alert.status = 'Actual';
     alert.msgType = 'Alert';
     alert.scope = 'Public';
@@ -173,6 +170,11 @@ module.exports = class Cap {
     if (!info.area) {
       return;
     }
+
+    // Add expiry time to information
+    info.expires = moment.tz(new Date().getTime()
+                + self.config.CAP_DEFAULT_EXPIRE_SECONDS * 1000,
+                  self.config.CAP_TIMEZONE).format('YYYY-MM-DDTHH:mm:ssZ');
 
     return info;
   }

@@ -44,3 +44,6 @@ API Server for CogniCity
 * Updated Babel package
 * Remove username field from GET /cards/:id
 * Fix bug with time series endpoints
+
+### v3.0.6
+* Fix bug with expiry time in CAP format of floods/ endpoint

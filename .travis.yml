@@ -52,10 +52,10 @@ deploy: #build the docs for dev branch only
   - provider: elasticbeanstalk # deploy the dev us server
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
-    region: $AWS_EB_REGION
-    app: $AWS_EB_APP
+    region: $AWS_EB_REGION_US
+    app: $AWS_EB_APP_US
     env: $AWS_EB_APP_ENV_US_DEV
-    bucket_name: $AWS_EB_APP_BUCKET
+    bucket_name: $AWS_EB_APP_BUCKET_US_DEV
     skip_cleanup: true
     zip_file: dist.zip
     on:

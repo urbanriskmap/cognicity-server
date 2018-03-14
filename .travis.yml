@@ -37,13 +37,25 @@ after_success: npm run coverage
 
 before_deploy:
   - npm run jsdoc && cd jsdoc
+  - npm run build && zip -r dist.zip dist
 
 deploy: #build the docs for dev branch only
-  provider: s3
-  bucket: "dev-cognicity-server-docs"
-  region: "us-east-1"
-  access_key_id: $AWS_S3_ACCESS_KEY_ID
-  secret_access_key: $AWS_S3_SECRET_ACCESS_KEY
-  skip_cleanup: true
-  on:
-    branch: dev
+  - provider: s3
+    bucket: "dev-cognicity-server-docs"
+    region: "us-east-1"
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    skip_cleanup: true
+    on:
+      branch: dev
+  - provider: elasticbeanstalk # deploy the dev us server
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    region: $AWS_EB_REGION
+    app: $AWS_EB_APP
+    env: $AWS_EB_APP_ENV_US_DEV
+    bucket_name: $AWS_EB_APP_BUCKET
+    skip_cleanup: true,
+    zip_file: dist.zip
+    on:
+      branch: dev

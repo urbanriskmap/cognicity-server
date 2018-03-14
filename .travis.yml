@@ -36,8 +36,8 @@ install:
 after_success: npm run coverage
 
 before_deploy:
-  - npm run jsdoc && cd jsdoc
-  - npm run build && pwd && ls
+  - npm run jsdoc
+  - npm run build && zip -r dist.zip dist
 
 deploy: #build the docs for dev branch only
   - provider: s3
@@ -46,6 +46,7 @@ deploy: #build the docs for dev branch only
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     skip_cleanup: true
+    local_dir: jsdoc
     on:
       branch: dev
   - provider: elasticbeanstalk # deploy the dev us server

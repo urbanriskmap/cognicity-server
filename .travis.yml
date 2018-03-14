@@ -37,7 +37,7 @@ after_success: npm run coverage
 
 before_deploy:
   - npm run jsdoc
-  - npm run build && zip -r dist.zip dist
+  - npm run build && zip -r dist.zip . -x "*node_modules*" "*.git*" "*src*" "*jsdoc*"
 
 deploy: #build the docs for dev branch only
   - provider: s3

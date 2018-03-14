@@ -37,8 +37,7 @@ after_success: npm run coverage
 
 before_deploy:
   - npm run jsdoc && cd jsdoc
-  - npm run build
-  - zip -r dist.zip dist
+  - npm run build && zip -r dist.zip dist
 
 deploy: #build the docs for dev branch only
   - provider: s3
@@ -56,7 +55,7 @@ deploy: #build the docs for dev branch only
     app: $AWS_EB_APP
     env: $AWS_EB_APP_ENV_US_DEV
     bucket_name: $AWS_EB_APP_BUCKET
-    skip_cleanup: true,
+    skip_cleanup: true
     zip_file: dist.zip
     on:
       branch: dev

@@ -49,3 +49,4 @@ API Server for CogniCity
 * Fix bug with expiry time in CAP format of floods/ endpoint
 * Updated Moment (known vulnerability in v2.18.1)
 * Test against PostgreSQL v10 (PostGIS 2.4)
+* Remove ?format from /reports endpoint

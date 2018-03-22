@@ -37,7 +37,6 @@ export default ({config, db, logger}) => {
         timeperiod: Joi.number().integer().positive()
           .max(config.API_REPORTS_TIME_WINDOW_MAX)
           .default(config.API_REPORTS_TIME_WINDOW),
-        format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
         geoformat: Joi.any().valid(config.GEO_FORMATS)
           .default(config.GEO_FORMAT_DEFAULT),
       },

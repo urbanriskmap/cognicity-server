@@ -68,7 +68,7 @@ export default function(app) {
 
     it('Can get reports between given timestamps as geojson', function(done) {
         test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end='+end+'&format=json&geoformat=geojson')
+          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end='+end+'&geoformat=geojson')
           .expect(200)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -87,7 +87,7 @@ export default function(app) {
 
     it('Can get reports between timestamps as topojson', function(done) {
         test.httpAgent(app)
-          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&format=json&geoformat=topojson')
+          .get('/reports/archive?start=2017-06-07T00:00:00%2B0700&end=2017-06-08T23:00:00%2B0700&geoformat=topojson')
           .expect(200)
           .expect('Content-Type', /json/)
           .end(function(err, res) {

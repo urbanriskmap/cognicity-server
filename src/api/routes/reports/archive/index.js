@@ -36,7 +36,6 @@ export default ({config, db, logger}) => {
         start: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
         end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ')
           .min(Joi.ref('start')).required(),
-        format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
         geoformat: Joi.any().valid(config.GEO_FORMATS)
           .default(config.GEO_FORMAT_DEFAULT),
       },

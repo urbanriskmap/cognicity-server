@@ -30,12 +30,11 @@ export default ({config, db, logger}) => {
     validate({
       query: {
         city: Joi.any().valid(config.REGION_CODES),
-        format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
         geoformat: Joi.any().valid(config.GEO_FORMATS)
           .default(config.GEO_FORMAT_DEFAULT),
       },
     }),
-    (req, res, next) => floodgauges(config, db, logger).all()
+    (req, res, next) => floodgauges(config, db, logger).all(req.query.city)
       .then((data) => handleGeoResponse(data, req, res, next))
       .catch((err) => {
         /* istanbul ignore next */
@@ -50,7 +49,6 @@ export default ({config, db, logger}) => {
     validate({
       params: {id: Joi.number().integer().required()},
       query: {
-        format: Joi.any().valid(config.FORMATS).default(config.FORMAT_DEFAULT),
         geoformat: Joi.any().valid(config.GEO_FORMATS)
           .default(config.GEO_FORMAT_DEFAULT),
       },

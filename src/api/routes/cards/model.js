@@ -100,6 +100,10 @@ export default (config, db, logger) => ({
               VALUES ($1, $2)`,
         values: [card.card_id, 'REPORT SUBMITTED'],
       },
+      {
+        query: `SELECT * FROM grasp.push_to_all_reports($1)`,
+        values: [card.card_id],
+      },
     ];
 
     // Log queries to debugger
@@ -107,7 +111,7 @@ export default (config, db, logger) => ({
 
     // Execute in a transaction as both INSERT and UPDATE must happen together
     db.tx((t) => {
-      return t.batch(queries.map((query) => t.none(query.query, query.values)));
+      return t.batch(queries.map((query) => t.oneOrNone(query.query, query.values)));
     }).timeout(config.PGTIMEOUT)
       .then((data) => resolve(data))
       /* istanbul ignore next */

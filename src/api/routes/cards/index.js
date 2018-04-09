@@ -150,6 +150,8 @@ export default ({config, db, logger}) => {
             // Try and submit the report and update the card
             cards(config, db, logger).submitReport(card, req.body)
               .then((data) => {
+                console.log(data[3].push_to_all_reports);
+                // publish a notify event
                 clearCache();
                 res.status(200).json({statusCode: 200,
                   cardId: req.params.cardId, created: true});

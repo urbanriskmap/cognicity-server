@@ -101,7 +101,7 @@ export default (config, db, logger) => ({
         values: [card.card_id, 'REPORT SUBMITTED'],
       },
       {
-        query: `SELECT * FROM grasp.push_to_all_reports($1)`,
+        query: `SELECT * FROM grasp.push_to_all_reports($1) as notify`,
         values: [card.card_id],
       },
     ];
@@ -111,9 +111,11 @@ export default (config, db, logger) => ({
 
     // Execute in a transaction as both INSERT and UPDATE must happen together
     db.tx((t) => {
-      return t.batch(queries.map((query) => t.oneOrNone(query.query, query.values)));
+      return t.batch(queries.map((query) =>
+        t.oneOrNone(query.query, query.values)));
     }).timeout(config.PGTIMEOUT)
-      .then((data) => resolve(data))
+      // return result from push function query
+      .then((data) => resolve(JSON.parse(data[3].notify)))
       /* istanbul ignore next */
       .catch((err) => {
         /* istanbul ignore next */

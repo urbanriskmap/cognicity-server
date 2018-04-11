@@ -12,7 +12,7 @@ import moment from 'moment-timezone';
 // Cap class
 module.exports = class Cap {
   /**
-   * Setup the CAP object to user specified logger
+   * Setup the CAP object to use specified logger
    * @alias module:lib/cap
    * @param {Object} config Server configuration
    * @param {Object} logger Configured Winston logger instance

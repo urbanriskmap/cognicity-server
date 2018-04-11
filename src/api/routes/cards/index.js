@@ -162,8 +162,8 @@ export default ({config, db, logger}) => {
                     logger.info('Notification request succesfully submitted');
                     logger.debug(JSON.stringify(data));
                   }).catch((err) => {
-                    logger.error('Error with notification request. Response was ' +
-                      JSON.stringify(err));
+                    logger.error(`Error with notification request. 
+                      Response was ` + JSON.stringify(err));
                   });
                 clearCache();
                 // Report success

@@ -32,9 +32,10 @@ export default class Notify {
                 {'headers': {'x-api-key': this.apikey}})
                 .then((response) => {
                     resolve(response);
-}
+                    }
                 )
                 .catch((err) => {
+                    console.log('err object: ', err);
                     // Return response error object (contains error details)
                     reject(err.response.data);
                 });

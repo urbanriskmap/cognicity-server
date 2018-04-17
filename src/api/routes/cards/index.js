@@ -160,7 +160,6 @@ export default ({config, db, logger}) => {
                 notify.send(data)
                   .then((data) => {
                     logger.info('Notification request succesfully submitted');
-                    logger.debug(JSON.stringify(data));
                   }).catch((err) => {
                     logger.error(`Error with notification request. 
                       Response was ` + JSON.stringify(err));

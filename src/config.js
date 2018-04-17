@@ -53,6 +53,8 @@ export default {
   LOG_MAX_FILE_SIZE: process.env.LOG_MAX_FILE_SIZE || 1024 * 1024 * 100,
   LOG_MAX_FILES: process.env.LOG_MAX_FILES || 10,
   NODE_ENV: process.env.NODE_ENV || 'development',
+  NOTIFY_API_KEY: process.env.NOTIFY_API_KEY || '',
+  NOTIFY_ENDPOINT: process.env.NOTIFY_ENDPOINT || 'api.petabencana.id/notify',
   PGHOST: process.env.PGHOST || '127.0.0.1',
   PGDATABASE: process.env.PGDATABASE || 'cognicity',
   PGPASSWORD: process.env.PGPASSWORD || 'p@ssw0rd',

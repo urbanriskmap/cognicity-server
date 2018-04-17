@@ -10,6 +10,9 @@ import cards from './model';
 // Import any required utility functions
 import {cacheResponse, handleResponse} from '../../../lib/util';
 
+// Import notify class
+import Notify from '../../../lib/notify';
+
 // Import validation dependencies
 import Joi from 'joi';
 import validate from 'celebrate';
@@ -46,6 +49,9 @@ export default ({config, db, logger}) => {
       signatureVersion: config.AWS_S3_SIGNATURE_VERSION,
       region: config.AWS_REGION,
     });
+
+  // Create a notify object
+  let notify = new Notify(config, logger);
 
   // Create a new card and if successful return generated cardId
   api.post('/',
@@ -150,7 +156,17 @@ export default ({config, db, logger}) => {
             // Try and submit the report and update the card
             cards(config, db, logger).submitReport(card, req.body)
               .then((data) => {
+                // Submit a request to notify the user report received
+                notify.send(data)
+                  .then((data) => {
+                    logger.info('Notification request succesfully submitted');
+                    logger.debug(JSON.stringify(data));
+                  }).catch((err) => {
+                    logger.error(`Error with notification request. 
+                      Response was ` + JSON.stringify(err));
+                  });
                 clearCache();
+                // Report success
                 res.status(200).json({statusCode: 200,
                   cardId: req.params.cardId, created: true});
               })

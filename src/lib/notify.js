@@ -24,18 +24,24 @@ export default class Notify {
      * @param {String} body.instanceRegionCode - region code of report
      * @param {String} body.language - language of report
      * @param {String} body.username - user network identifier
+     * @param {String} body.network - social network
      * @return {Promise} - response
      */
     send(body) {
         return new Promise((resolve, reject) => {
-            this.axios.post(this.endpoint, body,
+            // Construct endpoint
+            const endpoint = this.endpoint + body.network + '/send/';
+            // Re-map username to userId as required by Lambda service
+            body.userId = body.username;
+            delete(body.username);
+            // Request notification
+            this.axios.post(endpoint, body,
                 {'headers': {'x-api-key': this.apikey}})
                 .then((response) => {
                     resolve(response);
                     }
                 )
                 .catch((err) => {
-                    console.log('err object: ', err);
                     // Return response error object (contains error details)
                     reject(err.response.data);
                 });

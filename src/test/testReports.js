@@ -34,7 +34,7 @@ export default function(app, reportid, createdAt) {
     // Can get reports as geojson
     it('Get all reports as geojson', function(done) {
         test.httpAgent(app)
-          .get('/reports?format=json&geoformat=geojson')
+          .get('/reports?geoformat=geojson')
           .expect(200)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -49,7 +49,7 @@ export default function(app, reportid, createdAt) {
     // Can get reports as geojson
     it('Get all reports as topojson', function(done) {
         test.httpAgent(app)
-          .get('/reports?format=json&geoformat=topojson')
+          .get('/reports?geoformat=topojson')
           .expect(200)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
@@ -94,7 +94,7 @@ export default function(app, reportid, createdAt) {
       // Can report by id
       it('Get reports/:id endpoint', function(done) {
           test.httpAgent(app)
-            .get('/reports/'+reportid+'?format=json&geoformat=geojson')
+            .get('/reports/'+reportid+'?geoformat=geojson')
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {

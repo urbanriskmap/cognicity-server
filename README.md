@@ -123,8 +123,7 @@ Docs are hosted at https://urbanriskmap.github.io/cognicity-server/jsdoc/
 Before deployment:
 * Use NVM to switch to node and NPM versions specified in package.json for production
 * Run npm install
-* Run npm shrinkwrap --dev
-* Commit changes to npm-shrinkwrap.json
+* Commit changes to package-lock.json
 
 ### Release
 The release procedure is as follows:

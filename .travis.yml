@@ -1,17 +1,8 @@
 dist: trusty
 language: node_js
 node_js:
-   - "8.1.4"
+   - "8.9.3"
 sudo: true
-
-notifications:
-  slack: miturbanrisklab:4y7wfdHde8dtfb00wTfNZfTA
-
-addons:
-  postgresql: "9.5"
-  apt:
-    packages:
-      - postgresql-9.5-postgis-2.3
 
 branches:
   only:
@@ -20,7 +11,21 @@ branches:
     - server-object-refactor
     - report-archive
 
+notifications:
+  slack: miturbanrisklab:4y7wfdHde8dtfb00wTfNZfTA
+
+addons:
+  postgresql: "10"
+  apt:
+    packages:
+      - postgresql-10-postgis-2.4
+      - proj-bin
+      - postgresql-10-postgis-2.4-scripts
+
 before_install:
+  - sudo cp /etc/postgresql/9.6/main/pg_hba.conf /etc/postgresql/10/main/pg_hba.conf
+  - sudo /etc/init.d/postgresql restart
+  - export PGPORT=5433
   - npm i -g npm@5.0.3
   - if [[ $TRAVIS_BRANCH != 'master' ]]; then BRANCH='dev'; else BRANCH='master'; fi;
   - export PGDATABASE=cognicity_server_testing ; git clone -b $BRANCH https://github.com/urbanriskmap/cognicity-schema.git urbanriskmap/cognicity-schema && cd urbanriskmap/cognicity-schema && bash build/run.sh && cd -
@@ -28,17 +33,41 @@ before_install:
 install:
   - npm install
 
-after_success: npm run coverage 
+after_success: npm run coverage
 
 before_deploy:
-  - npm run jsdoc && cd jsdoc
+  - npm run jsdoc
+  - npm run build && zip -r dist.zip . -x "*node_modules*" "*.git*" "*src*" "*jsdoc*"
 
 deploy: #build the docs for dev branch only
-  provider: s3
-  bucket: "dev-cognicity-server-docs"
-  region: "us-east-1"
-  access_key_id: $AWS_S3_ACCESS_KEY_ID
-  secret_access_key: $AWS_S3_SECRET_ACCESS_KEY
-  skip_cleanup: true
-  on:
-    branch: dev
+  - provider: s3
+    bucket: "dev-cognicity-server-docs"
+    region: "us-east-1"
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    skip_cleanup: true
+    local_dir: jsdoc
+    on:
+      branch: dev
+  - provider: elasticbeanstalk # deploy the dev us server
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    region: $AWS_EB_REGION_US
+    app: $AWS_EB_APP_US
+    env: $AWS_EB_APP_ENV_US_DEV
+    bucket_name: $AWS_EB_APP_BUCKET_US_DEV
+    skip_cleanup: true
+    zip_file: dist.zip
+    on:
+      branch: dev
+  - provider: elasticbeanstalk # deploy the dev us server
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    region: $AWS_EB_REGION_US
+    app: $AWS_EB_APP_US
+    env: $AWS_EB_APP_ENV_US_PROD
+    bucket_name: $AWS_EB_APP_BUCKET_US_PROD
+    skip_cleanup: true
+    zip_file: dist.zip
+    on:
+      branch: master

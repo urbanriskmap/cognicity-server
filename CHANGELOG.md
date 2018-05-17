@@ -51,3 +51,4 @@ API Server for CogniCity
 * Test against PostgreSQL v10 (PostGIS 2.4)
 * Remove ?format option from /reports endpoint
 * Change floods endpoint to return new attributes column
+* Requires cognicity-schema v3.0.7 or later

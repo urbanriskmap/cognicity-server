@@ -52,3 +52,4 @@ API Server for CogniCity
 * Remove ?format option from /reports endpoint
 * Change floods endpoint to return new attributes column
 * Requires cognicity-schema v3.0.7 or later
+* Updated npm packages

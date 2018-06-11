@@ -246,5 +246,4 @@ module.exports = class Cap {
 
     return area;
   }
-
 };

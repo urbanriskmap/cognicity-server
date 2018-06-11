@@ -70,127 +70,129 @@ let token = jwt.sign({},
   config.CORS = true;
   config.RESPONSE_TIME = true;
 
-  // Initialise
-  init(config, initializeDb, routes, logger).then((app) => {
-    testServer(app);
-    testCards(app, createdAt);
-    testCities(app);
-    testFeeds(app);
-    testFloodgauges(app);
-    testInfrastructure(app);
-    testFloods(app, token);
-    testFloodsArchive(app);
-    testFloodsTimeseries(app);
-    testReports(app, reportid, createdAt);
-    testReportsArchive(app);
-    testReportsTimeseries(app);
-    testCAP(config, logger);
-    testDB();
+      // Initialise
+      init(config, initializeDb, routes, logger).then((app) => {
+        testServer(app);
+        testCards(app, createdAt);
+        testCities(app);
+        testFeeds(app);
+        testFloodgauges(app);
+        testInfrastructure(app);
+        testFloods(app, token);
+        testFloodsArchive(app);
+        testFloodsTimeseries(app);
+        testReports(app, reportid, createdAt);
+        testReportsArchive(app);
+        testReportsTimeseries(app);
+        testCAP(config, logger);
+        testDB();
 
-    // Removes dummy data
-    describe('Cleans up', function() {
-     let db = pgp(PG_CONFIG_STRING);
-     it('Removes dummy report data', function(done) {
-     let query = `DELETE FROM ${config.TABLE_REPORTS}
-          WHERE source = 'grasp'
-          AND text = 'integration testing';`;
+        // Removes dummy data
+        describe('Cleans up', function() {
+        let db = pgp(PG_CONFIG_STRING);
+        it('Removes dummy report data', function(done) {
+        let query = `DELETE FROM ${config.TABLE_REPORTS}
+              WHERE source = 'grasp'
+              AND text = 'integration testing';`;
 
-       db.none(query)
-        .then(() => {
-          done();
-        })
-        .catch((error) => console.log(error));
-     });
+          db.none(query)
+            .then(() => {
+              done();
+            })
+            .catch((error) => console.log(error));
+        });
 
-     it('Removes dummy cards data', function(done) {
-       let query = `DELETE FROM ${config.TABLE_GRASP_CARDS}
-          WHERE username = 'testuser'
-          AND network = 'test network';`;
+        it('Removes dummy cards data', function(done) {
+          let query = `DELETE FROM ${config.TABLE_GRASP_CARDS}
+              WHERE username = 'testuser'
+              AND network = 'test network';`;
 
-        db.none(query)
-          .then(() => {
-            done();
-          })
-          .catch((error) => console.log(error));
-     });
+            db.none(query)
+              .then(() => {
+                done();
+              })
+              .catch((error) => console.log(error));
+        });
 
-     it('Removes dummy cards data', function(done) {
-       let query = `DELETE FROM ${config.TABLE_GRASP_REPORTS}
-          WHERE text = 'integration testing';`;
+        it('Removes dummy cards data', function(done) {
+          let query = `DELETE FROM ${config.TABLE_GRASP_REPORTS}
+              WHERE text = 'integration testing';`;
 
-      db.none(query)
-        .then(() => {
-          done();
-        })
-        .catch((error) => console.log(error));
-     });
+          db.none(query)
+            .then(() => {
+              done();
+            })
+            .catch((error) => console.log(error));
+        });
 
-     // Remove dummy data from REM floods table
-     it('Removes dummy flood data', function(done) {
-      let query = `DELETE FROM ${config.TABLE_REM_STATUS} WHERE local_area = 5`;
+        // Remove dummy data from REM floods table
+        it('Removes dummy flood data', function(done) {
+          let query = `DELETE FROM ${config.TABLE_REM_STATUS} 
+            WHERE local_area = 5`;
 
-      db.none(query)
-        .then(() => {
-          done();
-        })
-        .catch((error) => console.log(error));
-     });
+          db.none(query)
+            .then(() => {
+              done();
+            })
+            .catch((error) => console.log(error));
+        });
 
-     // Remove dummy data from REM floods table
-     it('Removes dummy flood data from log', function(done) {
-      let query = `DELETE FROM ${config.TABLE_REM_STATUS_LOG}
-                    WHERE username = 'testing'`;
-        db.none(query)
-          .then(() => {
-            done();
-          })
-          .catch((error) => console.log(error));
-       });
+        // Remove dummy data from REM floods table
+        it('Removes dummy flood data from log', function(done) {
+          let query = `DELETE FROM ${config.TABLE_REM_STATUS_LOG}
+                        WHERE username = 'testing'`;
+            db.none(query)
+              .then(() => {
+                done();
+              })
+              .catch((error) => console.log(error));
+          });
 
 
-     // Remove dummy data from qlue table
-     it('Removes dummy qlue data', function(done) {
-      let query =`DELETE FROM ${config.TABLE_FEEDS_QLUE} WHERE pkey = 9999`;
-      db.none(query)
-        .then(() => {
-          done();
-        })
-        .catch((error) => console.log(error));
-     });
+        // Remove dummy data from qlue table
+        it('Removes dummy qlue data', function(done) {
+          let query =`DELETE FROM ${config.TABLE_FEEDS_QLUE} WHERE pkey = 9999`;
+          db.none(query)
+            .then(() => {
+              done();
+            })
+            .catch((error) => console.log(error));
+        });
 
-     // Remove dummy qlue data from all reports table
-     it('Removes dummy qlue data', function(done) {
-      let query = `DELETE FROM ${config.TABLE_REPORTS}
-          WHERE fkey = 9999 AND source = 'qlue'`;
-      db.none(query)
-        .then(() => {
-          done();
-        })
-        .catch((error) => console.log(error));
-     });
+        // Remove dummy qlue data from all reports table
+        it('Removes dummy qlue data', function(done) {
+          let query = `DELETE FROM ${config.TABLE_REPORTS}
+              WHERE fkey = 9999 AND source = 'qlue'`;
+          db.none(query)
+            .then(() => {
+              done();
+            })
+            .catch((error) => console.log(error));
+        });
 
-     // Remove dummy data from detik table
-     it('Removes dummy detik data', function(done) {
-      let query = `DELETE FROM ${config.TABLE_FEEDS_DETIK} WHERE pkey = 9999`;
-      db.none(query)
-        .then(() => {
-          done();
-        })
-        .catch((error) => console.log(error));
-       });
+        // Remove dummy data from detik table
+        it('Removes dummy detik data', function(done) {
+          let query = `DELETE FROM ${config.TABLE_FEEDS_DETIK} 
+            WHERE pkey = 9999`;
+          db.none(query)
+            .then(() => {
+              done();
+            })
+            .catch((error) => console.log(error));
+          });
 
-     // Remove dummy detik data from all reports table
-     it('Removes dummy detik data', function(done) {
-      let query = `DELETE FROM ${config.TABLE_REPORTS}
-          WHERE fkey = 9999 AND source = 'detik'`;
-      db.none(query)
-        .then(() => {
-          done();
-        })
-        .catch((error) => console.log(error));
-     });
-     return (done());
-   });
- });
+        // Remove dummy detik data from all reports table
+        it('Removes dummy detik data', function(done) {
+          let query = `DELETE FROM ${config.TABLE_REPORTS}
+              WHERE fkey = 9999 AND source = 'detik'`;
+          db.none(query)
+            .then(() => {
+              done();
+            })
+            .catch((error) => console.log(error));
+        });
+        return (done());
+      });
+    });
   });
 });

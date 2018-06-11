@@ -11,7 +11,7 @@
     "build": "babel src -s -D -d dist",
     "start": "node dist",
     "prestart": "npm run -s build",
-    "mocha": "nyc mocha --require babel-core/register src/test/",
+    "mocha": "nyc mocha --exit --require babel-core/register src/test/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint src",
     "test": "npm run lint & npm run mocha",

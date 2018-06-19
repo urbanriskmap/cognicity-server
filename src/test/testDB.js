@@ -5,7 +5,7 @@
  * A module to test the db utility module
  */
 
-import * as test from 'unit.js';  // Unit testing module
+import * as test from 'unit.js'; // Unit testing module
 import initializeDb from '../db'; // Database utility
 
 /**

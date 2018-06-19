@@ -5,7 +5,7 @@
  */
 
 import * as test from 'unit.js'; // Unit testing module
-import Cap from '../lib/cap';    // Cap formatter helper
+import Cap from '../lib/cap'; // Cap formatter helper
 
 
 /**

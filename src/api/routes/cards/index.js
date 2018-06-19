@@ -126,7 +126,7 @@ export default ({config, db, logger}) => {
         .when('disaster_type', {
             is: 'flood',
             then: Joi.object({flood_depth: Joi.number().integer().min(0)
-              .max(200).required()}),    // b.c is required only when a is true
+              .max(200).required()}), // b.c is required only when a is true
         }),
       text: Joi.string().allow(''),
       image_url: Joi.string().allow(''),

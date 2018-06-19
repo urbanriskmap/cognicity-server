@@ -53,3 +53,5 @@ API Server for CogniCity
 * Change floods endpoint to return new attributes column
 * Requires cognicity-schema v3.0.7 or later
 * Updated npm packages
+
+### v3.1.0

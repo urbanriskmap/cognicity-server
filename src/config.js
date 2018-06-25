@@ -44,7 +44,7 @@ export default {
   IMAGES_BUCKET: process.env.IMAGES_BUCKET || 'petabencana-image-uploads',
   IMAGES_HOST: process.env.IMAGES_HOST || 'images.petabencana.id',
   IMAGE_MIME_TYPES: (process.env.IMAGE_MIME_TYPES || 'image/png,image/jpeg,image/gif').split(','),
-  INFRASTRUCTURE_TYPES: (process.env.INFRASTRUCTURE_TYPES || 'floodgates,pumps,sites,waterways').split(','),
+  INFRASTRUCTURE_TYPES: (process.env.INFRASTRUCTURE_TYPES || 'basins,floodgates,pumps,sites,waterways').split(','),
   LANGUAGES: (process.env.LANGUAGES || 'en,id').split(','),
   LOG_CONSOLE: process.env.LOG_CONSOLE === 'true' || false,
   LOG_DIR: process.env.LOG_DIR || '',

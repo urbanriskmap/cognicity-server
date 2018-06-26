@@ -87,7 +87,7 @@ export default ({config, db, logger}) => {
             message: 'format must be \'json\' when geoformat '
                       +'IN (\'geojson\',\'topojson\')'});
       } else {
-floods(config, db, logger).allGeo(req.query.city, req.query.minimum_state)
+        floods(config, db, logger).allGeo(req.query.city, req.query.minimum_state)
         .then((data) =>
           req.query.geoformat === 'cap' ?
             // If CAP format has been required convert to geojson then to CAP
@@ -110,7 +110,7 @@ floods(config, db, logger).allGeo(req.query.city, req.query.minimum_state)
           /* istanbul ignore next */
           next(err);
         });
-}
+      }
     }
   );
 

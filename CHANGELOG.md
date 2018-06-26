@@ -55,3 +55,4 @@ API Server for CogniCity
 * Updated npm packages
 
 ### v3.1.0
+* Add city query parameter to /floods/timeseries and /floods/archive endpoints

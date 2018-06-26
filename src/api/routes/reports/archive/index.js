@@ -14,7 +14,6 @@ import {cacheResponse, handleGeoResponse} from '../../../../lib/util';
 import BaseJoi from 'joi';
 import Extension from 'joi-date-extensions';
 const Joi = BaseJoi.extend(Extension);
-
 import validate from 'celebrate';
 /**
  * Methods to get historic flood reports from database

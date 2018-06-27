@@ -4,7 +4,7 @@
     "version": "2017-05-11T05:43:00Z",
     "title": "cognicity"
   },
-  "host": "data.riskmap.in",
+  "host": "data-dev.riskmap.in",
   "schemes": [
     "https"
   ],
@@ -23,12 +23,12 @@
           }
         },
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in",
           "responses": {
             "default": {
               "statusCode": "200"
             }
           },
-          "uri": "https://${stageVariables.env}.riskmap.in",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "type": "http_proxy"
@@ -54,12 +54,12 @@
           }
         ],
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/cards",
           "responses": {
             "default": {
               "statusCode": "200"
             }
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/cards",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "type": "http_proxy"
@@ -102,10 +102,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -148,10 +148,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -213,6 +213,7 @@
           }
         },
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/cards/{cardId}",
           "responses": {
             "400": {
               "statusCode": "400",
@@ -248,7 +249,6 @@
           "requestParameters": {
             "integration.request.path.cardId": "method.request.path.cardId"
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/cards/{cardId}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
           "type": "http"
@@ -288,6 +288,7 @@
           }
         },
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/cards/{cardId}/images",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -300,7 +301,6 @@
             "integration.request.path.cardId": "method.request.path.cardId",
             "integration.request.header.content-type": "method.request.header.content-type"
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/cards/{cardId}/images",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "type": "http"
@@ -343,10 +343,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -379,12 +379,12 @@
           }
         },
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/cities",
           "responses": {
             "default": {
               "statusCode": "200"
             }
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/cities",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "h1la88",
@@ -432,10 +432,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -478,10 +478,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -510,6 +510,7 @@
           }
         ],
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/feeds/qlue",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -518,7 +519,6 @@
               }
             }
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/feeds/qlue",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
           "type": "http"
@@ -561,10 +561,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -608,6 +608,7 @@
           }
         },
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/floodgauges",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -621,7 +622,6 @@
             "integration.request.querystring.geoformat": "method.request.querystring.geoformat",
             "integration.request.querystring.format": "method.request.querystring.format"
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/floodgauges",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "so358j",
@@ -670,10 +670,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -716,10 +716,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -740,6 +740,7 @@
         ],
         "responses": {},
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/floodgauges/{id}",
           "responses": {
             "default": {
               "statusCode": "200"
@@ -748,7 +749,6 @@
           "requestParameters": {
             "integration.request.path.id": "method.request.path.id"
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/floodgauges/{id}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
           "cacheNamespace": "p829iq",
@@ -808,6 +808,7 @@
           }
         },
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/floods/",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -823,7 +824,6 @@
             "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state",
             "integration.request.querystring.format": "method.request.querystring.format"
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/floods/",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "nvy9s5",
@@ -857,10 +857,10 @@
               "statusCode": "200"
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -901,10 +901,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -948,6 +948,7 @@
           }
         },
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/floods/states",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -961,7 +962,6 @@
             "integration.request.querystring.minimum_state": "method.request.querystring.minimum_state",
             "integration.request.querystring.format": "method.request.querystring.format"
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/floods/states",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "cxp4qo",
@@ -1010,10 +1010,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1056,10 +1056,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1080,6 +1080,7 @@
         ],
         "responses": {},
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/floods/{id}",
           "responses": {
             "default": {
               "statusCode": "200"
@@ -1088,7 +1089,6 @@
           "requestParameters": {
             "integration.request.path.id": "method.request.path.id"
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/floods/{id}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
           "cacheNamespace": "8q9uet",
@@ -1138,10 +1138,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
@@ -1184,10 +1184,10 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       },
@@ -1220,6 +1220,7 @@
         ],
         "responses": {},
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/infrastructure/{type}",
           "responses": {
             "default": {
               "statusCode": "200"
@@ -1228,7 +1229,6 @@
           "requestParameters": {
             "integration.request.path.type": "method.request.path.type"
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/infrastructure/{type}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "ANY",
           "cacheNamespace": "qtdnlp",
@@ -1287,6 +1287,7 @@
           }
         },
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/reports",
           "responses": {
             "default": {
               "statusCode": "200",
@@ -1301,7 +1302,6 @@
             "integration.request.querystring.timeperiod": "method.request.querystring.timeperiod",
             "integration.request.querystring.format": "method.request.querystring.format"
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/reports",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "cacheNamespace": "8vxlp8",
@@ -1351,15 +1351,39 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
       }
     },
-    "/reports/{id+}": {
+    "/reports/archive": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/reports/archive",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "type": "http_proxy"
+        }
+      },
       "options": {
         "consumes": [
           "application/json"
@@ -1392,26 +1416,95 @@
               "statusCode": "200",
               "responseParameters": {
                 "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
+          "passthroughBehavior": "when_no_match",
           "type": "mock"
         }
-      },
-      "x-amazon-apigateway-any-method": {
-        "parameters": [
-          {
-            "name": "format",
-            "in": "query",
-            "required": false,
-            "type": "string"
+      }
+    },
+    "/reports/timeseries": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.us/reports/timeseries",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
           },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "GET",
+          "type": "http_proxy"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
           {
             "name": "id",
             "in": "path",
@@ -1419,8 +1512,16 @@
             "type": "string"
           }
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/reports/{id}",
           "responses": {
             "default": {
               "statusCode": "200"
@@ -1429,19 +1530,11 @@
           "requestParameters": {
             "integration.request.path.id": "method.request.path.id"
           },
-          "uri": "https://${stageVariables.env}.riskmap.in/reports/{id}",
           "passthroughBehavior": "when_no_match",
-          "httpMethod": "ANY",
-          "cacheNamespace": "5tep32",
-          "cacheKeyParameters": [
-            "method.request.path.id",
-            "method.request.querystring.format"
-          ],
+          "httpMethod": "GET",
           "type": "http_proxy"
         }
-      }
-    },
-    "/stats": {
+      },
       "options": {
         "consumes": [
           "application/json"
@@ -1479,176 +1572,24 @@
               }
             }
           },
-          "passthroughBehavior": "when_no_match",
           "requestTemplates": {
             "application/json": "{\"statusCode\": 200}"
           },
-          "type": "mock"
-        }
-      }
-    },
-    "/stats/floodedRWsSummary": {
-      "get": {
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "uri": "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:917524458155:function:cognicity-statistics-${stageVariables.stage}-floodedRWsSummary/invocations",
           "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws_proxy"
+          "type": "mock"
         }
       },
-      "options": {
-        "consumes": [
-          "application/json"
-        ],
+      "patch": {
         "produces": [
           "application/json"
         ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Methods": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Headers": {
-                "type": "string"
-              }
-            }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "passthroughBehavior": "when_no_match",
-          "requestTemplates": {
-            "application/json": "{\"statusCode\": 200}"
-          },
-          "type": "mock"
-        }
-      }
-    },
-    "/stats/floodedRegionsSummary": {
-      "get": {
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "uri": "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:917524458155:function:cognicity-statistics-${stageVariables.stage}-floodedRegionsSummary/invocations",
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws_proxy"
-        }
-      },
-      "options": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Methods": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Headers": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "passthroughBehavior": "when_no_match",
-          "requestTemplates": {
-            "application/json": "{\"statusCode\": 200}"
-          },
-          "type": "mock"
-        }
-      }
-    },
-    "/stats/reportsSummary": {
-      "get": {
-        "produces": [
-          "application/json"
         ],
         "responses": {
           "200": {
@@ -1659,148 +1600,18 @@
           }
         },
         "x-amazon-apigateway-integration": {
+          "uri": "https://${stageVariables.env}.riskmap.in/reports/{id}",
           "responses": {
             "default": {
               "statusCode": "200"
             }
           },
-          "uri": "arn:aws:apigateway:ap-south-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-south-1:917524458155:function:cognicity-statistics-${stageVariables.stage}-reportsSummary/invocations",
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws_proxy"
-        }
-      },
-      "options": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Methods": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Headers": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
+          "requestParameters": {
+            "integration.request.path.id": "method.request.path.id"
           },
           "passthroughBehavior": "when_no_match",
-          "requestTemplates": {
-            "application/json": "{\"statusCode\": 200}"
-          },
-          "type": "mock"
-        }
-      }
-    },
-    "/twilio": {
-      "post": {
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
-        "produces": [
-          "text/xml"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            ".*": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "responseTemplates": {
-                "text/xml": "#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))\n$errorMessageObj.message\n"
-              }
-            }
-          },
-          "uri": "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:917524458155:function:twilio/invocations",
-          "passthroughBehavior": "when_no_templates",
-          "httpMethod": "POST",
-          "requestTemplates": {
-            "application/x-www-form-urlencoded": "{\n        \"reqbody\":\"$input.path('$')\"\n}"
-          },
-          "contentHandling": "CONVERT_TO_TEXT",
-          "type": "aws"
-        }
-      },
-      "options": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "schema": {
-              "$ref": "#/definitions/Empty"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Methods": {
-                "type": "string"
-              },
-              "Access-Control-Allow-Headers": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'POST,OPTIONS'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "passthroughBehavior": "when_no_match",
-          "requestTemplates": {
-            "application/json": "{\"statusCode\": 200}"
-          },
-          "type": "mock"
+          "httpMethod": "PATCH",
+          "type": "http_proxy"
         }
       }
     }

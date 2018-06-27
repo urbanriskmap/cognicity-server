@@ -60,7 +60,7 @@ deploy: #build the docs for dev branch only
     zip_file: dist.zip
     on:
       branch: dev
-  - provider: elasticbeanstalk # deploy the dev us server
+  - provider: elasticbeanstalk # deploy the prod us server
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     region: $AWS_EB_REGION_US
@@ -71,3 +71,14 @@ deploy: #build the docs for dev branch only
     zip_file: dist.zip
     on:
       branch: master
+  - provider: elasticbeanstalk # deploy the dev in server
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    region: $AWS_EB_REGION_IN
+    app: $AWS_EB_APP_IN
+    env: $AWS_EB_APP_ENV_IN_DEV
+    bucket_name: $AWS_EB_APP_BUCKET_IN_DEV
+    skip_cleanup: true
+    zip_file: dist.zip
+    on:
+      branch: dev

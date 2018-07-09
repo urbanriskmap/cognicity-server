@@ -15,17 +15,24 @@
 export default (config, db, logger) => ({
 
   // Get all flood reports for a given city
-  count: (start, end) => new Promise((resolve, reject) => {
+  count: (start, end, city) => new Promise((resolve, reject) => {
     // Setup query
-    let query = `SELECT ts, count(local_area) FROM
-    (SELECT (cognicity.rem_get_flood(ts)).local_area, ts
-      FROM  generate_series(date_trunc('hour', $1::timestamp with time zone),
+    let query = `SELECT series.ts, count(series.local_area) 
+      FROM
+        (SELECT (cognicity.rem_get_flood(ts)).local_area, ts
+          FROM 
+            generate_series(date_trunc('hour', $1::timestamp with time zone),
             date_trunc('hour', $2::timestamp with time zone),'1 hour')
-      as series(ts)) output
-    GROUP BY ts ORDER BY ts`;
+      AS series(ts)) AS series,
+      ${config.TABLE_LOCAL_AREAS} AS la
+      WHERE 
+        series.local_area = la.pkey AND
+        ($3 IS NULL OR la.instance_region_code = $3)
+      GROUP BY series.ts 
+      ORDER BY series.ts`;
 
     // Setup values
-    let values = [start, end];
+    let values = [start, end, city];
 
     // Execute
     logger.debug(query, values);

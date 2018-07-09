@@ -15,13 +15,21 @@
 export default (config, db, logger) => ({
 
   // Get max state of all flood reports over time
-  maxstate: (start, end) => new Promise((resolve, reject) => {
+  maxstate: (start, end, city) => new Promise((resolve, reject) => {
     // Setup query
-    let query = `SELECT local_area as area_id, changed as last_updated,
-    max_state FROM cognicity.rem_get_max_flood($1, $2)`;
+    let query = `SELECT 
+      mf.local_area AS area_id, 
+      mf.changed AS last_updated,
+      mf.max_state 
+    FROM 
+      cognicity.rem_get_max_flood($1, $2) AS mf, 
+      ${config.TABLE_LOCAL_AREAS} AS la
+    WHERE 
+      mf.local_area = la.pkey AND
+      ($3 IS NULL OR la.instance_region_code = $3)`;
 
     // Setup values
-    let values = [start, end];
+    let values = [start, end, city];
 
     // Execute
     logger.debug(query, values);
@@ -35,3 +43,4 @@ export default (config, db, logger) => ({
       });
   }),
 });
+

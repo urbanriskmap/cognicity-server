@@ -8,7 +8,9 @@
 import feeds from './model';
 
 // Import validation dependencies
-import Joi from 'joi';
+import BaseJoi from 'joi';
+import Extension from 'joi-date-extensions';
+const Joi = BaseJoi.extend(Extension);
 import validate from 'celebrate';
 
 /**
@@ -28,7 +30,7 @@ export default ({config, db, logger}) => {
   api.post('/qlue', validate({
       body: Joi.object().keys({
         post_id: Joi.number().integer().required(),
-        created_at: Joi.date().iso().required(),
+        created_at: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
         title: Joi.string().allow(''),
         text: Joi.string().allow('').required(),
         image_url: Joi.string(),
@@ -57,7 +59,7 @@ export default ({config, db, logger}) => {
   api.post('/detik', validate({
       body: Joi.object().keys({
         contribution_id: Joi.number().integer().required(),
-        created_at: Joi.date().iso().required(),
+        created_at: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
         title: Joi.string().allow(''),
         text: Joi.string().allow('').required(),
         url: Joi.string().allow(''),

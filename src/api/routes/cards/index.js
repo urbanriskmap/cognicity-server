@@ -14,7 +14,9 @@ import {cacheResponse, handleResponse} from '../../../lib/util';
 import Notify from '../../../lib/notify';
 
 // Import validation dependencies
-import Joi from 'joi';
+import BaseJoi from 'joi';
+import Extension from 'joi-date-extensions';
+const Joi = BaseJoi.extend(Extension);
 import validate from 'celebrate';
 
 // Import image upload capabilities
@@ -130,7 +132,8 @@ export default ({config, db, logger}) => {
         }),
       text: Joi.string().allow(''),
       image_url: Joi.string().allow(''),
-      created_at: Joi.date().iso().required(),
+      created_at: Joi.alternatives(Joi.date().format('YYYY-MM-DDTHH:mm:ssZ'),
+      Joi.date().format('YYYY-MM-DDTHH:mm:ss.SSSZ')).required(),
       location: Joi.object().required().keys({
         lat: Joi.number().min(-90).max(90).required(),
         lng: Joi.number().min(-180).max(180).required(),

@@ -34,6 +34,8 @@ export default ({config, db, logger}) => {
         start: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ').required(),
         end: Joi.date().format('YYYY-MM-DDTHH:mm:ssZ')
           .min(Joi.ref('start')).required(),
+          city: Joi.alternatives().try(Joi.string(),
+          Joi.any().valid(null)).default(null, 'city'),
       },
     }),
     (req, res, next) => {
@@ -53,7 +55,8 @@ export default ({config, db, logger}) => {
         ]}});
         return;
       }
-      archive(config, db, logger).maxstate(req.query.start, req.query.end)
+      archive(config, db, logger).maxstate(req.query.start, req.query.end,
+      req.query.city)
         .then((data) => res.status(200).json({statusCode: 200, result: data}))
         .catch((err) => {
           /* istanbul ignore next */

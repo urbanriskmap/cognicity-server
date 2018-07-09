@@ -20,7 +20,7 @@ export default function(app) {
           .post('/feeds/qlue')
           .send({
               'post_id': '9999',
-              'created_at': '2017-06-07T14:32+0700',
+              'created_at': '2017-06-07T14:32:00+0700',
               'qlue_city': 'surabaya',
               'disaster_type': 'flood',
               'text': 'test report',
@@ -46,7 +46,7 @@ export default function(app) {
           .post('/feeds/qlue')
           .send({
               'post_id': '9999',
-              'created_at': '2017-06-07T14:32+0700',
+              'created_at': '2017-06-07T14:32:00+0700',
               'qlue_city': 'surabaya',
               'disaster_type': 'flood',
               'text': 'test report',
@@ -73,7 +73,7 @@ export default function(app) {
           .post('/feeds/detik')
           .send({
               'contribution_id': '9999',
-              'created_at': '2017-06-07T14:32+0700',
+              'created_at': '2017-06-07T14:32:00+0700',
               'disaster_type': 'flood',
               'location': {
                 'latitude': 45,
@@ -98,7 +98,7 @@ export default function(app) {
             .post('/feeds/detik')
             .send({
                 'contribution_id': '9999',
-                'created_at': '2017-06-07T14:32+0700',
+                'created_at': '2017-06-07T14:32:00+0700',
                 'disaster_type': 'flood',
                 'location': {
                   'latitude': 45,

@@ -14,7 +14,7 @@
   */
 export default (config, db, logger) => ({
 
-  // Get all flood reports for a given city
+  // Get all flooded areas for a given city
   all: (city, minimumState) => new Promise((resolve, reject) => {
     // Setup query
     let query = `SELECT local_area as area_id, state, last_updated
@@ -38,7 +38,7 @@ export default (config, db, logger) => ({
       });
   }),
 
-  // Get all flood reports for a given city
+  // Get all flooded areas for a given city
   allGeo: (city, minimumState) => new Promise((resolve, reject) => {
     // Setup query
     let query = `SELECT la.the_geom, la.pkey as area_id, la.geom_id,

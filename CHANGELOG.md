@@ -53,3 +53,9 @@ API Server for CogniCity
 * Change floods endpoint to return new attributes column
 * Requires cognicity-schema v3.0.7 or later
 * Updated npm packages
+
+### v3.1.0
+* Add city query parameter to /floods/timeseries and /floods/archive endpoints
+* Add time zone validation to all endpoints accepting timestamps
+* Notifications of received reports are now run from the server (added for testing in v3.0.6)
+* Add deployments for India

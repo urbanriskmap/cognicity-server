@@ -61,3 +61,4 @@ API Server for CogniCity
 * Add deployments for India
 
 ### v3.1.1
+* Add /reports/:id/flag endpoint

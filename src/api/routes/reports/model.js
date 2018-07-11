@@ -95,4 +95,28 @@ export default (config, db, logger) => ({
           reject(err);
         });
     }),
+
+    // Update a report's flag value
+    setFlag: (id, body) => new Promise((resolve, reject) => {
+      // Setup query
+      let query = `UPDATE ${config.TABLE_REPORTS} SET report_data = 
+      (SELECT COALESCE(report_data::jsonb, '{}') || 
+        ('{"flag":' || $2 || '}')::jsonb flag
+      FROM ${config.TABLE_REPORTS} WHERE pkey = $1) WHERE pkey = $1
+      RETURNING report_data->>'flag' as flag`;
+
+      let values = [id, body.flag];
+
+      // Execute
+      logger.debug(query, values);
+      db.oneOrNone(query, values).timeout(config.PGTIMEOUT)
+        .then((data) => {
+          resolve(data);
+        })
+      /* istanbul ignore next */
+      .catch((err) => {
+        /* istanbul ignore next */
+        reject(err);
+      });
+    }),
 });

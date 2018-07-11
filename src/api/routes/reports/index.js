@@ -99,5 +99,27 @@ export default ({config, db, logger}) => {
       }
   );
 
+  api.patch('/:id/flag', validate({
+    params: {id: Joi.number().integer().required()},
+    body: Joi.object().keys({
+      flag: Joi.bool().required(),
+    }),
+  }),
+  (req, res, next) => {
+      reports(config, db, logger).setFlag(req.params.id, req.body)
+        .then((data) => data ? res.status(200)
+        .json({statusCode: 200, id: req.params.id, flag: data.flag}) :
+        res.status(404).json(
+          {statusCode: 404, message: 'Report id ' + req.params.id
+            + ' not found'}).end())
+        .catch((err) => {
+          /* istanbul ignore next */
+          logger.error(err);
+          /* istanbul ignore next */
+          next(err);
+        });
+      }
+  );
+
   return api;
 };

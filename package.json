@@ -47,7 +47,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "api-error-handler": "^1.0.0",
-    "apicache": "^1.2.3",
+    "apicache": "0.8.4",
     "aws-sdk": "^2.7.24",
     "axios": "^0.18.0",
     "bluebird": "^3.5.0",

@@ -35,7 +35,9 @@ export default ({config, db, logger}) => {
 
   // Return the API version
   api.get('/', (req, res) => {
-    console.log(req); // eslint-disable-line no-console
+    console.log(req['context']); // eslint-disable-line no-console
+    console.log(req['headers']); // eslint-disable-line no-console
+
     let query = `SELECT * FROM cognicity.version()`;
     db.oneOrNone(query)
       .then((data) => {

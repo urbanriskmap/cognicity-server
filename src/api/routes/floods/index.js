@@ -151,7 +151,6 @@ export default ({config, db, logger}) => {
       },
     }),
     (req, res, next) => {
-    console.log(req.headers); // eslint-disable-line no-console
     floods(config, db, logger)
     .updateREMState(req.params.localAreaId, req.body.state, req.query.username)
       .then(() => {

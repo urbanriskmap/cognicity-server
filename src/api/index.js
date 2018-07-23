@@ -38,9 +38,11 @@ export default ({config, db, logger}) => {
 
   // Return the API version
   api.get('/', (req, res) => {
-    //console.log(req['context']); // eslint-disable-line no-console
-    //console.log(req['headers']); // eslint-disable-line no-console
-    console.log(jwtDecode(req['headers']['Authorization']));
+    // console.log(req['context']); // eslint-disable-line no-console
+    // console.log(req['headers']); // eslint-disable-line no-console
+    if (req['headers']['Authorization']) {
+      console.log(jwtDecode(req['headers']['Authorization'])); // eslint-disable-line
+    }
 
     let query = `SELECT * FROM cognicity.version()`;
     db.oneOrNone(query)

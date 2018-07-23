@@ -10,6 +10,9 @@ import errorHandler from 'api-error-handler';
 // Import validation dependencies
 import validate from 'celebrate';
 
+// Import JWT handler
+import jwtDecode from 'jwt-decode';
+
 // Get the current version
 import {version} from '../../package.json';
 
@@ -35,8 +38,9 @@ export default ({config, db, logger}) => {
 
   // Return the API version
   api.get('/', (req, res) => {
-    console.log(req['context']); // eslint-disable-line no-console
-    console.log(req['headers']); // eslint-disable-line no-console
+    //console.log(req['context']); // eslint-disable-line no-console
+    //console.log(req['headers']); // eslint-disable-line no-console
+    console.log(jwtDecode(req['headers']['Authorization']));
 
     let query = `SELECT * FROM cognicity.version()`;
     db.oneOrNone(query)

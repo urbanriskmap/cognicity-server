@@ -52,7 +52,7 @@ export default ({config, db, logger}) => {
     // console.log(req['context']); // eslint-disable-line no-console
     console.log(req['headers']); // eslint-disable-line no-console
     if (req['headers']['authorization']) {
-      const user = jwtDecode(['headers']['authorization']);
+      const user = jwtDecode(req['headers']['authorization']);
       res.status(200).json(user);
     } else {
       res.status(401).json({'stausCode': 401,

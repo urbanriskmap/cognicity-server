@@ -46,7 +46,7 @@ logger.add(logger.transports.File, {
   maxsize: config.LOG_MAX_FILE_SIZE, // Max size of each file
   maxFiles: config.LOG_MAX_FILES, // Max number of files
   level: config.LOG_LEVEL, // Level of log messages
-  timestamp: true
+  timestamp: true,
 });
 
 // If we are not in development and console logging not requested then remove it

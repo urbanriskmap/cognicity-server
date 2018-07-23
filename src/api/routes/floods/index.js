@@ -138,7 +138,7 @@ export default ({config, db, logger}) => {
   );
 
   // Update the flood status of a local area
-  api.put('/:localAreaId', jwtCheck,
+  api.put('/:localAreaId',
     validate({
       params: {localAreaId: Joi.number().integer().required()},
       body: Joi.object().keys({
@@ -150,7 +150,9 @@ export default ({config, db, logger}) => {
         username: Joi.string().required(),
       },
     }),
-    (req, res, next) => floods(config, db, logger)
+    (req, res, next) => {
+    console.log(req.headers); // eslint-disable-line no-console
+    floods(config, db, logger)
     .updateREMState(req.params.localAreaId, req.body.state, req.query.username)
       .then(() => {
         clearCache();
@@ -163,7 +165,8 @@ export default ({config, db, logger}) => {
         logger.error(err);
         /* istanbul ignore next */
         next(err);
-      })
+      });
+    }
   );
 
   // Remove the flood status of a local and add a log entry for audit

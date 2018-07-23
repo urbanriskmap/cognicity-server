@@ -38,12 +38,6 @@ export default ({config, db, logger}) => {
 
   // Return the API version
   api.get('/', (req, res) => {
-    // console.log(req['context']); // eslint-disable-line no-console
-    // console.log(req['headers']); // eslint-disable-line no-console
-    if (req['headers']['Authorization']) {
-      console.log(jwtDecode(req['headers']['Authorization'])); // eslint-disable-line
-    }
-
     let query = `SELECT * FROM cognicity.version()`;
     db.oneOrNone(query)
       .then((data) => {
@@ -52,6 +46,18 @@ export default ({config, db, logger}) => {
       .catch((err) => {
         res.status(500).json(err);
       });
+  });
+
+  api.get('/auth', (req, res) => {
+    // console.log(req['context']); // eslint-disable-line no-console
+    console.log(req['headers']); // eslint-disable-line no-console
+    if (req['headers']['authorization']) {
+      const user = jwtDecode(['headers']['authorization']);
+      res.status(200).json(user);
+    } else {
+      res.status(401).json({'stausCode': 401,
+      'message': 'authorization header not found'});
+    }
   });
 
   // Mount the various endpoints

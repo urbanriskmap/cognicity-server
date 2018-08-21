@@ -64,7 +64,7 @@ export default {
   PGUSER: process.env.PGUSER || 'postgres',
   PORT: process.env.PORT || 8001,
   REGION_CODES: (process.env.REGION_CODES || 'jbd,bdg,sby,srg').split(','),
-  REPORT_TYPES: (process.env.REPORT_TYPES || 'drain,desilting,canalrepair,treeclearing,flood').split(','),
+  REPORT_TYPES: (process.env.REPORT_TYPES || 'block,damage,power,treeclearing,flood').split(','),
   RESPONSE_TIME: process.env.RESPONSE_TIME === 'true' || false,
   SECURE_AUTH0: process.env.SECURE_AUTH0 === 'true' || false,
   TABLE_FLOODGAUGE_REPORTS: process.env.TABLE_FLOODGAUGE_REPORTS || 'floodgauge.reports',

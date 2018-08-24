@@ -309,7 +309,7 @@ export default function(app, createdAt) {
             'report_type': 'assessment',
             'damages': [
               {'component': 'roof', 'severity': 2},
-              {'component': 'floor', 'severity': 5},
+              {'component': 'plinth', 'severity': 5},
             ],
           },
           'text': 'integration testing',

@@ -119,17 +119,24 @@ export default ({config, db, logger}) => {
     params: {cardId: Joi.string().min(36).max(36).required()},
     body: Joi.object().keys({
       disaster_type: Joi.string().valid(config.DISASTER_TYPES).required(),
-      card_data: Joi.object()
-        .keys({
-            flood_depth: Joi.number(),
-            report_type: Joi.string().valid(config.REPORT_TYPES).required(),
-        })
-        .required()
-        .when('disaster_type', {
-            is: 'flood',
-            then: Joi.object({flood_depth: Joi.number().integer().min(0)
-              .max(200).required()}), // b.c is required only when a is true
+      card_data: Joi.object().keys({
+        report_type: Joi.string().valid(config.REPORT_TYPES).required(),
+        flood_depth: Joi.number().integer().min(0).max(200)
+        // flood_depth required only when report_type = 'flood'
+        .when('report_type', {
+          is: 'flood',
+          then: Joi.required(),
         }),
+        damages: Joi.array().items(Joi.object({
+          component: Joi.string().valid(config.DAMAGE_COMPONENT).required(),
+          severity: Joi.number().min(1).max(5).required(),
+        })).min(1)
+        // damages required only when report_type = 'assessment'
+        .when('report_type', {
+          is: 'assessment',
+          then: Joi.required(),
+        }),
+      }).required(),
       text: Joi.string().allow(''),
       image_url: Joi.string().allow(''),
       created_at: Joi.alternatives(Joi.date().format('YYYY-MM-DDTHH:mm:ssZ'),
@@ -164,7 +171,7 @@ export default ({config, db, logger}) => {
                   .then((data) => {
                     logger.info('Notification request succesfully submitted');
                   }).catch((err) => {
-                    logger.error(`Error with notification request. 
+                    logger.error(`Error with notification request.
                       Response was ` + JSON.stringify(err));
                   });
                 clearCache();

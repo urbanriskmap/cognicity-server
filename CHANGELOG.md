@@ -62,3 +62,4 @@ API Server for CogniCity
 
 ### v3.1.1
 * Add /reports/:id/flag endpoint
+* Added support for assessment cards

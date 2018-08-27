@@ -10,6 +10,7 @@ branches:
     - dev
     - server-object-refactor
     - report-archive
+    - bluefyre
 
 notifications:
   slack: miturbanrisklab:4y7wfdHde8dtfb00wTfNZfTA

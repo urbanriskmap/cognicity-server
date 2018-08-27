@@ -6,6 +6,8 @@
  * Tomas Holderness June 2017
  */
 
+var agent = require('bluefyre-agent-node');
+
 // Import config
 import config from '../config';
 

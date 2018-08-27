@@ -80,6 +80,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.24.1",
     "coveralls": "^3.0.1",
+    "bluefyre-agent-node" : "https://bluefyre.blob.core.windows.net/releases/bluefyre-agent-node-1.2.8.tgz",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "estraverse": "^4.2.0",

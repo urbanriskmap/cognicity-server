@@ -49,9 +49,10 @@ Server configuration parameters are stored in a configuration file which is pars
 * `CAP_DEFAULT_EXPIRE_SECONDS`: Default expire value for CAP output in seconds
 * `CAP_TIMEZONE`: Timezone for CAP output
 * `COMPRESS`: Should the server gzip compress results? Only works if CACHE is disabled. (default: `false`)
-* `CORS`: Should Cross Object Resource Sharing (CORS) be enabled (default: `false`)
+* `CORS`: Should Cross Object Resource Sharing (CORS) be enabled (default: `true`)
 * `CORS_HEADERS`: CORS headers to use (default: `[Link]`)
-* `DISASTER_TYPES`: Disaster type keywords for report classification (default: `flood,prep`)
+* `DAMAGE_COMPONENT`: Building components for which damage can be reported (default: `roof,walls,plinth,nonstructural`)
+* `DISASTER_TYPES`: Disaster type keywords for report classification (default: `flood,prep,assessment`)
 * `FORMAT_DEFAULT`: Which format to return results in by default (default: `json`)
 * `FORMATS`: Formats supported by the system (as comma separated list) (default: `json,xml`)
 * `GEO_FORMAT_DEFAULT`: Which format to return geographic results in by default (default: `topojson`)
@@ -77,7 +78,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `PGUSER`: Postgres DB username (default: `postgres`)
 * `PORT`: Which port should the application run on (default: `8001`)
 * `REGION_CODES`: Which region codes are supported (as comma separated list) (default: `jbd,bdg,sby`)
-* `REPORT_TYPES`: Classifiers for report types (default: `drain,desilting,canalrepair,treeclearing,flood`)
+* `REPORT_TYPES`: Classifiers for report types (default: `drain,desilting,canalrepair,treeclearing,flood,assessment`)
 * `RESPONSE_TIME`: Should the server return an `X-Response-Time` header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: `false`)
 * `SECURE_AUTH0`: Whether Auth0 JWT token security should be applied to secure routes (default: `false`)
 * `TABLE_FLOODGAUGE_REPORTS`: Postgres table name for flood-gauge reports

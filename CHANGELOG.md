@@ -59,3 +59,7 @@ API Server for CogniCity
 * Add time zone validation to all endpoints accepting timestamps
 * Notifications of received reports are now run from the server (added for testing in v3.0.6)
 * Add deployments for India
+
+### v3.1.1
+* Add /reports/:id/flag endpoint
+* Added support for assessment cards

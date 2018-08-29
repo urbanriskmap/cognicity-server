@@ -167,5 +167,21 @@ export default function(app, reportid, createdAt) {
               }
            });
         });
+
+      // Can update report flag
+      it('Update report flag (PATCH /reports/:id/flag)', function(done) {
+        test.httpAgent(app)
+          .patch('/reports/' + reportid + '/flag')
+          .send({'flag': true})
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            if (err) {
+              test.fail(err.message + ' ' + JSON.stringify(res));
+            } else {
+              done();
+            }
+         });
+      });
    });
 }

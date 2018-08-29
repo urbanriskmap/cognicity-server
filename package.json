@@ -1,6 +1,6 @@
 {
   "name": "cognicity-server",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Data Server for CogniCity",
   "main": "dist",
   "engines": {
@@ -47,7 +47,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "api-error-handler": "^1.0.0",
-    "apicache": "^0.8.4",
+    "apicache": "0.8.4",
     "aws-sdk": "^2.7.24",
     "axios": "^0.18.0",
     "bluebird": "^3.5.0",
@@ -63,6 +63,7 @@
     "joi-date-extensions": "^1.0.2",
     "jsonwebtoken": "^8.2.2",
     "jwks-rsa": "^1.1.1",
+    "jwt-decode": "^2.2.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.13",
     "morgan": "^1.8.1",

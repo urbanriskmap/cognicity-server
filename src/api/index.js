@@ -10,6 +10,9 @@ import errorHandler from 'api-error-handler';
 // Import validation dependencies
 import validate from 'celebrate';
 
+// Import JWT handler
+import jwtDecode from 'jwt-decode';
+
 // Get the current version
 import {version} from '../../package.json';
 
@@ -43,6 +46,18 @@ export default ({config, db, logger}) => {
       .catch((err) => {
         res.status(500).json(err);
       });
+  });
+
+  api.get('/auth', (req, res) => {
+    // console.log(req['context']); // eslint-disable-line no-console
+    console.log(req['headers']); // eslint-disable-line no-console
+    if (req['headers']['authorization']) {
+      const user = jwtDecode(req['headers']['authorization']);
+      res.status(200).json(user);
+    } else {
+      res.status(401).json({'stausCode': 401,
+      'message': 'authorization header not found'});
+    }
   });
 
   // Mount the various endpoints

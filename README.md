@@ -77,7 +77,7 @@ Server configuration parameters are stored in a configuration file which is pars
 * `PGTIMEOUT`: Max duration on DB calls before timeout (in milliseconds) (default: `5000` i.e. 5 seconds)
 * `PGUSER`: Postgres DB username (default: `postgres`)
 * `PORT`: Which port should the application run on (default: `8001`)
-* `REGION_CODES`: Which region codes are supported (as comma separated list) (default: `jbd,bdg,sby`)
+* `REGION_CODES`: Which region codes are supported (as comma separated list) (default: `jbd,bdg,sby,srg` also accepts bdy,blr,brw,fph,chn,mdh,mum,krl)
 * `REPORT_TYPES`: Classifiers for report types (default: `drain,desilting,canalrepair,treeclearing,flood,assessment`)
 * `RESPONSE_TIME`: Should the server return an `X-Response-Time` header detailing the time taken to process the request.  This is useful for both development to identify latency impact on testing and production for performance / health monitoring (default: `false`)
 * `SECURE_AUTH0`: Whether Auth0 JWT token security should be applied to secure routes (default: `false`)
